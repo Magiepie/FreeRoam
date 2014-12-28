@@ -16,6 +16,7 @@ public class VirtualWorld
         init();
     }
 
+	@SuppressWarnings("rawtypes")
 	public static final void init()
     {
         for(int i = 0; i < 10331; i++)
@@ -41,8 +42,8 @@ public class VirtualWorld
         return server.world.map.I.I(height, currentX, currentY, futureX, futureY, a);
     }
 
+	@SuppressWarnings("rawtypes")
 	public static Map I[] = new Hashtable[10331];
 
 }
-
 

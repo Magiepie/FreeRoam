@@ -15,7 +15,7 @@ public class Firemaking {
 	private Client c;
 	
 	private int[] logs = {1511,1521,1519,1517,1515,1513};
-	private int[] exp = {20,30,40,50,60,70};
+	//private int[] exp = {20,30,40,50,60,70};
 	private int[] level = {1,15,30,45,60,75};
 	public long lastLight;
 	private int DELAY = 1250;

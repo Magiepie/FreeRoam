@@ -248,7 +248,6 @@ public class RS2LoginProtocolDecoder extends CumulativeProtocolDecoder {
 		cl.isActive = true;
 		bldr.addByte((byte) 0);
 		Packet pkt = bldr.toPacket();
-		final Client fcl = cl;
 		session.setAttachment(cl);
 		session.write(pkt).addListener(new IoFutureListener() {
 			public void operationComplete(IoFuture arg0) {

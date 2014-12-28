@@ -61,13 +61,14 @@ public class I
         } else
         if(k < 0)
         {
-			int i1 = k + 4;
-            k = k;
+			//int i1 = k + 4;
+           // k = k;
         }
         return k;
     }
 
-    private static void close()
+    @SuppressWarnings({ "rawtypes", "unused" })
+	private static void close()
     {
         RandomAccessFile randomaccessfile = null;
         int i = 0;
@@ -339,7 +340,8 @@ public class I
         return k;
     }
 
-    public static final void containsKey()
+    @SuppressWarnings({ "unused", "resource" })
+	public static final void containsKey()
     {
         equals = new byte[B.j[24]];
         get = new byte[B.j[24]];
@@ -435,7 +437,8 @@ public class I
     }
     
     //(int height, int currentX, int currentY, int futureX, int futureY, int a)
-    public static final boolean I(int height, int currentX, int currentY, int futureX, int futureY, int j1)
+    @SuppressWarnings("rawtypes")
+	public static final boolean I(int height, int currentX, int currentY, int futureX, int futureY, int j1)
     {
         if(currentY == futureX && currentY == futureY)
             return true;

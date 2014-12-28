@@ -307,7 +307,8 @@ public class ItemHandler {
 				ItemList temp = getItemList(Integer.parseInt(line[0]));
 				if (temp != null)
 					temp.ShopValue = Integer.parseInt(line[1]);			
-			}		
+			}	
+			s.close();
 		} catch (IOException e) {
 			e.printStackTrace();		
 		}
@@ -331,7 +332,6 @@ public class ItemHandler {
 		String token2_2 = "";
 		String[] token3 = new String[10];
 		boolean EndOfFile = false;
-		int ReadMode = 0;
 		BufferedReader characterfile = null;
 		try {
 			characterfile = new BufferedReader(new FileReader("./Data/cfg/"+FileName));
@@ -343,6 +343,11 @@ public class ItemHandler {
 			line = characterfile.readLine();
 		} catch(IOException ioexception) {
 			Misc.println(FileName+": error loading file.");
+			try {
+				characterfile.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			return false;
 		}
 		while(EndOfFile == false && line != null) {
@@ -372,8 +377,13 @@ public class ItemHandler {
 				}
 			} else {
 				if (line.equals("[ENDOFITEMLIST]")) {
-					try { characterfile.close(); } catch(IOException ioexception) { }
-					return true;
+					try {
+						characterfile.close();
+						return true;
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					
 				}
 			}
 			try {

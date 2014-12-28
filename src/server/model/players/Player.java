@@ -816,7 +816,6 @@ public int follow2 = 0;
 				if(isRunning) {
 					dir2 = getNextWalkingDirection();
 				}
-				Client c = (Client)this;
 				//c.sendMessage("Cycle Ended");	
 				int deltaX = 0, deltaY = 0;
 				if(currentX < 2*8) {
@@ -1676,14 +1675,10 @@ public int follow2 = 0;
 		return newWalkCmdIsRunning;
 	}
 
-	private ISAACRandomGen inStreamDecryption = null, outStreamDecryption = null;
-	
 	public void setInStreamDecryption(ISAACRandomGen inStreamDecryption) {
-		this.inStreamDecryption = inStreamDecryption;
 	}
 
 	public void setOutStreamDecryption(ISAACRandomGen outStreamDecryption) {
-		this.outStreamDecryption = outStreamDecryption;
 	}
 	
 	public boolean samePlayer() {

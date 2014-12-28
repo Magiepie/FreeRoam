@@ -64,6 +64,7 @@ public class NPCDrops {
 				dropRarity.put(npcId, itemRarity[npcId]);
 			}
 			loadConstants();
+			s.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}	
@@ -87,6 +88,7 @@ public class NPCDrops {
 				}
 				constantDrops.put(npcId,temp);
 			}
+			s.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

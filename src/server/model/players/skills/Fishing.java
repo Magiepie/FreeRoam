@@ -16,7 +16,6 @@ public class Fishing {
 	private int fishType;
 	private int exp;
 	private int req;
-	private int equipmentType;
 	private final int SALMON_EXP = 70;
 	private final int SWORD_EXP = 100;
 	private final int SALMON_ID = 331;
@@ -38,7 +37,7 @@ public class Fishing {
 					if (slot > -1) {
 						this.req = REQS[slot];
 						this.fishType = FISH_TYPES[slot];
-						this.equipmentType = getEquipment(fishType);
+						getEquipment(fishType);
 						this.exp = EXP[slot];
 						c.fishing = true;
 						c.fishTimer = 3 + Misc.random(2);
@@ -130,7 +129,6 @@ public class Fishing {
 	public void resetFishing() {
 		this.exp = 0;
 		this.fishType = -1;
-		this.equipmentType = -1;
 		this.req = 0;
 		c.fishTimer = -1;
 		c.fishing = false;

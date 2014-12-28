@@ -70,6 +70,7 @@ public class Commands implements PacketType {
 	} finally {
 	spawn.close();
 	}
+   spawn1.close();
 	} catch (IOException e) {
                 e.printStackTrace();
 			}

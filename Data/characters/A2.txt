@@ -1,14 +1,14 @@
 [ACCOUNT]
-character-username = A
+character-username = A2
 character-password = 
 
 character-lastkilled = 
 [CHARACTER]
 character-height = 0
-character-posx = 3098
-character-posy = 3498
-character-rights = 3
-character-ip = 192.168.137.1
+character-posx = 3367
+character-posy = 3274
+character-rights = 0
+character-ip = 127.0.0.1
 crystal-bow-shots = 0
 skull-timer = -1
 magic-book = 0
@@ -16,28 +16,28 @@ brother-info = 0	0
 brother-info = 1	0
 brother-info = 2	0
 brother-info = 3	0
-brother-info = 4	2
+brother-info = 4	0
 brother-info = 5	0
 special-amount = 10.0
 selected-coffin = 0
-barrows-killcount = 5
+barrows-killcount = 0
 teleblock-length = 0
-pc-points = 5
+pc-points = 0
 slayerTask = -1
-pk-points = 15
+pk-points = 2
 votingPoints = 0
 taskAmount = 0
 magePoints = 0
 autoRet = 0
 trade11 = -1
-barrowskillcount = 5
+barrowskillcount = 0
 flagged = false
 wave = 0
-gwkc = 0
+gwkc = 1
 fightMode = 2
 void = 0	0	0	0	0
 tradeTimer = 0
-pkPoints = 15
+pkPoints = 2
 memberStatus = 0
 
 [EQUIPMENT]
@@ -72,21 +72,21 @@ character-look = 11	3
 character-look = 12	0
 
 [SKILLS]
-character-skill = 0	99	13103236
+character-skill = 0	99	13232836
 character-skill = 1	99	13034436
-character-skill = 2	99	16890436
-character-skill = 3	99	14342580
+character-skill = 2	99	13533636
+character-skill = 3	99	13266950
 character-skill = 4	99	13034436
-character-skill = 5	99	13055996
+character-skill = 5	99	13037236
 character-skill = 6	99	13034436
 character-skill = 7	99	13034436
 character-skill = 8	99	13496436
 character-skill = 9	99	13034436
 character-skill = 10	99	13034436
-character-skill = 11	99	13487736
+character-skill = 11	99	13034436
 character-skill = 12	99	13034436
 character-skill = 13	99	13034436
-character-skill = 14	99	13081236
+character-skill = 14	99	13034436
 character-skill = 15	99	13034436
 character-skill = 16	99	13034436
 character-skill = 17	99	13034436
@@ -99,40 +99,32 @@ character-skill = 23	1	0
 character-skill = 24	1	0
 
 [ITEMS]
-character-item = 0	996	9770200
-character-item = 1	1623	2
-character-item = 2	1621	2
-character-item = 3	162	1
-character-item = 4	150	1
-character-item = 5	166	1
-character-item = 6	1276	1
-character-item = 7	4154	1
-character-item = 8	1378	1
-character-item = 9	5699	1
-character-item = 11	392	1
-character-item = 14	392	1
-character-item = 15	392	1
-character-item = 16	392	1
-character-item = 17	392	1
+character-item = 6	146	1
+character-item = 7	160	1
+character-item = 8	1516	1
+character-item = 9	1516	1
+character-item = 10	1516	1
+character-item = 11	1516	1
+character-item = 12	1516	1
+character-item = 13	1516	1
 
 [BANK]
 character-bank = 0	1350	1
 character-bank = 1	1512	16
 character-bank = 2	3025	10
-character-bank = 3	392	290
+character-bank = 3	392	297
 character-bank = 4	2441	9
-character-bank = 5	2443	9
+character-bank = 5	2443	10
 character-bank = 6	2437	9
 character-bank = 7	1334	1
 character-bank = 8	1520	4
 character-bank = 9	1518	6
-character-bank = 10	1360	1
-character-bank = 11	1324	1
-character-bank = 12	1516	12
-character-bank = 13	996	17587288
+character-bank = 10	1324	1
+character-bank = 11	1360	1
+character-bank = 12	996	2337000
 
 [FRIENDS]
-character-friend = 0	66
+character-friend = 0	1
 
 [EOF]
 

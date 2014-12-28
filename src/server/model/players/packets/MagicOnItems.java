@@ -9,10 +9,11 @@ import server.model.players.PacketType;
  **/
 public class MagicOnItems implements PacketType {
 
+	@SuppressWarnings("unused")
 	public void processPacket(Client c, int packetType, int packetSize) {
 		int slot = c.getInStream().readSignedWord();
 		int itemId = c.getInStream().readSignedWordA();
-		int junk = c.getInStream().readSignedWord();
+		int junk = c.getInStream().readSignedWord();//needed
 		int spellId = c.getInStream().readSignedWordA();
 		
 		c.usingMagic = true;

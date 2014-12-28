@@ -149,7 +149,6 @@ public class ObjectHandler {
 		String token2_2 = "";
 		String[] token3 = new String[10];
 		boolean EndOfFile = false;
-		int ReadMode = 0;
 		BufferedReader objectFile = null;
 		try {
 			objectFile = new BufferedReader(new FileReader("./"+fileName));
@@ -161,6 +160,11 @@ public class ObjectHandler {
 			line = objectFile.readLine();
 		} catch(IOException ioexception) {
 			Misc.println(fileName+": error loading file.");
+			try {
+				objectFile.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			return false;
 		}
 		while(EndOfFile == false && line != null) {
@@ -183,8 +187,13 @@ public class ObjectHandler {
 				}
 			} else {
 				if (line.equals("[ENDOFOBJECTLIST]")) {
-					try { objectFile.close(); } catch(IOException ioexception) { }
-					return true;
+					try {
+						objectFile.close();
+						return true;
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					
 				}
 			}
 			try {
@@ -192,6 +201,7 @@ public class ObjectHandler {
 			} catch(IOException ioexception1) { EndOfFile = true; }
 		}
 		try { objectFile.close(); } catch(IOException ioexception) { }
+
 		return false;
 	}
 	
@@ -252,7 +262,6 @@ public class ObjectHandler {
 		String token2_2 = "";
 		String[] token3 = new String[10];
 		boolean EndOfFile = false;
-		int ReadMode = 0;
 		BufferedReader objectFile = null;
 		try {
 			objectFile = new BufferedReader(new FileReader("./"+fileName));
@@ -264,6 +273,11 @@ public class ObjectHandler {
 			line = objectFile.readLine();
 		} catch(IOException ioexception) {
 			Misc.println(fileName+": error loading file.");
+			try {
+				objectFile.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			return false;
 		}
 		int door = 0;
@@ -291,8 +305,13 @@ public class ObjectHandler {
 				}
 			} else {
 				if (line.equals("[ENDOFDOORLIST]")) {
-					try { objectFile.close(); } catch(IOException ioexception) { }
-					return true;
+					try {
+						objectFile.close(); 
+						return true;
+						} catch(IOException ioexception) {
+							
+						}
+					
 				}
 			}
 			try {

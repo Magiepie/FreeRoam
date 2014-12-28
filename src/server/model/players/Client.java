@@ -113,7 +113,9 @@ public class Client extends Player {
 		}catch(Exception e){
 			return false;
 		}
+		in.close();
 		return true;
+		
 	}
         public void highscores() {
 getPA().sendFrame126("Highscores", 6399);
@@ -318,8 +320,7 @@ public void gimeCP() {
 	};
 
 	public void destruct() {
-                       Client o = (Client) PlayerHandler.players[duelingWith];
-/*                        if(inDuelArena() && o.disconnected == true) {
+                       /*                        if(inDuelArena() && o.disconnected == true) {
                                  getTradeAndDuel().duelVictory();
                         }*/
 		if(session == null) 
@@ -930,7 +931,7 @@ if (inWild() == true && WildernessWarning == false) {
 			getPA().sendFrame126("Kill Count: "+barrowsKillCount, 4536);
 			getPA().walkableInterface(4535);
 		} else if(isInFunPk()){
-			int modY = absY > 6400 ?  absY - 6400 : absY;
+		//	int modY = absY > 6400 ?  absY - 6400 : absY;
 			wildLevel = 12;
 			getPA().walkableInterface(197);
 			getPA().showOption(3, 0, "Attack", 1);

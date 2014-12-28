@@ -101,6 +101,7 @@ public class ShopHandler {
 		ShopItemsDelay[ShopID][ArrayID] = 0;
 	}
 
+	@SuppressWarnings("resource")
 	public boolean loadShops(String FileName) {
 		String line = "";
 		String token = "";
@@ -108,7 +109,6 @@ public class ShopHandler {
 		String token2_2 = "";
 		String[] token3 = new String[(MaxShopItems * 2)];
 		boolean EndOfFile = false;
-		int ReadMode = 0;
 		BufferedReader characterfile = null;
 		try {
 			characterfile = new BufferedReader(new FileReader("./Data/CFG/"+FileName));

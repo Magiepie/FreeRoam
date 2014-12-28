@@ -1188,7 +1188,6 @@ public class NPCHandler {
 	
 	public int getNpcKillerId(int npcId) {
 		int oldDamage = 0;
-		int count = 0;
 		int killerId = 0;
 		for (int p = 1; p < Config.MAX_PLAYERS; p++)  {	
 			if (PlayerHandler.players[p] != null) {
@@ -1267,7 +1266,6 @@ public class NPCHandler {
 	
 	
 	public void dropItems(int i) {
-		int npc = 0;
 		//long start = System.currentTimeMillis();
 		Client c = (Client)PlayerHandler.players[npcs[i].killedBy];
 		if(c != null) {
@@ -1464,7 +1462,6 @@ public class NPCHandler {
 	* Slayer Experience
 	**/	
 	public void appendSlayerExperience(int i) {
-		int npc = 0;
 		Client c = (Client)PlayerHandler.players[npcs[i].killedBy];
 		if(c != null) {
 			if (c.slayerTask == npcs[i].npcType){
@@ -1601,8 +1598,6 @@ public class NPCHandler {
 							break;
 						}	
 					}
-					int x = (npcs[i].absX + npcs[i].moveX);
-					int y = (npcs[i].absY + npcs[i].moveY);
 					npcs[i].facePlayer(playerId);
 					handleClipping(i);
 					npcs[i].getNextNPCMovement(i);
@@ -2241,6 +2236,7 @@ if(c.prayerActive[18]) { // protect from melee
 	}
 	
 	
+	@SuppressWarnings("resource")
 	public boolean loadAutoSpawn(String FileName) {
 		String line = "";
 		String token = "";
@@ -2248,7 +2244,6 @@ if(c.prayerActive[18]) { // protect from melee
 		String token2_2 = "";
 		String[] token3 = new String[10];
 		boolean EndOfFile = false;
-		int ReadMode = 0;
 		BufferedReader characterfile = null;
 		try {
 			characterfile = new BufferedReader(new FileReader("./"+FileName));
@@ -2316,6 +2311,7 @@ if(c.prayerActive[18]) { // protect from melee
 		return "nothing";
 	}
 
+	@SuppressWarnings("resource")
 	public boolean loadNPCList(String FileName) {
 		String line = "";
 		String token = "";
@@ -2323,7 +2319,6 @@ if(c.prayerActive[18]) { // protect from melee
 		String token2_2 = "";
 		String[] token3 = new String[10];
 		boolean EndOfFile = false;
-		int ReadMode = 0;
 		BufferedReader characterfile = null;
 		try {
 			characterfile = new BufferedReader(new FileReader("./"+FileName));

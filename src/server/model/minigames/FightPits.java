@@ -109,10 +109,7 @@ public class FightPits {
 		}
 	}
 	
-	public void endPitsGame(String champion) {
-		boolean giveReward = false;
-		if (playersRemaining == 1)
-			giveReward = true;
+	public void endPitsGame(String champion) {		
 		for (int j = 0; j < playerInPits.length; j++) {
 			if (playerInPits[j] < 0)
 				continue;

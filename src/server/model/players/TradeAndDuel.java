@@ -410,7 +410,7 @@ public boolean fromTrade(int itemID, int fromSlot, int amount) {
 				} else {
 					SendAmount = "" + Misc.format(item.amount);
 				}
-				SendAmount = SendAmount;
+				//SendAmount = SendAmount;
 				
 					if (Count == 0) {
 						SendTrade = c.getItems().getItemName(item.id);		

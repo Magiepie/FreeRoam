@@ -62,8 +62,6 @@ public class PestControl {
 			for (int j = 0; j < PlayerHandler.players.length; j++) {
 				if (PlayerHandler.players[j] != null) {
 					if (PlayerHandler.players[j].inPcBoat()) {
-						Client c = (Client)PlayerHandler.players[j];
-						//c.sendMessage("There need to be at least 3 players to start a game of pest control.");
 					}			
 				}		
 			}

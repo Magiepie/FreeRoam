@@ -86,7 +86,6 @@ public class ObjectManager {
 		}
 	}
 	
-	private int[][] customObjects = {{}};
 	public void loadCustomSpawns(Client c) {
 
 			//left side

@@ -4,7 +4,6 @@ import server.Server;
 import server.model.items.GameItem;
 import server.model.players.Client;
 import server.model.players.PlayerHandler;
-import server.model.players.SkillMenu;
 import server.model.players.PacketType;
 import server.util.Misc;
 
@@ -915,7 +914,7 @@ break;
 				Client o = (Client) PlayerHandler.players[c.duelingWith];
 				if(o == null) {
 					c.getTradeAndDuel().declineDuel();
-					o.getTradeAndDuel().declineDuel();
+					//o.getTradeAndDuel().declineDuel();
 					return;
 				}
 					

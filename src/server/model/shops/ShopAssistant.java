@@ -689,13 +689,13 @@ public boolean addShopItem(int itemID, int amount) {
 				c.getOutStream().createFrameVarSizeWord(53);
 				c.getOutStream().writeWord(3900);
 				c.getOutStream().writeWord(TotalItems);
-				int TotalCount = 0;
+				//int TotalCount = 0;
 				for (int i = 0; i < 21; i++) {
 					if (c.getLevelForXP(c.playerXP[i]) < 99)
 						continue;
 					c.getOutStream().writeByte(1);
 					c.getOutStream().writeWordBigEndianA(skillCapes[i] + 2);
-					TotalCount++;
+					//TotalCount++;
 				}
 				c.getOutStream().endFrameVarSizeWord();
 				c.flushOutStream();	

@@ -10,6 +10,8 @@ import server.util.Misc;
 public class ClickItem implements PacketType {
 
 	public void processPacket(Client c, int packetType, int packetSize) {
+		@SuppressWarnings("unused")
+		int junk = c.getInStream().readSignedWordBigEndianA(); // needed
 		int itemSlot = c.getInStream().readUnsignedWordA();
 		int itemId = c.getInStream().readUnsignedWordBigEndian();
 		if (c.usingCarpet) {

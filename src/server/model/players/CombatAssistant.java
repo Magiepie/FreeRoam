@@ -1282,7 +1282,6 @@ if (!PlayerHandler.players[c.playerId].goodDistance(c.absX, c.absY, NPCHandler.n
 			}
 		}	
 		c.getPA().requestUpdates();
-		int oldindex = c.oldPlayerIndex;
 		if(c.bowSpecShot <= 0) {
 			c.oldPlayerIndex = 0;	
 			c.projectileStage = 0;
@@ -2240,7 +2239,6 @@ if (!PlayerHandler.players[c.playerId].goodDistance(c.absX, c.absY, NPCHandler.n
 	
 	public int getKillerId(int playerId) {
 		int oldDamage = 0;
-		int count = 0;
 		int killerId = 0;
 		for (int i = 1; i < Config.MAX_PLAYERS; i++) {	
 			if (PlayerHandler.players[i] != null) {

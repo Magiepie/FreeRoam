@@ -17,8 +17,6 @@ public class Mining {
 	private final int[] RANDOM_GEMS = {1623,1621,1619,1617,1631};
 	private int oreType;
 	private int exp;
-	private int levelReq;
-	private int pickType;
 	private final int EMOTE = 625;
 	
 	public Mining(Client c) {
@@ -31,8 +29,7 @@ public class Mining {
 			if (c.playerLevel[c.playerMining] >= levelReq) {
 				this.oreType = oreType;
 				this.exp = exp;
-				this.levelReq = levelReq;
-				this.pickType = goodPick();
+				goodPick();
 				c.sendMessage("You swing your pick at the rock.");
 				c.miningTimer = getMiningTimer(oreType);
 				c.startAnimation(EMOTE);
@@ -69,8 +66,6 @@ public class Mining {
 	public void resetMining() {
 		this.oreType = -1;
 		this.exp = -1;
-		this.levelReq = -1;
-		this.pickType = -1;
 	}
 	
 	public int goodPick() {

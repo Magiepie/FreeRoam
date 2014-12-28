@@ -13,6 +13,7 @@ import server.util.Misc;
 public class PrivateMessaging implements PacketType {
 
 	public final int ADD_FRIEND = 188, SEND_PM = 126, REMOVE_FRIEND = 215, CHANGE_PM_STATUS = 95, REMOVE_IGNORE = 59, ADD_IGNORE = 133;
+	@SuppressWarnings("unused")
 	public void processPacket(Client c, int packetType, int packetSize) {
 		switch(packetType) {
 		

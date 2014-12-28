@@ -5,11 +5,11 @@ import server.Server;
 import server.model.npcs.NPCHandler;
 import server.util.Misc;
 import server.Connection;
-import java.io.IOException;
-import org.apache.mina.common.IoSession;
 
+import java.io.IOException;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
+
 import server.event.EventManager;
 import server.event.Event;
 import server.event.EventContainer;
@@ -17,7 +17,6 @@ import server.event.EventContainer;
 public class PlayerAssistant{
 
 	private Client c;
-	private IoSession session;
 	public PlayerAssistant(Client Client) {
 		this.c = Client;
 	}
@@ -380,6 +379,7 @@ return -1;
 		}
 	}
 	
+	@SuppressWarnings("unused")
 	public void sendPM(long name, int rights, byte[] chatmessage, int messagesize) {
 		synchronized(c) {
 			if(c.getOutStream() != null && c != null) {
@@ -1514,7 +1514,6 @@ return -1;
 		int otherX = NPCHandler.npcs[c.followId2].getX();
 		int otherY = NPCHandler.npcs[c.followId2].getY();
 		boolean withinDistance = c.goodDistance(otherX, otherY, c.getX(), c.getY(), 2);
-		boolean goodDistance = c.goodDistance(otherX, otherY, c.getX(), c.getY(), 1);
 		boolean hallyDistance = c.goodDistance(otherX, otherY, c.getX(), c.getY(), 2);
 		boolean bowDistance = c.goodDistance(otherX, otherY, c.getX(), c.getY(), 8);
 		boolean rangeWeaponDistance = c.goodDistance(otherX, otherY, c.getX(), c.getY(), 4);

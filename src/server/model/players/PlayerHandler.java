@@ -60,8 +60,7 @@ public class PlayerHandler{
 	public final void getDoubleEXPWeekend() {
 		for (int j = 0; j < PlayerHandler.players.length; j++) {
 			if (PlayerHandler.players[j] != null) {
-				Client c = (Client)PlayerHandler.players[j];
-		Calendar calendar = new GregorianCalendar();
+				Calendar calendar = new GregorianCalendar();
 		int day = calendar.get(Calendar.DAY_OF_WEEK);
 		Config.doubleEXPWeekend = false;
 		if (day > 5) {
@@ -196,7 +195,6 @@ public class PlayerHandler{
 						removePlayer(players[i]);
 						players[i] = null;
 					} else {
-						Client o = (Client) PlayerHandler.players[i];
 						//if(o.g) {
 							if(!players[i].initialized) {
 								players[i].initialize();

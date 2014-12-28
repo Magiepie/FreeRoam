@@ -16,8 +16,6 @@ public class Woodcutting {
 	private final int[] AXE_REQS = {1,1,6,6,21,31,41,61};
 	private int logType;
 	private int exp;
-	private int levelReq;
-	private int axeType;
 	private final int EMOTE = 875;
 	
 	public Woodcutting(Client c) {
@@ -30,8 +28,7 @@ public class Woodcutting {
 			if (c.playerLevel[c.playerWoodcutting] >= levelReq) {
 				this.logType = logType;
 				this.exp = exp;
-				this.levelReq = levelReq;
-				this.axeType = goodAxe();
+				goodAxe();
 				c.wcTimer = getWcTimer();
 				c.startAnimation(EMOTE);
 			} else {
@@ -49,8 +46,6 @@ public class Woodcutting {
 	public void resetWoodcut() {
 		this.logType = -1;
 		this.exp = -1;
-		this.levelReq = -1;
-		this.axeType = -1;
 		c.wcTimer = -1;	
 	}
 	

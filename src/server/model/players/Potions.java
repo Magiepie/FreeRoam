@@ -204,8 +204,6 @@ public class Potions {
 		c.playerItems[slot] = replaceItem + 1;
 		c.getItems().resetItems(3214);
 		c.overloadcounter = 5;
-		//c.overloadcounter();
-		int[] toIncrease = {0,1,2,4};
 		c.playerLevel[0] += getBrewStat(0, .27);		
 		if (c.playerLevel[0] > (c.getLevelForXP(c.playerXP[0])*1.27 + 1)) {
 			c.playerLevel[0] = (int)(c.getLevelForXP(c.playerXP[0])*1.27);
@@ -287,7 +285,6 @@ public class Potions {
 		c.getItems().resetItems(3214);
 		int[] toDecrease = {0,2,4,6};
 		
-		int[] toIncrease = {1,3};
 		for (int tD : toDecrease) {
 			c.playerLevel[tD] -= getBrewStat(tD, .10);
 			if (c.playerLevel[tD] < 0)

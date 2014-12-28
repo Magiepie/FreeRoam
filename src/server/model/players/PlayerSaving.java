@@ -63,7 +63,6 @@ public class PlayerSaving implements Runnable {
 		int totalSave = 0;
 		for (int id : requests) {
 			if (PlayerHandler.players[id] != null) {
-				Client c = (Client)PlayerHandler.players[id];
 				PlayerSave.saveGame((Client)PlayerHandler.players[id]);
 				totalSave++;
 			}		

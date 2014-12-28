@@ -58,7 +58,7 @@ public class PlayerSave
 				case 1:
 					 if (token.equals("character-password")) {
 						if (playerPass.equalsIgnoreCase(token2) || (playerPass).equals(token2)) {
-							playerPass = (playerPass);
+							//playerPass = (playerPass);
 						} else {
 							return 3;
 						}
