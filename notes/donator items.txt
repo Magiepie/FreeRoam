@@ -1,0 +1,74 @@
+http://www.moparscape.org/smf/index.php/topic,465531.msg3405336.html#msg3405336
+
+making items for donators...
+~~//\\//~~
+
+
+ItemAssistant, find this method:
+
+
+public void getRequirements(String itemName, int itemId) {
+
+
+The first line should handle the levelReq variables.
+
+Simply add on to it, the following.
+
+
+c.donorReq
+
+
+It should look similar to the following.
+
+
+c.donorReq = c.attackLevelReq = c.prayerLevelReq = c.hitpointsLevelReq = c.defenceLevelReq = c.strengthLevelReq = c.rangeLevelReq = c.magicLevelReq = 0;
+
+
+Note, I have added more variables to mine, so yours probably will be different.
+
+Now, let's scroll down some, and set the requirements.
+You have an option of doing it by item ID, or by name.
+
+Here is by ID (Should already be in your source)
+
+
+                        case 11724:
+                        case 11726:
+                        case 11728:
+                                c.defenceLevelReq = 65;
+                                c.donorReq = 1;
+                        break;
+
+
+We simply add the c.donorReq to the item.
+
+You now need 65 defence, and donorReq to wear the item.
+
+Now, let's find
+
+
+public boolean wearItem(int wearID, int slot) {
+
+
+Scroll down some until you see this.
+
+
+if(Config.itemRequirements) {
+
+
+Under that, add this:
+
+
+                                                if(c.donorReq > 0) {
+                                                        if(YOUR_DONOR_VARIABLE) < c.donorReq) {
+                                                                c.sendMessage("You must be a donator to wear that item.");
+                                                                canWearItem = false;
+                                                        }
+                                                }
+
+
+Now, go to the Player class, and declare.
+
+
+public int donorReq;
+

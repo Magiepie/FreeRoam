@@ -1,0 +1,2 @@
+ObjectManager.java
+Search for a moving-side thing on mopar/google. New home, im at the coords.

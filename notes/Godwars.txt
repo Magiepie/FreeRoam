@@ -1,0 +1,5 @@
+NPCHandler.java
+
+Shows the npcs, (49 and 122) 49 is the hell hound and 122 is the hobgoblin.
+
+The NPCs are on certain height levels, they're in autospawn.cfg
