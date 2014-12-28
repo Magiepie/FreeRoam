@@ -44,7 +44,7 @@ public class C
         return true;
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings({ "rawtypes" })
 	public ArrayList I;
     public int Z;
 }

@@ -67,7 +67,7 @@ public class I
         return k;
     }
 
-    @SuppressWarnings({ "rawtypes", "unused" })
+    @SuppressWarnings({ "unused", "unchecked" })
 	private static void close()
     {
         RandomAccessFile randomaccessfile = null;
@@ -281,17 +281,17 @@ public class I
                 if(VirtualWorld.I[j5].containsKey(az[k5]))
                 {
                     C c1 = (C)VirtualWorld.I[j5].get(az[k5]);
-                    ArrayList arraylist1 = new ArrayList();
+                    ArrayList<Integer> arraylist1 = new ArrayList<Integer>();
                     int l5;
-                    for(Iterator iterator = c1.I.iterator(); iterator.hasNext(); arraylist1.add(Integer.valueOf(l5)))
+                    for(Iterator<?> iterator = c1.I.iterator(); iterator.hasNext(); arraylist1.add(Integer.valueOf(l5)))
                         l5 = ((Integer)iterator.next()).intValue();
 
                     if(arraylist1.contains(Integer.valueOf(k4)))
                         continue;
-                    ArrayList arraylist2 = new ArrayList();
+                    ArrayList<Integer> arraylist2 = new ArrayList<Integer>();
                     if(!arraylist1.contains(Integer.valueOf(-1)))
                     {
-                        Iterator iterator1 = arraylist1.iterator();
+                        Iterator<Integer> iterator1 = arraylist1.iterator();
                         do
                         {
                             if(!iterator1.hasNext())
@@ -311,7 +311,7 @@ public class I
                     i++;
                 } else
                 {
-                    ArrayList arraylist = new ArrayList();
+                    ArrayList<Integer> arraylist = new ArrayList<Integer>();
                     arraylist.add(Integer.valueOf(k4));
                     C c2 = new C(arraylist, l2);
                     VirtualWorld.I[j5].put(az[k5], c2);
@@ -437,8 +437,7 @@ public class I
     }
     
     //(int height, int currentX, int currentY, int futureX, int futureY, int a)
-    @SuppressWarnings("rawtypes")
-	public static final boolean I(int height, int currentX, int currentY, int futureX, int futureY, int j1)
+    public static final boolean I(int height, int currentX, int currentY, int futureX, int futureY, int j1)
     {
         if(currentY == futureX && currentY == futureY)
             return true;
@@ -462,13 +461,13 @@ public class I
             c2 = (C)VirtualWorld.I[k1].get(z1);
         if(c1 == null && c2 == null)
             return true;
-        ArrayList arraylist = null;
+        ArrayList<?> arraylist = null;
         if(c1 != null)
             arraylist = c1.I;
         else
         if(c2 != null)
             arraylist = c2.I;
-        for(Iterator iterator = arraylist.iterator(); iterator.hasNext();)
+        for(Iterator<?> iterator = arraylist.iterator(); iterator.hasNext();)
         {
             int i2 = ((Integer)iterator.next()).intValue();
             if(l1 == B.j[25])
