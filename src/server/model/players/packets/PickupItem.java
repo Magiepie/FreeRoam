@@ -10,7 +10,6 @@ import server.model.players.PacketType;
  **/
 public class PickupItem implements PacketType {
 
-	@Override
 	public void processPacket(Client c, int packetType, int packetSize) {
 	c.pItemY = c.getInStream().readSignedWordBigEndian();
 	c.pItemId = c.getInStream().readUnsignedWord();

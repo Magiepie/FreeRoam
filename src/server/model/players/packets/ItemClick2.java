@@ -14,7 +14,6 @@ import server.util.Misc;
 
 public class ItemClick2 implements PacketType {
 
-	@Override
 	public void processPacket(Client c, int packetType, int packetSize) {
 		int itemId = c.getInStream().readSignedWordA();
 		

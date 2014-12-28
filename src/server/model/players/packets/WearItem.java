@@ -9,7 +9,6 @@ import server.model.players.PacketType;
  **/
 public class WearItem implements PacketType {
 
-	@Override
 	public void processPacket(Client c, int packetType, int packetSize) {
 		c.wearId = c.getInStream().readUnsignedWord();
 		c.wearSlot = c.getInStream().readUnsignedWordA();

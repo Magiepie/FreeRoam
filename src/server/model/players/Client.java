@@ -5,6 +5,7 @@ import java.util.Queue;
 import java.util.concurrent.Future;
 
 import org.apache.mina.common.IoSession;
+
 import java.net.URL;
 import java.net.MalformedURLException;
 import java.io.InputStreamReader;
@@ -12,8 +13,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.File;
 import java.util.Scanner;
+
 import server.Config;
-import server.world.ClanChatHandler;
 import server.Server;
 import server.model.items.ItemAssistant;
 import server.model.shops.ShopAssistant;
@@ -22,6 +23,7 @@ import server.net.Packet;
 import server.net.StaticPacketBuilder;
 import server.util.Misc;
 import server.util.Stream;
+import server.model.npcs.NPCHandler;
 import server.model.players.skills.*;
 import server.event.EventManager;
 import server.event.Event;
@@ -64,7 +66,6 @@ public class Client extends Player {
 	private Thieving thieving = new Thieving(this);
 	private Firemaking firemaking = new Firemaking(this);
 		private Herblore herblore = new Herblore(this);
-	private int somejunk;
 	//public static int trade11 = 0;
 	public int lowMemoryVersion = 0;
 	public int timeOutCounter = 0;
@@ -147,7 +148,7 @@ public void applyFollowing()
 		if (follow2 > 0)
 		{
 			//Client p = Server.playerHandler.client[followId];
-			Client p = (Client) Server.playerHandler.players[follow2];     
+			Client p = (Client) PlayerHandler.players[follow2];     
 			if (p != null)
 			{
 				if (isDead)
@@ -169,20 +170,20 @@ public void applyFollowing()
 		else if (follow2 > 0)
 		{
 			//Server.npcHandler.npcs.NPC npc = Server.npcHandler.npcs[followId2];
-			if (Server.npcHandler.npcs[followId2] != null)
+			if (NPCHandler.npcs[followId2] != null)
 			{
-				if (Server.npcHandler.npcs[followId2].isDead)
+				if (NPCHandler.npcs[followId2].isDead)
 				{
 					follow(0, 3, 1);
 					return;
 				}
-				if (!goodDistance(Server.npcHandler.npcs[followId2].absX, Server.npcHandler.npcs[followId2].absY, absX, absY, 25))
+				if (!goodDistance(NPCHandler.npcs[followId2].absX, NPCHandler.npcs[followId2].absY, absX, absY, 25))
 				{
 					follow(0, 3, 1);
 					return;
 				}
 			}
-			else if (Server.npcHandler.npcs[followId2] == null)
+			else if (NPCHandler.npcs[followId2] == null)
 			{
 				follow(0, 3, 1);
 			}
@@ -317,7 +318,7 @@ public void gimeCP() {
 	};
 
 	public void destruct() {
-                       Client o = (Client) Server.playerHandler.players[duelingWith];
+                       Client o = (Client) PlayerHandler.players[duelingWith];
 /*                        if(inDuelArena() && o.disconnected == true) {
                                  getTradeAndDuel().duelVictory();
                         }*/
@@ -388,11 +389,11 @@ public void gimeCP() {
 			outStream.createFrame(249);
 			outStream.writeByteA(1);		// 1 for members, zero for free
 			outStream.writeWordBigEndianA(playerId);
-			for (int j = 0; j < Server.playerHandler.players.length; j++) {
+			for (int j = 0; j < PlayerHandler.players.length; j++) {
 				if (j == playerId)
 					continue;
-				if (Server.playerHandler.players[j] != null) {
-					if (Server.playerHandler.players[j].playerName.equalsIgnoreCase(playerName))
+				if (PlayerHandler.players[j] != null) {
+					if (PlayerHandler.players[j].playerName.equalsIgnoreCase(playerName))
 						disconnected = true;
 				}
 			}
@@ -832,21 +833,21 @@ if (inWild() == true && WildernessWarning == false) {
 			}
 		}
 		
-		if((clickNpcType > 0) && Server.npcHandler.npcs[npcClickIndex] != null) {			
-			if(goodDistance(getX(), getY(), Server.npcHandler.npcs[npcClickIndex].getX(), Server.npcHandler.npcs[npcClickIndex].getY(), 1)) {
+		if((clickNpcType > 0) && NPCHandler.npcs[npcClickIndex] != null) {			
+			if(goodDistance(getX(), getY(), NPCHandler.npcs[npcClickIndex].getX(), NPCHandler.npcs[npcClickIndex].getY(), 1)) {
 				if(clickNpcType == 1) {
-					turnPlayerTo(Server.npcHandler.npcs[npcClickIndex].getX(), Server.npcHandler.npcs[npcClickIndex].getY());
-					Server.npcHandler.npcs[npcClickIndex].facePlayer(playerId);
+					turnPlayerTo(NPCHandler.npcs[npcClickIndex].getX(), NPCHandler.npcs[npcClickIndex].getY());
+					NPCHandler.npcs[npcClickIndex].facePlayer(playerId);
 					getActions().firstClickNpc(npcType);
 				}
 				if(clickNpcType == 2) {
-					turnPlayerTo(Server.npcHandler.npcs[npcClickIndex].getX(), Server.npcHandler.npcs[npcClickIndex].getY());
-					Server.npcHandler.npcs[npcClickIndex].facePlayer(playerId);
+					turnPlayerTo(NPCHandler.npcs[npcClickIndex].getX(), NPCHandler.npcs[npcClickIndex].getY());
+					NPCHandler.npcs[npcClickIndex].facePlayer(playerId);
 					getActions().secondClickNpc(npcType);
 				}
 				if(clickNpcType == 3) {
-					turnPlayerTo(Server.npcHandler.npcs[npcClickIndex].getX(), Server.npcHandler.npcs[npcClickIndex].getY());
-					Server.npcHandler.npcs[npcClickIndex].facePlayer(playerId);
+					turnPlayerTo(NPCHandler.npcs[npcClickIndex].getX(), NPCHandler.npcs[npcClickIndex].getY());
+					NPCHandler.npcs[npcClickIndex].facePlayer(playerId);
 					getActions().thirdClickNpc(npcType);
 				}
 			}
@@ -993,10 +994,10 @@ if (inWild() == true && WildernessWarning == false) {
 		if(freezeTimer > -6) {
 			freezeTimer--;
 			if (frozenBy > 0) {
-				if (Server.playerHandler.players[frozenBy] == null) {
+				if (PlayerHandler.players[frozenBy] == null) {
 					freezeTimer = -1;
 					frozenBy = -1;
-				} else if (!goodDistance(absX, absY, Server.playerHandler.players[frozenBy].absX, Server.playerHandler.players[frozenBy].absY, 20)) {
+				} else if (!goodDistance(absX, absY, PlayerHandler.players[frozenBy].absX, PlayerHandler.players[frozenBy].absY, 20)) {
 					freezeTimer = -1;
 					frozenBy = -1;
 				}
@@ -1068,7 +1069,7 @@ if (inWild() == true && WildernessWarning == false) {
 		timeOutCounter++;
 		
 		if(inTrade && tradeResetNeeded){
-			Client o = (Client) Server.playerHandler.players[tradeWith];
+			Client o = (Client) PlayerHandler.players[tradeWith];
 			if(o != null){
 				if(o.tradeResetNeeded){
 					getTradeAndDuel().resetTrade();
@@ -1277,7 +1278,7 @@ if (inWild() == true && WildernessWarning == false) {
 			sendMessage("Your wave will start in 10 seconds.");
 			EventManager.getSingleton().addEvent(new Event() {
 				public void execute(EventContainer c) {
-					Server.fightCaves.spawnNextWave((Client)Server.playerHandler.players[playerId]);
+					Server.fightCaves.spawnNextWave((Client)PlayerHandler.players[playerId]);
 					c.stop();
 				}
 				}, 10000);

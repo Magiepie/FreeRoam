@@ -4,10 +4,7 @@ import server.Config;
 import server.Server;
 import server.model.objects.Object;
 import server.util.Misc;
-import server.model.players.skills.*;
 import server.util.ScriptManager;
-import server.clip.region.ObjectDef;
-import server.clip.region.Region;
 
 public class ActionHandler {
 	

@@ -2,7 +2,9 @@ package server.model.items;
 
 import server.Config;
 import server.Server;
+import server.model.npcs.NPCHandler;
 import server.model.players.Client;
+import server.model.players.PlayerHandler;
 import server.util.Misc;
 
 public class ItemAssistant {
@@ -207,7 +209,7 @@ public class ItemAssistant {
 	**/
 	
 	public void dropAllItems() {
-		Client o = (Client) Server.playerHandler.players[c.killerId];
+		Client o = (Client) PlayerHandler.players[c.killerId];
 		
 		for(int i = 0; i < c.playerItems.length; i++) {
 			if(o != null) {
@@ -1358,7 +1360,7 @@ public class ItemAssistant {
 						c.playerEquipmentN[targetSlot] = toEquipN;
 					} else if (targetSlot == 5) {
 						boolean wearing2h = is2handed(getItemName(c.playerEquipment[c.playerWeapon]).toLowerCase(), c.playerEquipment[c.playerWeapon]);
-						boolean wearingShield = c.playerEquipment[c.playerShield] > 0;
+						//boolean wearingShield = c.playerEquipment[c.playerShield] > 0;
 						if (wearing2h) {
 							toRemove = c.playerEquipment[c.playerWeapon];
 							toRemoveN = c.playerEquipmentN[c.playerWeapon];
@@ -2098,7 +2100,7 @@ public class ItemAssistant {
 	
 	public void deleteEquipment(int i, int j) {
 		synchronized(c) {
-			if(Server.playerHandler.players[c.playerId] == null) {
+			if(PlayerHandler.players[c.playerId] == null) {
 				return;
 			}
 			if(i < 0) {
@@ -2227,8 +2229,8 @@ public void deleteItem(int id, int amount) {
 	public void dropArrowNpc() {
 		if (c.playerEquipment[c.playerCape] == 10499)
 			return;
-		int enemyX = Server.npcHandler.npcs[c.oldNpcIndex].getX();
-		int enemyY = Server.npcHandler.npcs[c.oldNpcIndex].getY();
+		int enemyX = NPCHandler.npcs[c.oldNpcIndex].getX();
+		int enemyY = NPCHandler.npcs[c.oldNpcIndex].getY();
 		if(Misc.random(10) >= 4) {
 			if (Server.itemHandler.itemAmount(c.rangeItemUsed, enemyX, enemyY) == 0) {
 				Server.itemHandler.createGroundItem(c, c.rangeItemUsed, enemyX, enemyY, 1, c.getId());
@@ -2241,8 +2243,8 @@ public void deleteItem(int id, int amount) {
 	}	
 	
 	public void dropArrowPlayer() {
-		int enemyX = Server.playerHandler.players[c.oldPlayerIndex].getX();
-		int enemyY = Server.playerHandler.players[c.oldPlayerIndex].getY();
+		int enemyX = PlayerHandler.players[c.oldPlayerIndex].getX();
+		int enemyY = PlayerHandler.players[c.oldPlayerIndex].getY();
 		if (c.playerEquipment[c.playerCape] == 10499)
 			return;
 		if(Misc.random(10) >= 4) {
@@ -2470,7 +2472,7 @@ public void deleteItem(int id, int amount) {
 	}
 	
 	public void makeGodsword(int i) {
-		int godsword = i - 8;
+		//int godsword = i - 8;
 		if (playerHasItem(11690) && playerHasItem(i)) {
 			deleteItem(11690,1);
 			deleteItem(i,1);

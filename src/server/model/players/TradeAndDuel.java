@@ -833,6 +833,7 @@ if(!c.getItems().playerHasItem(itemID, amount))
 	}
 	
 	
+	@SuppressWarnings("unused")
 	public void startDuel() {
 		c.freezeTimer = 2;
 		c.getPA().resetFollow();

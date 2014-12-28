@@ -10,7 +10,6 @@ import server.model.players.PacketType;
  **/
 public class BankAll implements PacketType {
 
-	@Override
 	public void processPacket(Client c, int packetType, int packetSize) {
 	int removeSlot = c.getInStream().readUnsignedWordA();
 	int interfaceId = c.getInStream().readUnsignedWord();

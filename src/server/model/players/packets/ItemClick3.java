@@ -14,7 +14,6 @@ import server.util.Misc;
 
 public class ItemClick3 implements PacketType {
 
-	@Override
 	public void processPacket(Client c, int packetType, int packetSize) {
 		int itemId11 = c.getInStream().readSignedWordBigEndianA();
 		int itemId1 = c.getInStream().readSignedWordA();

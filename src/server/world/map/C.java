@@ -6,7 +6,8 @@ import java.util.Iterator;
 public class C
 {
 
-    public C(ArrayList arraylist, int i)
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+	public C(ArrayList arraylist, int i)
     {
         I = new ArrayList();
         I.clear();
@@ -43,7 +44,7 @@ public class C
         return true;
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "rawtypes" })
 	public ArrayList I;
     public int Z;
 }

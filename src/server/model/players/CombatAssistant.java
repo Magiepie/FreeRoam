@@ -19,7 +19,7 @@ public class CombatAssistant{
 	
 	public boolean goodSlayer(int i) {
 		for (int j = 0; j < slayerReqs.length; j++) {
-			if (slayerReqs[j][0] == Server.npcHandler.npcs[i].npcType) {
+			if (slayerReqs[j][0] == NPCHandler.npcs[i].npcType) {
 				if (slayerReqs[j][1] > c.playerLevel[c.playerSlayer]) {
 					c.sendMessage("You need a slayer level of " + slayerReqs[j][1] + " to harm this NPC.");
 					return false;
@@ -33,8 +33,8 @@ public class CombatAssistant{
 	* Attack Npcs
 	*/
 	public void attackNpc(int i) {		
-		if (Server.npcHandler.npcs[i] != null) {
-			if (Server.npcHandler.npcs[i].isDead || Server.npcHandler.npcs[i].MaxHP <= 0) {
+		if (NPCHandler.npcs[i] != null) {
+			if (NPCHandler.npcs[i].isDead || NPCHandler.npcs[i].MaxHP <= 0) {
 				c.usingMagic = false;
 				c.faceUpdate(0);
 				c.npcIndex = 0;
@@ -44,7 +44,7 @@ public class CombatAssistant{
 				c.npcIndex = 0;
 				return;
 			}
-			if (Server.npcHandler.npcs[i].underAttackBy > 0 && Server.npcHandler.npcs[i].underAttackBy != c.playerId && !Server.npcHandler.npcs[i].inMulti()) {
+			if (NPCHandler.npcs[i].underAttackBy > 0 && NPCHandler.npcs[i].underAttackBy != c.playerId && !NPCHandler.npcs[i].inMulti()) {
 				c.npcIndex = 0;
 				c.sendMessage("This monster is already in combat.");
 				return;
@@ -58,16 +58,16 @@ public class CombatAssistant{
 				resetPlayerAttack();
 				return;
 			}
-			if (Server.npcHandler.npcs[i].spawnedBy != c.playerId && Server.npcHandler.npcs[i].spawnedBy > 0) {
+			if (NPCHandler.npcs[i].spawnedBy != c.playerId && NPCHandler.npcs[i].spawnedBy > 0) {
 				resetPlayerAttack();
 				c.sendMessage("This monster was not spawned for you.");
 				return;
 			}
 			c.followId2 = i;
 			c.followId = 0;
-if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Server.npcHandler.npcs[i].absX, Server.npcHandler.npcs[i].absY, 15)) {
+if (!PlayerHandler.players[c.playerId].goodDistance(c.absX, c.absY, NPCHandler.npcs[i].absX, NPCHandler.npcs[i].absY, 15)) {
 			return;
-			} else if(c.attackTimer <= 0 && Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Server.npcHandler.npcs[i].absX, Server.npcHandler.npcs[i].absY, 15)) {
+			} else if(c.attackTimer <= 0 && PlayerHandler.players[c.playerId].goodDistance(c.absX, c.absY, NPCHandler.npcs[i].absX, NPCHandler.npcs[i].absY, 15)) {
 				boolean usingBow = false;
 				boolean usingArrows = false;
 				boolean usingOtherRangeWeapons = false;
@@ -107,7 +107,7 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 					resetPlayerAttack();
 					return;
 				}
-				if((!c.goodDistance(c.getX(), c.getY(), Server.npcHandler.npcs[i].getX(), Server.npcHandler.npcs[i].getY(), 2) && (usingHally() && !usingOtherRangeWeapons && !usingBow && !c.usingMagic)) ||(!c.goodDistance(c.getX(), c.getY(), Server.npcHandler.npcs[i].getX(), Server.npcHandler.npcs[i].getY(), 4) && (usingOtherRangeWeapons && !usingBow && !c.usingMagic)) || (!c.goodDistance(c.getX(), c.getY(), Server.npcHandler.npcs[i].getX(), Server.npcHandler.npcs[i].getY(), 1) && (!usingOtherRangeWeapons && !usingHally() && !usingBow && !c.usingMagic)) || ((!c.goodDistance(c.getX(), c.getY(), Server.npcHandler.npcs[i].getX(), Server.npcHandler.npcs[i].getY(), 8) && (usingBow || c.usingMagic)))) {
+				if((!c.goodDistance(c.getX(), c.getY(), NPCHandler.npcs[i].getX(), NPCHandler.npcs[i].getY(), 2) && (usingHally() && !usingOtherRangeWeapons && !usingBow && !c.usingMagic)) ||(!c.goodDistance(c.getX(), c.getY(), NPCHandler.npcs[i].getX(), NPCHandler.npcs[i].getY(), 4) && (usingOtherRangeWeapons && !usingBow && !c.usingMagic)) || (!c.goodDistance(c.getX(), c.getY(), NPCHandler.npcs[i].getX(), NPCHandler.npcs[i].getY(), 1) && (!usingOtherRangeWeapons && !usingHally() && !usingBow && !c.usingMagic)) || ((!c.goodDistance(c.getX(), c.getY(), NPCHandler.npcs[i].getX(), NPCHandler.npcs[i].getY(), 8) && (usingBow || c.usingMagic)))) {
 					c.attackTimer = 2;
 					return;
 				}
@@ -133,7 +133,7 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 					return;				
 				}
 				
-				if(usingBow || c.usingMagic || usingOtherRangeWeapons || (c.goodDistance(c.getX(), c.getY(), Server.npcHandler.npcs[i].getX(), Server.npcHandler.npcs[i].getY(), 2) && usingHally())) {
+				if(usingBow || c.usingMagic || usingOtherRangeWeapons || (c.goodDistance(c.getX(), c.getY(), NPCHandler.npcs[i].getX(), NPCHandler.npcs[i].getY(), 2) && usingHally())) {
 					c.stopMovement();
 				}
 
@@ -146,8 +146,8 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 				c.faceUpdate(i);
 				//c.specAccuracy = 1.0;
 				//c.specDamage = 1.0;
-				Server.npcHandler.npcs[i].underAttackBy = c.playerId;
-				Server.npcHandler.npcs[i].lastDamageTaken = System.currentTimeMillis();
+				NPCHandler.npcs[i].underAttackBy = c.playerId;
+				NPCHandler.npcs[i].lastDamageTaken = System.currentTimeMillis();
 				if(c.usingSpecial && !c.usingMagic) {
 					if(checkSpecAmount(c.playerEquipment[c.playerWeapon])){
 						c.lastWeaponUsed = c.playerEquipment[c.playerWeapon];
@@ -215,8 +215,8 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 				if(c.usingMagic) {	// magic hit delay
 					int pX = c.getX();
 					int pY = c.getY();
-					int nX = Server.npcHandler.npcs[i].getX();
-					int nY = Server.npcHandler.npcs[i].getY();
+					int nX = NPCHandler.npcs[i].getX();
+					int nY = NPCHandler.npcs[i].getY();
 					int offX = (pY - nY)* -1;
 					int offY = (pX - nX)* -1;
 					c.castingMagic = true;
@@ -272,17 +272,17 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 	
 
 	public void delayedHit(int i) { // npc hit delay
-		if (Server.npcHandler.npcs[i] != null) {
-			if (Server.npcHandler.npcs[i].isDead) {
+		if (NPCHandler.npcs[i] != null) {
+			if (NPCHandler.npcs[i].isDead) {
 				c.npcIndex = 0;
 				return;
 			}
-			Server.npcHandler.npcs[i].facePlayer(c.playerId);
+			NPCHandler.npcs[i].facePlayer(c.playerId);
 			
-			if (Server.npcHandler.npcs[i].underAttackBy > 0 && Server.npcHandler.getsPulled(i)) {
-				Server.npcHandler.npcs[i].killerId = c.playerId;			
-			} else if (Server.npcHandler.npcs[i].underAttackBy < 0 && !Server.npcHandler.getsPulled(i)) {
-				Server.npcHandler.npcs[i].killerId = c.playerId;
+			if (NPCHandler.npcs[i].underAttackBy > 0 && Server.npcHandler.getsPulled(i)) {
+				NPCHandler.npcs[i].killerId = c.playerId;			
+			} else if (NPCHandler.npcs[i].underAttackBy < 0 && !Server.npcHandler.getsPulled(i)) {
+				NPCHandler.npcs[i].killerId = c.playerId;
 			}
 			c.lastNpcAttacked = i;
 			if(c.projectileStage == 0 && !c.usingMagic && !c.castingMagic) { // melee hit damage
@@ -303,30 +303,30 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 				boolean ignoreDef = false;
 				if (Misc.random(5) == 1 && c.lastArrowUsed == 9243) {
 					ignoreDef = true;
-					Server.npcHandler.npcs[i].gfx0(758);
+					NPCHandler.npcs[i].gfx0(758);
 				}
 
 				
-				if(Misc.random(Server.npcHandler.npcs[i].defence) > Misc.random(10+calculateRangeAttack()) && !ignoreDef) {
+				if(Misc.random(NPCHandler.npcs[i].defence) > Misc.random(10+calculateRangeAttack()) && !ignoreDef) {
 					damage = 0;
-				} else if (Server.npcHandler.npcs[i].npcType == 2881 || Server.npcHandler.npcs[i].npcType == 2883 && !ignoreDef) {
+				} else if (NPCHandler.npcs[i].npcType == 2881 || NPCHandler.npcs[i].npcType == 2883 && !ignoreDef) {
 					damage = 0;
 				}
 				
 				if (Misc.random(4) == 1 && c.lastArrowUsed == 9242 && damage > 0) {
-					Server.npcHandler.npcs[i].gfx0(754);
-					damage = Server.npcHandler.npcs[i].HP/5;
+					NPCHandler.npcs[i].gfx0(754);
+					damage = NPCHandler.npcs[i].HP/5;
 					c.handleHitMask(c.playerLevel[3]/10);
 					c.dealDamage(c.playerLevel[3]/10);
 					c.gfx0(754);					
 				}
 				
 				if (c.lastWeaponUsed == 11235 || c.bowSpecShot == 1) {
-					if (Misc.random(Server.npcHandler.npcs[i].defence) > Misc.random(10+calculateRangeAttack()))
+					if (Misc.random(NPCHandler.npcs[i].defence) > Misc.random(10+calculateRangeAttack()))
 						damage2 = 0;
 				}
 				if (c.dbowSpec) {
-					Server.npcHandler.npcs[i].gfx100(1100);
+					NPCHandler.npcs[i].gfx100(1100);
 					if (damage < 8)
 						damage = 8;
 					if (damage2 < 8)
@@ -335,13 +335,13 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 				}
 				if (damage > 0 && Misc.random(5) == 1 && c.lastArrowUsed == 9244) {
 					damage *= 1.45;
-					Server.npcHandler.npcs[i].gfx0(756);
+					NPCHandler.npcs[i].gfx0(756);
 				}
 				
-				if (Server.npcHandler.npcs[i].HP - damage < 0) { 
-					damage = Server.npcHandler.npcs[i].HP;
+				if (NPCHandler.npcs[i].HP - damage < 0) { 
+					damage = NPCHandler.npcs[i].HP;
 				}
-				if (Server.npcHandler.npcs[i].HP - damage <= 0 && damage2 > 0) {
+				if (NPCHandler.npcs[i].HP - damage <= 0 && damage2 > 0) {
 					damage2 = 0;
 				}
 				if(c.fightMode == 3) {
@@ -358,7 +358,7 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 					c.getPA().refreshSkill(4);
 				}
 				if (damage > 0) {
-					if (Server.npcHandler.npcs[i].npcType >= 3777 && Server.npcHandler.npcs[i].npcType <= 3780) {
+					if (NPCHandler.npcs[i].npcType >= 3777 && NPCHandler.npcs[i].npcType <= 3780) {
 						c.pcDamage += damage;					
 					}				
 				}
@@ -373,12 +373,12 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 				if(dropArrows) {
 					c.getItems().dropArrowNpc();	
 				}
-				Server.npcHandler.npcs[i].underAttack = true;
-				Server.npcHandler.npcs[i].hitDiff = damage;
-				Server.npcHandler.npcs[i].HP -= damage;
+				NPCHandler.npcs[i].underAttack = true;
+				NPCHandler.npcs[i].hitDiff = damage;
+				NPCHandler.npcs[i].HP -= damage;
 				if (damage2 > -1) {
-					Server.npcHandler.npcs[i].hitDiff2 = damage2;
-					Server.npcHandler.npcs[i].HP -= damage2;
+					NPCHandler.npcs[i].hitDiff2 = damage2;
+					NPCHandler.npcs[i].HP -= damage2;
 					c.totalDamageDealt += damage2;	
 				}
 				if (c.killingNpcIndex != c.oldNpcIndex) {
@@ -386,10 +386,10 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 				}
 				c.killingNpcIndex = c.oldNpcIndex;
 				c.totalDamageDealt += damage;
-				Server.npcHandler.npcs[i].hitUpdateRequired = true;
+				NPCHandler.npcs[i].hitUpdateRequired = true;
 				if (damage2 > -1)
-					Server.npcHandler.npcs[i].hitUpdateRequired2 = true;
-				Server.npcHandler.npcs[i].updateRequired = true;
+					NPCHandler.npcs[i].hitUpdateRequired2 = true;
+				NPCHandler.npcs[i].updateRequired = true;
 
 			} else if (c.projectileStage > 0) { // magic hit damage
 				int damage = Misc.random((c.MAGIC_SPELLS[c.oldSpellId][6]) + c.totalMagicBonus());
@@ -401,16 +401,16 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 				boolean magicFailed = false;
 				//c.npcIndex = 0;
 				int bonusAttack = getBonusAttack(i);
-				if (Misc.random(Server.npcHandler.npcs[i].defence) > 10+ Misc.random(mageAtk()) + bonusAttack) {
+				if (Misc.random(NPCHandler.npcs[i].defence) > 10+ Misc.random(mageAtk()) + bonusAttack) {
 					damage = 0;
 					magicFailed = true;
-				} else if (Server.npcHandler.npcs[i].npcType == 2881 || Server.npcHandler.npcs[i].npcType == 2882) {
+				} else if (NPCHandler.npcs[i].npcType == 2881 || NPCHandler.npcs[i].npcType == 2882) {
 					damage = 0;
 					magicFailed = true;
 				}
 				
-				if (Server.npcHandler.npcs[i].HP - damage < 0) { 
-					damage = Server.npcHandler.npcs[i].HP;
+				if (NPCHandler.npcs[i].HP - damage < 0) { 
+					damage = NPCHandler.npcs[i].HP;
 				}
 				
 				c.getPA().addSkillXP((c.MAGIC_SPELLS[c.oldSpellId][7] + damage*Config.MAGIC_EXP_RATE), 6); 
@@ -418,23 +418,23 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 				c.getPA().refreshSkill(3);
 				c.getPA().refreshSkill(6);
 				if (damage > 0) {
-					if (Server.npcHandler.npcs[i].npcType >= 3777 && Server.npcHandler.npcs[i].npcType <= 3780) {
+					if (NPCHandler.npcs[i].npcType >= 3777 && NPCHandler.npcs[i].npcType <= 3780) {
 						c.pcDamage += damage;					
 					}				
 				}
 				if(getEndGfxHeight() == 100 && !magicFailed){ // end GFX
-					Server.npcHandler.npcs[i].gfx100(c.MAGIC_SPELLS[c.oldSpellId][5]);
+					NPCHandler.npcs[i].gfx100(c.MAGIC_SPELLS[c.oldSpellId][5]);
 				} else if (!magicFailed){
-					Server.npcHandler.npcs[i].gfx0(c.MAGIC_SPELLS[c.oldSpellId][5]);
+					NPCHandler.npcs[i].gfx0(c.MAGIC_SPELLS[c.oldSpellId][5]);
 				}
 				
 				if(magicFailed) {	
-					Server.npcHandler.npcs[i].gfx100(85);
+					NPCHandler.npcs[i].gfx100(85);
 				}			
 				if(!magicFailed) {
 					int freezeDelay = getFreezeTime();//freeze 
-					if(freezeDelay > 0 && Server.npcHandler.npcs[i].freezeTimer == 0) {
-						Server.npcHandler.npcs[i].freezeTimer = freezeDelay;
+					if(freezeDelay > 0 && NPCHandler.npcs[i].freezeTimer == 0) {
+						NPCHandler.npcs[i].freezeTimer = freezeDelay;
 					}
 					switch(c.MAGIC_SPELLS[c.oldSpellId][0]) { 
 						case 12901:
@@ -452,15 +452,15 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 					}
 
 				}
-				Server.npcHandler.npcs[i].underAttack = true;
+				NPCHandler.npcs[i].underAttack = true;
 				if(c.MAGIC_SPELLS[c.oldSpellId][6] != 0) {
-					Server.npcHandler.npcs[i].hitDiff = damage;
-					Server.npcHandler.npcs[i].HP -= damage;
-					Server.npcHandler.npcs[i].hitUpdateRequired = true;
+					NPCHandler.npcs[i].hitDiff = damage;
+					NPCHandler.npcs[i].HP -= damage;
+					NPCHandler.npcs[i].hitUpdateRequired = true;
 					c.totalDamageDealt += damage;
 				}
 				c.killingNpcIndex = c.oldNpcIndex;			
-				Server.npcHandler.npcs[i].updateRequired = true;
+				NPCHandler.npcs[i].updateRequired = true;
 				c.usingMagic = false;
 				c.castingMagic = false;
 				c.oldSpellId = 0;
@@ -489,14 +489,14 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 	public void applyNpcMeleeDamage(int i, int damageMask, int damage) {
 		c.previousDamage = damage;
 		boolean fullVeracsEffect = c.getPA().fullVeracs() && Misc.random(3) == 1;
-		if (Server.npcHandler.npcs[i].HP - damage < 0) { 
-			damage = Server.npcHandler.npcs[i].HP;
+		if (NPCHandler.npcs[i].HP - damage < 0) { 
+			damage = NPCHandler.npcs[i].HP;
 		}
 		
 		if (!fullVeracsEffect) {
-			if (Misc.random(Server.npcHandler.npcs[i].defence) > 10 + Misc.random(calculateMeleeAttack())) {
+			if (Misc.random(NPCHandler.npcs[i].defence) > 10 + Misc.random(calculateMeleeAttack())) {
 				damage = 0;
-			} else if (Server.npcHandler.npcs[i].npcType == 2882 || Server.npcHandler.npcs[i].npcType == 2883) {
+			} else if (NPCHandler.npcs[i].npcType == 2882 || NPCHandler.npcs[i].npcType == 2883) {
 				damage = 0;
 			}
 		}	
@@ -522,7 +522,7 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 			c.getPA().refreshSkill(3);
 		}
 		if (damage > 0) {
-			if (Server.npcHandler.npcs[i].npcType >= 3777 && Server.npcHandler.npcs[i].npcType <= 3780) {
+			if (NPCHandler.npcs[i].npcType >= 3777 && NPCHandler.npcs[i].npcType <= 3780) {
 				c.pcDamage += damage;					
 			}				
 		}
@@ -531,9 +531,9 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 			if (c.playerLevel[3] > c.getLevelForXP(c.playerXP[3]))
 				c.playerLevel[3] = c.getLevelForXP(c.playerXP[3]);
 			c.getPA().refreshSkill(3);
-			Server.npcHandler.npcs[i].gfx0(398);		
+			NPCHandler.npcs[i].gfx0(398);		
 		}
-		Server.npcHandler.npcs[i].underAttack = true;
+		NPCHandler.npcs[i].underAttack = true;
 		//Server.npcHandler.npcs[i].killerId = c.playerId;
 		c.killingNpcIndex = c.npcIndex;
 		c.lastNpcAttacked = i;
@@ -556,19 +556,19 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 		}
 		switch(damageMask) {
 			case 1:
-			Server.npcHandler.npcs[i].hitDiff = damage;
-			Server.npcHandler.npcs[i].HP -= damage;
+			NPCHandler.npcs[i].hitDiff = damage;
+			NPCHandler.npcs[i].HP -= damage;
 			c.totalDamageDealt += damage;
-			Server.npcHandler.npcs[i].hitUpdateRequired = true;	
-			Server.npcHandler.npcs[i].updateRequired = true;
+			NPCHandler.npcs[i].hitUpdateRequired = true;	
+			NPCHandler.npcs[i].updateRequired = true;
 			break;
 		
 			case 2:
-			Server.npcHandler.npcs[i].hitDiff2 = damage;
-			Server.npcHandler.npcs[i].HP -= damage;
+			NPCHandler.npcs[i].hitDiff2 = damage;
+			NPCHandler.npcs[i].HP -= damage;
 			c.totalDamageDealt += damage;
-			Server.npcHandler.npcs[i].hitUpdateRequired2 = true;	
-			Server.npcHandler.npcs[i].updateRequired = true;
+			NPCHandler.npcs[i].hitUpdateRequired2 = true;	
+			NPCHandler.npcs[i].updateRequired = true;
 			c.doubleHit = false;
 			break;
 			
@@ -577,12 +577,12 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 	
 	public void fireProjectileNpc() {
 		if(c.oldNpcIndex > 0) {
-			if(Server.npcHandler.npcs[c.oldNpcIndex] != null) {
+			if(NPCHandler.npcs[c.oldNpcIndex] != null) {
 				c.projectileStage = 2;
 				int pX = c.getX();
 				int pY = c.getY();
-				int nX = Server.npcHandler.npcs[c.oldNpcIndex].getX();
-				int nY = Server.npcHandler.npcs[c.oldNpcIndex].getY();
+				int nX = NPCHandler.npcs[c.oldNpcIndex].getX();
+				int nY = NPCHandler.npcs[c.oldNpcIndex].getY();
 				int offX = (pY - nY)* -1;
 				int offY = (pX - nX)* -1;
 				c.getPA().createPlayersProjectile(pX, pY, offX, offY, 50, getProjectileSpeed(), getRangeProjectileGFX(), 43, 31, c.oldNpcIndex + 1, getStartDelay());
@@ -600,14 +600,14 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 	
 		public void attackPlayer(int i) {
 
-		if (Server.playerHandler.players[i] != null) {
+		if (PlayerHandler.players[i] != null) {
 			
-			if (Server.playerHandler.players[i].isDead) {
+			if (PlayerHandler.players[i].isDead) {
 				resetPlayerAttack();
 				return;
 			}
 			
-			if(c.respawnTimer > 0 || Server.playerHandler.players[i].respawnTimer > 0) {
+			if(c.respawnTimer > 0 || PlayerHandler.players[i].respawnTimer > 0) {
 				resetPlayerAttack();
 				return;
 			}
@@ -637,19 +637,19 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 				resetPlayerAttack();
 				return;
 			}
-			boolean sameSpot = c.absX == Server.playerHandler.players[i].getX() && c.absY == Server.playerHandler.players[i].getY();
-			if(!c.goodDistance(Server.playerHandler.players[i].getX(), Server.playerHandler.players[i].getY(), c.getX(), c.getY(), 25) && !sameSpot) {
+			boolean sameSpot = c.absX == PlayerHandler.players[i].getX() && c.absY == PlayerHandler.players[i].getY();
+			if(!c.goodDistance(PlayerHandler.players[i].getX(), PlayerHandler.players[i].getY(), c.getX(), c.getY(), 25) && !sameSpot) {
 				resetPlayerAttack();
 				return;
 			}
 
-			if(Server.playerHandler.players[i].respawnTimer > 0) {
-				Server.playerHandler.players[i].playerIndex = 0;
+			if(PlayerHandler.players[i].respawnTimer > 0) {
+				PlayerHandler.players[i].playerIndex = 0;
 				resetPlayerAttack();
 				return;
 			}
 			
-			if (Server.playerHandler.players[i].heightLevel != c.heightLevel) {
+			if (PlayerHandler.players[i].heightLevel != c.heightLevel) {
 				resetPlayerAttack();
 				return;
 			}
@@ -667,7 +667,7 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 				boolean usingCross = c.playerEquipment[c.playerWeapon] == 9185;
 				c.projectileStage = 0;
 				
-				if (c.absX == Server.playerHandler.players[i].absX && c.absY == Server.playerHandler.players[i].absY) {
+				if (c.absX == PlayerHandler.players[i].absX && c.absY == PlayerHandler.players[i].absY) {
 					if (c.freezeTimer > 0) {
 						resetPlayerAttack();
 						return;
@@ -679,7 +679,7 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 					return;
 				}
 				
-				if ((c.inPirateHouse() && !Server.playerHandler.players[i].inPirateHouse()) || (Server.playerHandler.players[i].inPirateHouse() && !c.inPirateHouse())) {
+				if ((c.inPirateHouse() && !PlayerHandler.players[i].inPirateHouse()) || (PlayerHandler.players[i].inPirateHouse() && !c.inPirateHouse())) {
 					resetPlayerAttack();
 					return;
 				}
@@ -741,10 +741,10 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 					return;
 				}
 				
-				if((!c.goodDistance(c.getX(), c.getY(), Server.playerHandler.players[i].getX(), Server.playerHandler.players[i].getY(), 4) && (usingOtherRangeWeapons && !usingBow && !c.usingMagic)) 
-				|| (!c.goodDistance(c.getX(), c.getY(), Server.playerHandler.players[i].getX(), Server.playerHandler.players[i].getY(), 2) && (!usingOtherRangeWeapons && usingHally() && !usingBow && !c.usingMagic))
-				|| (!c.goodDistance(c.getX(), c.getY(), Server.playerHandler.players[i].getX(), Server.playerHandler.players[i].getY(), getRequiredDistance()) && (!usingOtherRangeWeapons && !usingHally() && !usingBow && !c.usingMagic)) 
-				|| (!c.goodDistance(c.getX(), c.getY(), Server.playerHandler.players[i].getX(), Server.playerHandler.players[i].getY(), 10) && (usingBow || c.usingMagic))) {
+				if((!c.goodDistance(c.getX(), c.getY(), PlayerHandler.players[i].getX(), PlayerHandler.players[i].getY(), 4) && (usingOtherRangeWeapons && !usingBow && !c.usingMagic)) 
+				|| (!c.goodDistance(c.getX(), c.getY(), PlayerHandler.players[i].getX(), PlayerHandler.players[i].getY(), 2) && (!usingOtherRangeWeapons && usingHally() && !usingBow && !c.usingMagic))
+				|| (!c.goodDistance(c.getX(), c.getY(), PlayerHandler.players[i].getX(), PlayerHandler.players[i].getY(), getRequiredDistance()) && (!usingOtherRangeWeapons && !usingHally() && !usingBow && !c.usingMagic)) 
+				|| (!c.goodDistance(c.getX(), c.getY(), PlayerHandler.players[i].getX(), PlayerHandler.players[i].getY(), 10) && (usingBow || c.usingMagic))) {
 					//c.sendMessage("Setting attack timer to 1");
 					c.attackTimer = 1;
 					if (!usingBow && !c.usingMagic && !usingOtherRangeWeapons && c.freezeTimer > 0)
@@ -785,7 +785,7 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 				c.faceUpdate(i+32768);
 				
 				if(c.duelStatus != 5) {
-					if(!c.attackedPlayers.contains(c.playerIndex) && !Server.playerHandler.players[c.playerIndex].attackedPlayers.contains(c.playerId)) {
+					if(!c.attackedPlayers.contains(c.playerIndex) && !PlayerHandler.players[c.playerIndex].attackedPlayers.contains(c.playerId)) {
 						c.attackedPlayers.add(c.playerIndex);
 						c.isSkulled = true;
 						c.skullTimer = Config.SKULL_TIMER;
@@ -826,14 +826,14 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 					c.mageFollow = true;
 					c.followId = c.playerIndex;
 				}
-				Server.playerHandler.players[i].underAttackBy = c.playerId;
-				Server.playerHandler.players[i].logoutDelay = System.currentTimeMillis();
-				Server.playerHandler.players[i].singleCombatDelay = System.currentTimeMillis();
-				Server.playerHandler.players[i].killerId = c.playerId;
+				PlayerHandler.players[i].underAttackBy = c.playerId;
+				PlayerHandler.players[i].logoutDelay = System.currentTimeMillis();
+				PlayerHandler.players[i].singleCombatDelay = System.currentTimeMillis();
+				PlayerHandler.players[i].killerId = c.playerId;
 				c.lastArrowUsed = 0;
 				c.rangeItemUsed = 0;
 				if(!usingBow && !c.usingMagic && !usingOtherRangeWeapons) { // melee hit delay
-					c.followId = Server.playerHandler.players[c.playerIndex].playerId;
+					c.followId = PlayerHandler.players[c.playerIndex].playerId;
 					c.getPA().followPlayer();
 					c.hitDelay = getHitDelay(c.getItems().getItemName(c.playerEquipment[c.playerWeapon]).toLowerCase());
 					c.delayedDamage = Misc.random(calculateMeleeMaxHit());
@@ -854,7 +854,7 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 					if (usingCross)
 						c.usingBow = true;
 					c.usingBow = true;
-					c.followId = Server.playerHandler.players[c.playerIndex].playerId;
+					c.followId = PlayerHandler.players[c.playerIndex].playerId;
 					c.getPA().followPlayer();
 					c.lastWeaponUsed = c.playerEquipment[c.playerWeapon];
 					c.lastArrowUsed = c.playerEquipment[c.playerArrows];
@@ -869,7 +869,7 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 					c.rangeItemUsed = c.playerEquipment[c.playerWeapon];
 					c.getItems().deleteEquipment();
 					c.usingRangeWeapon = true;
-					c.followId = Server.playerHandler.players[c.playerIndex].playerId;
+					c.followId = PlayerHandler.players[c.playerIndex].playerId;
 					c.getPA().followPlayer();
 					c.gfx100(getRangeStartGFX());
 					if (c.fightMode == 2)
@@ -883,8 +883,8 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 				if(c.usingMagic) {	// magic hit delay
 					int pX = c.getX();
 					int pY = c.getY();
-					int nX = Server.playerHandler.players[i].getX();
-					int nY = Server.playerHandler.players[i].getY();
+					int nX = PlayerHandler.players[i].getX();
+					int nY = PlayerHandler.players[i].getY();
 					int offX = (pY - nY)* -1;
 					int offY = (pX - nX)* -1;
 					c.castingMagic = true;
@@ -907,7 +907,7 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 					c.oldPlayerIndex = i;
 					c.oldSpellId = c.spellId;
                     c.spellId = 0;
-					Client o = (Client)Server.playerHandler.players[i];
+					Client o = (Client)PlayerHandler.players[i];
 					if(c.MAGIC_SPELLS[c.oldSpellId][0] == 12891 && o.isMoving) {
 						//c.sendMessage("Barrage projectile..");
 						c.getPA().createPlayersProjectile(pX, pY, offX, offY, 50, 85, 368, 25, 25, -i - 1, getStartDelay());
@@ -918,8 +918,8 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 						c.magicFailed = false;
 					}
 					int freezeDelay = getFreezeTime();//freeze time
-					if(freezeDelay > 0 && Server.playerHandler.players[i].freezeTimer <= -3 && !c.magicFailed) { 
-						Server.playerHandler.players[i].freezeTimer = freezeDelay;
+					if(freezeDelay > 0 && PlayerHandler.players[i].freezeTimer <= -3 && !c.magicFailed) { 
+						PlayerHandler.players[i].freezeTimer = freezeDelay;
 						o.resetWalkingQueue();
 						o.sendMessage("You have been frozen.");
 						o.frozenBy = c.playerId;
@@ -964,7 +964,7 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 	public void appendVengeance(int otherPlayer, int damage) {
 		if (damage <= 0)
 			return;
-		Player o = Server.playerHandler.players[otherPlayer];
+		Player o = PlayerHandler.players[otherPlayer];
 		o.forcedText = "Taste vengeance!";
 		o.forcedChatUpdateRequired = true;
 		o.updateRequired = true;
@@ -983,17 +983,17 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 	}
 	
 	public void playerDelayedHit(int i) {
-		if (Server.playerHandler.players[i] != null) {
-			if (Server.playerHandler.players[i].isDead || c.isDead || Server.playerHandler.players[i].playerLevel[3] <= 0 || c.playerLevel[3] <= 0) {
+		if (PlayerHandler.players[i] != null) {
+			if (PlayerHandler.players[i].isDead || c.isDead || PlayerHandler.players[i].playerLevel[3] <= 0 || c.playerLevel[3] <= 0) {
 				c.playerIndex = 0;
 				return;
 			}
-			if (Server.playerHandler.players[i].respawnTimer > 0) {
+			if (PlayerHandler.players[i].respawnTimer > 0) {
 				c.faceUpdate(0);
 				c.playerIndex = 0;
 				return;
 			}
-			Client o = (Client) Server.playerHandler.players[i];
+			Client o = (Client) PlayerHandler.players[i];
 			o.getPA().removeAllWindows();
 			if (o.playerIndex <= 0 && o.npcIndex <= 0) {
 				if (o.autoRet == 1) {
@@ -1030,8 +1030,8 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 					damage = 0;
 				}
 				if (Misc.random(4) == 1 && c.lastArrowUsed == 9242 && damage > 0) {
-					Server.playerHandler.players[i].gfx0(754);
-					damage = Server.npcHandler.npcs[i].HP/5;
+					PlayerHandler.players[i].gfx0(754);
+					damage = NPCHandler.npcs[i].HP/5;
 					c.handleHitMask(c.playerLevel[3]/10);
 					c.dealDamage(c.playerLevel[3]/10);
 					c.gfx0(754);
@@ -1059,11 +1059,11 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 					if (c.lastWeaponUsed == 11235 || c.bowSpecShot == 1)
 						damage2 = (int)damage2 * 60 / 100;
 				}
-				if (Server.playerHandler.players[i].playerLevel[3] - damage < 0) { 
-					damage = Server.playerHandler.players[i].playerLevel[3];
+				if (PlayerHandler.players[i].playerLevel[3] - damage < 0) { 
+					damage = PlayerHandler.players[i].playerLevel[3];
 				}
-				if (Server.playerHandler.players[i].playerLevel[3] - damage - damage2 < 0) { 
-					damage2 = Server.playerHandler.players[i].playerLevel[3] - damage;
+				if (PlayerHandler.players[i].playerLevel[3] - damage - damage2 < 0) { 
+					damage2 = PlayerHandler.players[i].playerLevel[3] - damage;
 				}
 				if (damage < 0)
 					damage = 0;
@@ -1101,27 +1101,27 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 				if(dropArrows) {
 					c.getItems().dropArrowPlayer();	
 				}
-				Server.playerHandler.players[i].underAttackBy = c.playerId;
-				Server.playerHandler.players[i].logoutDelay = System.currentTimeMillis();
-				Server.playerHandler.players[i].singleCombatDelay = System.currentTimeMillis();
-				Server.playerHandler.players[i].killerId = c.playerId;
+				PlayerHandler.players[i].underAttackBy = c.playerId;
+				PlayerHandler.players[i].logoutDelay = System.currentTimeMillis();
+				PlayerHandler.players[i].singleCombatDelay = System.currentTimeMillis();
+				PlayerHandler.players[i].killerId = c.playerId;
 				//Server.playerHandler.players[i].setHitDiff(damage);
 				//Server.playerHandler.players[i].playerLevel[3] -= damage;
-				Server.playerHandler.players[i].dealDamage(damage);
-				Server.playerHandler.players[i].damageTaken[c.playerId] += damage;
-				c.killedBy = Server.playerHandler.players[i].playerId;
-				Server.playerHandler.players[i].handleHitMask(damage);
+				PlayerHandler.players[i].dealDamage(damage);
+				PlayerHandler.players[i].damageTaken[c.playerId] += damage;
+				c.killedBy = PlayerHandler.players[i].playerId;
+				PlayerHandler.players[i].handleHitMask(damage);
 				if (damage2 != -1) {
 					//Server.playerHandler.players[i].playerLevel[3] -= damage2;
-					Server.playerHandler.players[i].dealDamage(damage2);
-					Server.playerHandler.players[i].damageTaken[c.playerId] += damage2;
-					Server.playerHandler.players[i].handleHitMask(damage2);
+					PlayerHandler.players[i].dealDamage(damage2);
+					PlayerHandler.players[i].damageTaken[c.playerId] += damage2;
+					PlayerHandler.players[i].handleHitMask(damage2);
 				
 				}
 				o.getPA().refreshSkill(3);
 					
 				//Server.playerHandler.players[i].setHitUpdateRequired(true);	
-				Server.playerHandler.players[i].updateRequired = true;
+				PlayerHandler.players[i].updateRequired = true;
 				applySmite(i, damage);
 				if (damage2 != -1)
 					applySmite(i, damage2);
@@ -1140,8 +1140,8 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 				if(o.prayerActive[16] && System.currentTimeMillis() - o.protMageDelay > 1500) { // if prayer active reduce damage by half 
 					damage = (int)damage * 60 / 100;
 				}
-				if (Server.playerHandler.players[i].playerLevel[3] - damage < 0) {
-					damage = Server.playerHandler.players[i].playerLevel[3];
+				if (PlayerHandler.players[i].playerLevel[3] - damage < 0) {
+					damage = PlayerHandler.players[i].playerLevel[3];
 				}
 				if (o.vengOn)
 					appendVengeance(i, damage);
@@ -1153,22 +1153,22 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 				c.getPA().refreshSkill(6);
 				
 				if(getEndGfxHeight() == 100 && !c.magicFailed){ // end GFX
-					Server.playerHandler.players[i].gfx100(c.MAGIC_SPELLS[c.oldSpellId][5]);
+					PlayerHandler.players[i].gfx100(c.MAGIC_SPELLS[c.oldSpellId][5]);
 				} else if (!c.magicFailed){
-					Server.playerHandler.players[i].gfx0(c.MAGIC_SPELLS[c.oldSpellId][5]);
+					PlayerHandler.players[i].gfx0(c.MAGIC_SPELLS[c.oldSpellId][5]);
 				} else if(c.magicFailed) {	
-					Server.playerHandler.players[i].gfx100(85);
+					PlayerHandler.players[i].gfx100(85);
 				}
 				
 				if(!c.magicFailed) {
-					if(System.currentTimeMillis() - Server.playerHandler.players[i].reduceStat > 35000) {
-						Server.playerHandler.players[i].reduceStat = System.currentTimeMillis();
+					if(System.currentTimeMillis() - PlayerHandler.players[i].reduceStat > 35000) {
+						PlayerHandler.players[i].reduceStat = System.currentTimeMillis();
 						switch(c.MAGIC_SPELLS[c.oldSpellId][0]) { 
 							case 12987:
 							case 13011:
 							case 12999:
 							case 13023:
-							Server.playerHandler.players[i].playerLevel[0] -= ((o.getPA().getLevelForXP(Server.playerHandler.players[i].playerXP[0]) * 10) / 100);
+							PlayerHandler.players[i].playerLevel[0] -= ((o.getPA().getLevelForXP(PlayerHandler.players[i].playerXP[0]) * 10) / 100);
 							break;
 						}
 					}
@@ -1199,79 +1199,79 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 						break;
 						
 						case 1153:						
-						Server.playerHandler.players[i].playerLevel[0] -= ((o.getPA().getLevelForXP(Server.playerHandler.players[i].playerXP[0]) * 5) / 100);
+						PlayerHandler.players[i].playerLevel[0] -= ((o.getPA().getLevelForXP(PlayerHandler.players[i].playerXP[0]) * 5) / 100);
 						o.sendMessage("Your attack level has been reduced!");
-						Server.playerHandler.players[i].reduceSpellDelay[c.reduceSpellId] = System.currentTimeMillis();
+						PlayerHandler.players[i].reduceSpellDelay[c.reduceSpellId] = System.currentTimeMillis();
 						o.getPA().refreshSkill(0);
 						break;
 						
 						case 1157:
-						Server.playerHandler.players[i].playerLevel[2] -= ((o.getPA().getLevelForXP(Server.playerHandler.players[i].playerXP[2]) * 5) / 100);
+						PlayerHandler.players[i].playerLevel[2] -= ((o.getPA().getLevelForXP(PlayerHandler.players[i].playerXP[2]) * 5) / 100);
 						o.sendMessage("Your strength level has been reduced!");
-						Server.playerHandler.players[i].reduceSpellDelay[c.reduceSpellId] = System.currentTimeMillis();						
+						PlayerHandler.players[i].reduceSpellDelay[c.reduceSpellId] = System.currentTimeMillis();						
 						o.getPA().refreshSkill(2);
 						break;
 						
 						case 1161:
-						Server.playerHandler.players[i].playerLevel[1] -= ((o.getPA().getLevelForXP(Server.playerHandler.players[i].playerXP[1]) * 5) / 100);
+						PlayerHandler.players[i].playerLevel[1] -= ((o.getPA().getLevelForXP(PlayerHandler.players[i].playerXP[1]) * 5) / 100);
 						o.sendMessage("Your defence level has been reduced!");
-						Server.playerHandler.players[i].reduceSpellDelay[c.reduceSpellId] = System.currentTimeMillis();					
+						PlayerHandler.players[i].reduceSpellDelay[c.reduceSpellId] = System.currentTimeMillis();					
 						o.getPA().refreshSkill(1);
 						break;
 						
 						case 1542:
-						Server.playerHandler.players[i].playerLevel[1] -= ((o.getPA().getLevelForXP(Server.playerHandler.players[i].playerXP[1]) * 10) / 100);
+						PlayerHandler.players[i].playerLevel[1] -= ((o.getPA().getLevelForXP(PlayerHandler.players[i].playerXP[1]) * 10) / 100);
 						o.sendMessage("Your defence level has been reduced!");
-						Server.playerHandler.players[i].reduceSpellDelay[c.reduceSpellId] =  System.currentTimeMillis();
+						PlayerHandler.players[i].reduceSpellDelay[c.reduceSpellId] =  System.currentTimeMillis();
 						o.getPA().refreshSkill(1);
 						break;
 						
 						case 1543:
-						Server.playerHandler.players[i].playerLevel[2] -= ((o.getPA().getLevelForXP(Server.playerHandler.players[i].playerXP[2]) * 10) / 100);
+						PlayerHandler.players[i].playerLevel[2] -= ((o.getPA().getLevelForXP(PlayerHandler.players[i].playerXP[2]) * 10) / 100);
 						o.sendMessage("Your strength level has been reduced!");
-						Server.playerHandler.players[i].reduceSpellDelay[c.reduceSpellId] = System.currentTimeMillis();
+						PlayerHandler.players[i].reduceSpellDelay[c.reduceSpellId] = System.currentTimeMillis();
 						o.getPA().refreshSkill(2);
 						break;
 						
 						case 1562:					
-						Server.playerHandler.players[i].playerLevel[0] -= ((o.getPA().getLevelForXP(Server.playerHandler.players[i].playerXP[0]) * 10) / 100);
+						PlayerHandler.players[i].playerLevel[0] -= ((o.getPA().getLevelForXP(PlayerHandler.players[i].playerXP[0]) * 10) / 100);
 						o.sendMessage("Your attack level has been reduced!");
-						Server.playerHandler.players[i].reduceSpellDelay[c.reduceSpellId] = System.currentTimeMillis();					
+						PlayerHandler.players[i].reduceSpellDelay[c.reduceSpellId] = System.currentTimeMillis();					
 						o.getPA().refreshSkill(0);
 						break;
 					}					
 				}
 				
-				Server.playerHandler.players[i].logoutDelay = System.currentTimeMillis();
-				Server.playerHandler.players[i].underAttackBy = c.playerId;
-				Server.playerHandler.players[i].killerId = c.playerId;
-				Server.playerHandler.players[i].singleCombatDelay = System.currentTimeMillis();
+				PlayerHandler.players[i].logoutDelay = System.currentTimeMillis();
+				PlayerHandler.players[i].underAttackBy = c.playerId;
+				PlayerHandler.players[i].killerId = c.playerId;
+				PlayerHandler.players[i].singleCombatDelay = System.currentTimeMillis();
 				if(c.MAGIC_SPELLS[c.oldSpellId][6] != 0) {
 					//Server.playerHandler.players[i].playerLevel[3] -= damage;
-					Server.playerHandler.players[i].dealDamage(damage);
-					Server.playerHandler.players[i].damageTaken[c.playerId] += damage;
+					PlayerHandler.players[i].dealDamage(damage);
+					PlayerHandler.players[i].damageTaken[c.playerId] += damage;
 					c.totalPlayerDamageDealt += damage;
 					if (!c.magicFailed) {
 						//Server.playerHandler.players[i].setHitDiff(damage);
 						//Server.playerHandler.players[i].setHitUpdateRequired(true);
-						Server.playerHandler.players[i].handleHitMask(damage);
+						PlayerHandler.players[i].handleHitMask(damage);
 					}
 				}
 				applySmite(i, damage);
-				c.killedBy = Server.playerHandler.players[i].playerId;	
+				c.killedBy = PlayerHandler.players[i].playerId;	
 				o.getPA().refreshSkill(3);
-				Server.playerHandler.players[i].updateRequired = true;
+				PlayerHandler.players[i].updateRequired = true;
 				c.usingMagic = false;
 				c.castingMagic = false;
 				if (o.inMulti() && multis()) {
 					c.barrageCount = 0;
-					for (int j = 0; j < Server.playerHandler.players.length; j++) {
-						if (Server.playerHandler.players[j] != null) {
+					for (int j = 0; j < PlayerHandler.players.length; j++) {
+						if (PlayerHandler.players[j] != null) {
 							if (j == o.playerId)
 								continue;
 							if (c.barrageCount >= 9)
 								break;
-							if (o.goodDistance(o.getX(), o.getY(), Server.playerHandler.players[j].getX(), Server.playerHandler.players[j].getY(), 1))
+							if (o.goodDistance(o.getX(), o.getY(), PlayerHandler.players[j].getX(), PlayerHandler.players[j].getY(), 1))
 								appendMultiBarrage(j, c.magicFailed);
 						}	
 					}
@@ -1311,8 +1311,8 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 	
 	}
 	public void appendMultiBarrage(int playerId, boolean splashed) {
-		if (Server.playerHandler.players[playerId] != null) {
-			Client c2 = (Client)Server.playerHandler.players[playerId];
+		if (PlayerHandler.players[playerId] != null) {
+			Client c2 = (Client)PlayerHandler.players[playerId];
 			if (c2.isDead || c2.respawnTimer > 0)
 				return;
 			if (checkMultiBarrageReqs(playerId)) {
@@ -1334,10 +1334,10 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 					c.getPA().addSkillXP((c.MAGIC_SPELLS[c.oldSpellId][7] + damage*Config.MAGIC_EXP_RATE/3), 3);
 					//Server.playerHandler.players[playerId].setHitDiff(damage);
 					//Server.playerHandler.players[playerId].setHitUpdateRequired(true);
-					Server.playerHandler.players[playerId].handleHitMask(damage);
+					PlayerHandler.players[playerId].handleHitMask(damage);
 					//Server.playerHandler.players[playerId].playerLevel[3] -= damage;
-					Server.playerHandler.players[playerId].dealDamage(damage);
-					Server.playerHandler.players[playerId].damageTaken[c.playerId] += damage;
+					PlayerHandler.players[playerId].dealDamage(damage);
+					PlayerHandler.players[playerId].damageTaken[c.playerId] += damage;
 					c2.getPA().refreshSkill(3);
 					c.totalPlayerDamageDealt += damage;
 					multiSpellEffect(playerId, damage);
@@ -1352,9 +1352,9 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 		switch(c.MAGIC_SPELLS[c.oldSpellId][0]) {
 			case 13011:
 			case 13023:
-			if(System.currentTimeMillis() - Server.playerHandler.players[playerId].reduceStat > 35000) {
-				Server.playerHandler.players[playerId].reduceStat = System.currentTimeMillis();
-				Server.playerHandler.players[playerId].playerLevel[0] -= ((Server.playerHandler.players[playerId].getLevelForXP(Server.playerHandler.players[playerId].playerXP[0]) * 10) / 100);
+			if(System.currentTimeMillis() - PlayerHandler.players[playerId].reduceStat > 35000) {
+				PlayerHandler.players[playerId].reduceStat = System.currentTimeMillis();
+				PlayerHandler.players[playerId].playerLevel[0] -= ((PlayerHandler.players[playerId].getLevelForXP(PlayerHandler.players[playerId].playerXP[0]) * 10) / 100);
 			}	
 			break;
 			case 12919: // blood spells
@@ -1369,9 +1369,9 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 			break;
 			case 12891:
 			case 12881:
-				if (Server.playerHandler.players[playerId].freezeTimer < -4) {
-					Server.playerHandler.players[playerId].freezeTimer = getFreezeTime();
-					Server.playerHandler.players[playerId].stopMovement();
+				if (PlayerHandler.players[playerId].freezeTimer < -4) {
+					PlayerHandler.players[playerId].freezeTimer = getFreezeTime();
+					PlayerHandler.players[playerId].stopMovement();
 				}
 			break;
 		}	
@@ -1379,7 +1379,7 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 	
 	public void applyPlayerMeleeDamage(int i, int damageMask, int damage){
 		c.previousDamage = damage;
-		Client o = (Client) Server.playerHandler.players[i];
+		Client o = (Client) PlayerHandler.players[i];
 		if(o == null) {
 			return;
 		}
@@ -1429,8 +1429,8 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 			damage1 = 5 + Misc.random(11);
 			c.ssSpec = false;
 		}
-		if (Server.playerHandler.players[i].playerLevel[3] - damage1 < 0) { 
-			damage1 = Server.playerHandler.players[i].playerLevel[3];
+		if (PlayerHandler.players[i].playerLevel[3] - damage1 < 0) { 
+			damage1 = PlayerHandler.players[i].playerLevel[3];
 		}
 		if (o.vengOn && damage1 > 0)
 			appendVengeance(i, damage1);
@@ -1504,13 +1504,13 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 			c.getPA().refreshSkill(c.fightMode);
 			c.getPA().refreshSkill(3);
 		}
-		Server.playerHandler.players[i].logoutDelay = System.currentTimeMillis();
-		Server.playerHandler.players[i].underAttackBy = c.playerId;
-		Server.playerHandler.players[i].killerId = c.playerId;	
-		Server.playerHandler.players[i].singleCombatDelay = System.currentTimeMillis();
-		if (c.killedBy != Server.playerHandler.players[i].playerId)
+		PlayerHandler.players[i].logoutDelay = System.currentTimeMillis();
+		PlayerHandler.players[i].underAttackBy = c.playerId;
+		PlayerHandler.players[i].killerId = c.playerId;	
+		PlayerHandler.players[i].singleCombatDelay = System.currentTimeMillis();
+		if (c.killedBy != PlayerHandler.players[i].playerId)
 			c.totalPlayerDamageDealt = 0;
-		c.killedBy = Server.playerHandler.players[i].playerId;
+		c.killedBy = PlayerHandler.players[i].playerId;
 		applySmite(i, damage1);
 		switch(damageMask) {
 			case 1:
@@ -1522,10 +1522,10 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 				Server.playerHandler.players[i].setHitUpdateRequired2(true);			
 			}*/
 			//Server.playerHandler.players[i].playerLevel[3] -= damage1;
-			Server.playerHandler.players[i].dealDamage(damage1);
-			Server.playerHandler.players[i].damageTaken[c.playerId] += damage1;
+			PlayerHandler.players[i].dealDamage(damage1);
+			PlayerHandler.players[i].damageTaken[c.playerId] += damage1;
 			c.totalPlayerDamageDealt += damage1;
-			Server.playerHandler.players[i].updateRequired = true;
+			PlayerHandler.players[i].updateRequired = true;
 			o.getPA().refreshSkill(3);
 			break;
 		
@@ -1538,15 +1538,15 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 				Server.playerHandler.players[i].setHitUpdateRequired(true);			
 			}*/
 			//Server.playerHandler.players[i].playerLevel[3] -= damage1;
-			Server.playerHandler.players[i].dealDamage(damage1);
-			Server.playerHandler.players[i].damageTaken[c.playerId] += damage1;
+			PlayerHandler.players[i].dealDamage(damage1);
+			PlayerHandler.players[i].damageTaken[c.playerId] += damage1;
 			c.totalPlayerDamageDealt += damage1;
-			Server.playerHandler.players[i].updateRequired = true;	
+			PlayerHandler.players[i].updateRequired = true;	
 			c.doubleHit = false;
 			o.getPA().refreshSkill(3);
 			break;			
 		}
-		Server.playerHandler.players[i].handleHitMask(damage1);
+		PlayerHandler.players[i].handleHitMask(damage1);
 	}
 	
 	public void applySmite(int index, int damage) {
@@ -1554,8 +1554,8 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 			return;
 		if (damage <= 0)
 			return;
-		if (Server.playerHandler.players[index] != null) { 
-			Client c2 = (Client)Server.playerHandler.players[index];
+		if (PlayerHandler.players[index] != null) { 
+			Client c2 = (Client)PlayerHandler.players[index];
 			c2.playerLevel[5] -= (int)(damage/4);
 			if (c2.playerLevel[5] <= 0) {
 				c2.playerLevel[5] = 0;
@@ -1568,12 +1568,12 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 	
 	public void fireProjectilePlayer() {
 		if(c.oldPlayerIndex > 0) {
-			if(Server.playerHandler.players[c.oldPlayerIndex] != null) {
+			if(PlayerHandler.players[c.oldPlayerIndex] != null) {
 				c.projectileStage = 2;
 				int pX = c.getX();
 				int pY = c.getY();
-				int oX = Server.playerHandler.players[c.oldPlayerIndex].getX();
-				int oY = Server.playerHandler.players[c.oldPlayerIndex].getY();
+				int oX = PlayerHandler.players[c.oldPlayerIndex].getX();
+				int oY = PlayerHandler.players[c.oldPlayerIndex].getY();
 				int offX = (pY - oY)* -1;
 				int offY = (pX - oX)* -1;	
 				if (!c.msbSpec)
@@ -1858,10 +1858,10 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 	**/
 	
 	public void activateSpecial(int weapon, int i){
-		if(Server.npcHandler.npcs[i] == null && c.npcIndex > 0) {
+		if(NPCHandler.npcs[i] == null && c.npcIndex > 0) {
 			return;
 		}
-		if(Server.playerHandler.players[i] == null && c.playerIndex > 0) {
+		if(PlayerHandler.players[i] == null && c.playerIndex > 0) {
 			return;
 		}
 		c.doubleHit = false;
@@ -1872,10 +1872,10 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 			c.oldNpcIndex = i;
 		} else if (c.playerIndex > 0){
 			c.oldPlayerIndex = i;
-			Server.playerHandler.players[i].underAttackBy = c.playerId;
-			Server.playerHandler.players[i].logoutDelay = System.currentTimeMillis();
-			Server.playerHandler.players[i].singleCombatDelay = System.currentTimeMillis();
-			Server.playerHandler.players[i].killerId = c.playerId;
+			PlayerHandler.players[i].underAttackBy = c.playerId;
+			PlayerHandler.players[i].logoutDelay = System.currentTimeMillis();
+			PlayerHandler.players[i].singleCombatDelay = System.currentTimeMillis();
+			PlayerHandler.players[i].killerId = c.playerId;
 		}
 		switch(weapon) {
 			
@@ -1922,8 +1922,8 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 			case 15989:
 			case 15988:
 			case 15987:
-			if(Server.npcHandler.npcs[i] != null) {
-				Server.npcHandler.npcs[i].gfx100(341);
+			if(NPCHandler.npcs[i] != null) {
+				NPCHandler.npcs[i].gfx100(341);
 			}
 			c.specAccuracy = 1.10;
 			c.startAnimation(1658);
@@ -1945,14 +1945,14 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 			c.clawDamage = 0;
 			
             if (c.playerIndex > 0) {
-            	Client o = (Client) Server.playerHandler.players[c.playerIndex];
+            	Client o = (Client) PlayerHandler.players[c.playerIndex];
             	if (Misc.random(calculateMeleeAttack()) > Misc.random(o.getCombat().calculateMeleeDefence())) {
             		c.clawDamage = Misc.random(calculateMeleeMaxHit() + Misc.random(4));
             	}
             	c.clawIndex = c.playerIndex;
             	c.clawType = 1;
             } else if (c.npcIndex > 0) {
-            	NPC n = Server.npcHandler.npcs[c.npcIndex];
+            	NPC n = NPCHandler.npcs[c.npcIndex];
             	if (Misc.random(calculateMeleeAttack()) > Misc.random(n.defence)) {
             		c.clawDamage = Misc.random(calculateMeleeMaxHit() + Misc.random(2));
             	}
@@ -2011,7 +2011,7 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 				c.gfx100(253);
 				resetPlayerAttack();
 				if (c.playerIndex > 0) {
-					Client o = (Client)Server.playerHandler.players[i];
+					Client o = (Client)PlayerHandler.players[i];
 					o.getPA().getSpeared(c.absX, c.absY);
 				}	
 			break;
@@ -2020,13 +2020,13 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 			c.gfx100(282);
 			c.startAnimation(1203);
 			c.hitDelay = getHitDelay(c.getItems().getItemName(c.playerEquipment[c.playerWeapon]).toLowerCase());
-			if(Server.npcHandler.npcs[i] != null && c.npcIndex > 0) {
-				if(!c.goodDistance(c.getX(), c.getY(), Server.npcHandler.npcs[i].getX(), Server.npcHandler.npcs[i].getY(), 1)){
+			if(NPCHandler.npcs[i] != null && c.npcIndex > 0) {
+				if(!c.goodDistance(c.getX(), c.getY(), NPCHandler.npcs[i].getX(), NPCHandler.npcs[i].getY(), 1)){
 					c.doubleHit = true;
 				}
 			}
-			if(Server.playerHandler.players[i] != null && c.playerIndex > 0) {
-				if(!c.goodDistance(c.getX(), c.getY(), Server.playerHandler.players[i].getX(),Server.playerHandler.players[i].getY(), 1)){
+			if(PlayerHandler.players[i] != null && c.playerIndex > 0) {
+				if(!c.goodDistance(c.getX(), c.getY(), PlayerHandler.players[i].getX(),PlayerHandler.players[i].getY(), 1)){
 					c.doubleHit = true;
 					c.delayedDamage2 = Misc.random(calculateMeleeMaxHit());
 				}
@@ -2243,16 +2243,16 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 		int count = 0;
 		int killerId = 0;
 		for (int i = 1; i < Config.MAX_PLAYERS; i++) {	
-			if (Server.playerHandler.players[i] != null) {
-				if(Server.playerHandler.players[i].killedBy == playerId) {
-					if (Server.playerHandler.players[i].withinDistance(Server.playerHandler.players[playerId])) {
-						if(Server.playerHandler.players[i].totalPlayerDamageDealt > oldDamage) {
-							oldDamage = Server.playerHandler.players[i].totalPlayerDamageDealt;
+			if (PlayerHandler.players[i] != null) {
+				if(PlayerHandler.players[i].killedBy == playerId) {
+					if (PlayerHandler.players[i].withinDistance(PlayerHandler.players[playerId])) {
+						if(PlayerHandler.players[i].totalPlayerDamageDealt > oldDamage) {
+							oldDamage = PlayerHandler.players[i].totalPlayerDamageDealt;
 							killerId = i;
 						}
 					}	
-					Server.playerHandler.players[i].totalPlayerDamageDealt = 0;
-					Server.playerHandler.players[i].killedBy = 0;
+					PlayerHandler.players[i].totalPlayerDamageDealt = 0;
+					PlayerHandler.players[i].killedBy = 0;
 				}	
 			}
 		}				
@@ -2336,14 +2336,14 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 	**/
 	
 	public boolean checkReqs() {
-		if(Server.playerHandler.players[c.playerIndex] == null) {
+		if(PlayerHandler.players[c.playerIndex] == null) {
 			return false;
 		}
 		if (c.playerIndex == c.playerId)
 			return false;
-		if (c.inPits && Server.playerHandler.players[c.playerIndex].inPits)
+		if (c.inPits && PlayerHandler.players[c.playerIndex].inPits)
 			return true;
-		if(Server.playerHandler.players[c.playerIndex].inDuelArena() && c.duelStatus != 5 && !c.usingMagic) {
+		if(PlayerHandler.players[c.playerIndex].inDuelArena() && c.duelStatus != 5 && !c.usingMagic) {
 			if(c.arenas() || c.duelStatus == 5) {
 				c.sendMessage("You can't challenge inside the arena!");
 				return false;
@@ -2351,15 +2351,15 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 			c.getTradeAndDuel().requestDuel(c.playerIndex);
 			return false;
 		}
-		if(c.duelStatus == 5 && Server.playerHandler.players[c.playerIndex].duelStatus == 5) {
-			if(Server.playerHandler.players[c.playerIndex].duelingWith == c.getId()) {
+		if(c.duelStatus == 5 && PlayerHandler.players[c.playerIndex].duelStatus == 5) {
+			if(PlayerHandler.players[c.playerIndex].duelingWith == c.getId()) {
 				return true;
 			} else {
 				c.sendMessage("This isn't your opponent!");
 				return false;
 			}
 		}
-		if(!Server.playerHandler.players[c.playerIndex].inWild()) {
+		if(!PlayerHandler.players[c.playerIndex].inWild()) {
 			c.sendMessage("That player is not in the wilderness.");
 			c.stopMovement();
 			c.getCombat().resetPlayerAttack();
@@ -2372,8 +2372,8 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 			return false;
 		}
 		if(Config.COMBAT_LEVEL_DIFFERENCE) {
-			int combatDif1 = c.getCombat().getCombatDifference(c.combatLevel, Server.playerHandler.players[c.playerIndex].combatLevel);
-			if(combatDif1 > c.wildLevel || combatDif1 > Server.playerHandler.players[c.playerIndex].wildLevel) {
+			int combatDif1 = c.getCombat().getCombatDifference(c.combatLevel, PlayerHandler.players[c.playerIndex].combatLevel);
+			if(combatDif1 > c.wildLevel || combatDif1 > PlayerHandler.players[c.playerIndex].wildLevel) {
 				c.sendMessage("Your combat level difference is too great to attack that player here.");
 				c.stopMovement();
 				c.getCombat().resetPlayerAttack();
@@ -2382,14 +2382,14 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 		}
 		
 		if(Config.SINGLE_AND_MULTI_ZONES) {
-			if(!Server.playerHandler.players[c.playerIndex].inMulti()) {	// single combat zones
-				if(Server.playerHandler.players[c.playerIndex].underAttackBy != c.playerId  && Server.playerHandler.players[c.playerIndex].underAttackBy != 0) {
+			if(!PlayerHandler.players[c.playerIndex].inMulti()) {	// single combat zones
+				if(PlayerHandler.players[c.playerIndex].underAttackBy != c.playerId  && PlayerHandler.players[c.playerIndex].underAttackBy != 0) {
 					c.sendMessage("That player is already in combat.");
 					c.stopMovement();
 					c.getCombat().resetPlayerAttack();
 					return false;
 				}
-				if(Server.playerHandler.players[c.playerIndex].playerId != c.underAttackBy && c.underAttackBy != 0 || c.underAttackBy2 > 0) {
+				if(PlayerHandler.players[c.playerIndex].playerId != c.underAttackBy && c.underAttackBy != 0 || c.underAttackBy2 > 0) {
 					c.sendMessage("You are already in combat.");
 					c.stopMovement();
 					c.getCombat().resetPlayerAttack();
@@ -2401,30 +2401,30 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 	}
 	
 	public boolean checkMultiBarrageReqs(int i) {
-		if(Server.playerHandler.players[i] == null) {
+		if(PlayerHandler.players[i] == null) {
 			return false;
 		}
 		if (i == c.playerId)
 			return false;
-		if (c.inPits && Server.playerHandler.players[i].inPits)
+		if (c.inPits && PlayerHandler.players[i].inPits)
 			return true;
-		if(!Server.playerHandler.players[i].inWild()) {
+		if(!PlayerHandler.players[i].inWild()) {
 			return false;
 		}
 		if(Config.COMBAT_LEVEL_DIFFERENCE) {
-			int combatDif1 = c.getCombat().getCombatDifference(c.combatLevel, Server.playerHandler.players[i].combatLevel);
-			if(combatDif1 > c.wildLevel || combatDif1 > Server.playerHandler.players[i].wildLevel) {
+			int combatDif1 = c.getCombat().getCombatDifference(c.combatLevel, PlayerHandler.players[i].combatLevel);
+			if(combatDif1 > c.wildLevel || combatDif1 > PlayerHandler.players[i].wildLevel) {
 				c.sendMessage("Your combat level difference is too great to attack that player here.");
 				return false;
 			}
 		}
 		
 		if(Config.SINGLE_AND_MULTI_ZONES) {
-			if(!Server.playerHandler.players[i].inMulti()) {	// single combat zones
-				if(Server.playerHandler.players[i].underAttackBy != c.playerId  && Server.playerHandler.players[i].underAttackBy != 0) {
+			if(!PlayerHandler.players[i].inMulti()) {	// single combat zones
+				if(PlayerHandler.players[i].underAttackBy != c.playerId  && PlayerHandler.players[i].underAttackBy != 0) {
 					return false;
 				}
-				if(Server.playerHandler.players[i].playerId != c.underAttackBy && c.underAttackBy != 0) {
+				if(PlayerHandler.players[i].playerId != c.underAttackBy && c.underAttackBy != 0) {
 					c.sendMessage("You are already in combat.");
 					return false;
 				}
@@ -3591,19 +3591,19 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 		}
 
 		if(c.usingMagic && c.playerIndex > 0) {
-			if(Server.playerHandler.players[c.playerIndex] != null) {
+			if(PlayerHandler.players[c.playerIndex] != null) {
 				for(int r = 0; r < c.REDUCE_SPELLS.length; r++){	// reducing spells, confuse etc
-					if(Server.playerHandler.players[c.playerIndex].REDUCE_SPELLS[r] == c.MAGIC_SPELLS[spell][0]) {
+					if(PlayerHandler.players[c.playerIndex].REDUCE_SPELLS[r] == c.MAGIC_SPELLS[spell][0]) {
 						c.reduceSpellId = r;
-						if((System.currentTimeMillis() - Server.playerHandler.players[c.playerIndex].reduceSpellDelay[c.reduceSpellId]) > Server.playerHandler.players[c.playerIndex].REDUCE_SPELL_TIME[c.reduceSpellId]) {
-							Server.playerHandler.players[c.playerIndex].canUseReducingSpell[c.reduceSpellId] = true;
+						if((System.currentTimeMillis() - PlayerHandler.players[c.playerIndex].reduceSpellDelay[c.reduceSpellId]) > PlayerHandler.players[c.playerIndex].REDUCE_SPELL_TIME[c.reduceSpellId]) {
+							PlayerHandler.players[c.playerIndex].canUseReducingSpell[c.reduceSpellId] = true;
 						} else {
-							Server.playerHandler.players[c.playerIndex].canUseReducingSpell[c.reduceSpellId] = false;
+							PlayerHandler.players[c.playerIndex].canUseReducingSpell[c.reduceSpellId] = false;
 						}
 						break;
 					}			
 				}
-				if(!Server.playerHandler.players[c.playerIndex].canUseReducingSpell[c.reduceSpellId]) {
+				if(!PlayerHandler.players[c.playerIndex].canUseReducingSpell[c.reduceSpellId]) {
 					c.sendMessage("That player is currently immune to this spell.");
 					c.usingMagic = false;
 					c.stopMovement();
@@ -3818,14 +3818,14 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 	
 	public void handleDfs() {
 		if (System.currentTimeMillis() - c.dfsDelay > 30000) {
-			if (c.playerIndex > 0 && Server.playerHandler.players[c.playerIndex] != null) {
+			if (c.playerIndex > 0 && PlayerHandler.players[c.playerIndex] != null) {
 				int damage = Misc.random(15) + 5;
 				c.startAnimation(2836);
 				c.gfx0(497);
-				Server.playerHandler.players[c.playerIndex].playerLevel[3] -= damage;
-				Server.playerHandler.players[c.playerIndex].hitDiff2 = damage;
-				Server.playerHandler.players[c.playerIndex].hitUpdateRequired2 = true;
-				Server.playerHandler.players[c.playerIndex].updateRequired = true;
+				PlayerHandler.players[c.playerIndex].playerLevel[3] -= damage;
+				PlayerHandler.players[c.playerIndex].hitDiff2 = damage;
+				PlayerHandler.players[c.playerIndex].hitUpdateRequired2 = true;
+				PlayerHandler.players[c.playerIndex].updateRequired = true;
 				c.dfsDelay = System.currentTimeMillis();						
 			} else {
 				c.sendMessage("I should be in combat before using this.");
@@ -3837,14 +3837,14 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 	
 	public void handleDfsNPC() {
 		if (System.currentTimeMillis() - c.dfsDelay > 30000) {
-			if (c.npcIndex > 0 && Server.npcHandler.npcs[c.npcIndex] != null) {
+			if (c.npcIndex > 0 && NPCHandler.npcs[c.npcIndex] != null) {
 				int damage = Misc.random(15) + 5;
 				c.startAnimation(2836);
 				c.gfx0(497);
-				Server.npcHandler.npcs[c.npcIndex].HP -= damage;
-				Server.npcHandler.npcs[c.npcIndex].hitDiff2 = damage;
-				Server.npcHandler.npcs[c.npcIndex].hitUpdateRequired2 = true;
-				Server.npcHandler.npcs[c.npcIndex].updateRequired = true;
+				NPCHandler.npcs[c.npcIndex].HP -= damage;
+				NPCHandler.npcs[c.npcIndex].hitDiff2 = damage;
+				NPCHandler.npcs[c.npcIndex].hitUpdateRequired2 = true;
+				NPCHandler.npcs[c.npcIndex].updateRequired = true;
 				c.dfsDelay = System.currentTimeMillis();						
 			} else {
 				c.sendMessage("I should be in combat before using this.");
@@ -3855,7 +3855,7 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 	}
 	
 	public void applyRecoil(int damage, int i) {
-		if (damage > 0 && Server.playerHandler.players[i].playerEquipment[c.playerRing] == 2550) {
+		if (damage > 0 && PlayerHandler.players[i].playerEquipment[c.playerRing] == 2550) {
 			int recDamage = damage/10 + 1;
 			if (!c.getHitUpdateRequired()) {
 				c.setHitDiff(recDamage);
@@ -3870,7 +3870,7 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 	}
 	
 	public int getBonusAttack(int i) {
-		switch (Server.npcHandler.npcs[i].npcType) {
+		switch (NPCHandler.npcs[i].npcType) {
 			case 2883:
 			return Misc.random(50) + 30;
 			case 2026:
@@ -3886,7 +3886,7 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 	
 	public void handleGmaulPlayer() {
 		if (c.playerIndex > 0) {
-			Client o = (Client)Server.playerHandler.players[c.playerIndex];
+			Client o = (Client)PlayerHandler.players[c.playerIndex];
 			if (c.goodDistance(c.getX(), c.getY(), o.getX(), o.getY(), getRequiredDistance())) {
 				if (checkReqs()) {
 					if (checkSpecAmount(4153)) {						
@@ -3907,7 +3907,7 @@ if (!Server.playerHandler.players[c.playerId].goodDistance(c.absX, c.absY, Serve
 	}
 	
 	public boolean armaNpc(int i) {
-		switch (Server.npcHandler.npcs[i].npcType) {
+		switch (NPCHandler.npcs[i].npcType) {
 			case 2558:
 			case 2559:
 			case 2560:

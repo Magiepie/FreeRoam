@@ -1,6 +1,4 @@
 package server.model.players.packets;
-import server.model.players.content.*;
-
 import server.Config;
 import server.Server;
 import server.model.items.GameItem;
@@ -14,7 +12,6 @@ import server.util.Misc;
  **/
 public class ClickingButtons implements PacketType {
 
-	@Override
 	public void processPacket(Client c, int packetType, int packetSize) {
 		int actionButtonId = Misc.hexToInt(c.getInStream().buffer, 0, packetSize);
 		//int actionButtonId = c.getInStream().readShort();

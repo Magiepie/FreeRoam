@@ -9,7 +9,6 @@ import server.model.players.PacketType;
  **/
 public class MagicOnFloorItems implements PacketType {
 
-	@Override
 	public void processPacket(Client c, int packetType, int packetSize) {
 		int itemY = c.getInStream().readSignedWordBigEndian();
 		int itemId = c.getInStream().readUnsignedWord();

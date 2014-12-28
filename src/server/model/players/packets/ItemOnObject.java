@@ -10,7 +10,6 @@ import server.model.players.PacketType;
 
 public class ItemOnObject implements PacketType {
 
-	@Override
 	public void processPacket(Client c, int packetType, int packetSize) {
 		/*
 		 * a = ?

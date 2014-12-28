@@ -9,7 +9,6 @@ import server.model.players.PacketType;
  **/
 public class Dialogue implements PacketType {
 
-	@Override
 	public void processPacket(Client c, int packetType, int packetSize) {
 		
 		if(c.nextChat > 0) {

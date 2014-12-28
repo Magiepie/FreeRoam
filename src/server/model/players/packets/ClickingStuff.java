@@ -11,7 +11,6 @@ import server.util.Misc;
  **/
 public class ClickingStuff implements PacketType {
 
-	@Override
 	public void processPacket(Client c, int packetType, int packetSize) {
 		if (c.inTrade) {
 			if (!c.acceptedTrade) {

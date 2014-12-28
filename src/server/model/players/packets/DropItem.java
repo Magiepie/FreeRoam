@@ -11,7 +11,6 @@ import server.model.players.PlayerSave;
  **/
 public class DropItem implements PacketType {
 
-	@Override
 	public void processPacket(Client c, int packetType, int packetSize) {
 		int itemId = c.getInStream().readUnsignedWordA();
 		c.getInStream().readUnsignedByte();

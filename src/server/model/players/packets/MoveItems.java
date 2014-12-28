@@ -8,7 +8,6 @@ import server.model.players.PacketType;
  **/
 public class MoveItems implements PacketType {
 
-	@Override
 	public void processPacket(Client c, int packetType, int packetSize) {
 		int somejunk = c.getInStream().readUnsignedWordA(); //junk
 		int itemFrom =  c.getInStream().readUnsignedWordA();// slot1

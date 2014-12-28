@@ -7,7 +7,6 @@ import server.model.players.PacketType;
  **/
 public class Bank10 implements PacketType {
 
-	@Override
 	public void processPacket(Client c, int packetType, int packetSize) {
 	int interfaceId = c.getInStream().readUnsignedWordBigEndian();
 	int removeId = c.getInStream().readUnsignedWordA();

@@ -9,7 +9,6 @@ import server.model.players.PacketType;
  */
 public class ChangeRegions implements PacketType {
 
-	@Override
 	public void processPacket(Client c, int packetType, int packetSize) {
 		//Server.objectHandler.updateObjects(c);
 		Server.itemHandler.reloadItems(c);

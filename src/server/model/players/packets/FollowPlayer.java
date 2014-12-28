@@ -6,7 +6,6 @@ import server.model.players.PacketType;
 
 public class FollowPlayer implements PacketType {
 	
-	@Override
 	public void processPacket(Client c, int packetType, int packetSize) {
 		int followPlayer = c.getInStream().readUnsignedWordBigEndian();
 		if(Server.playerHandler.players[followPlayer] == null) {

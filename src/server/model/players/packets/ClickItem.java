@@ -9,9 +9,7 @@ import server.util.Misc;
  **/
 public class ClickItem implements PacketType {
 
-	@Override
 	public void processPacket(Client c, int packetType, int packetSize) {
-		int junk = c.getInStream().readSignedWordBigEndianA();
 		int itemSlot = c.getInStream().readUnsignedWordA();
 		int itemId = c.getInStream().readUnsignedWordBigEndian();
 		if (c.usingCarpet) {

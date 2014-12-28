@@ -10,7 +10,6 @@ import server.model.players.PacketType;
 
 public class ItemOnItem implements PacketType {
 
-	@Override
 	public void processPacket(Client c, int packetType, int packetSize) {
 		int usedWithSlot = c.getInStream().readUnsignedWord();
 		int itemUsedSlot = c.getInStream().readUnsignedWordA();

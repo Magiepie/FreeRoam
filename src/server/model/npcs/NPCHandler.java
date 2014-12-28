@@ -960,10 +960,10 @@ public class NPCHandler {
 							if(npcs[i].attackTimer == 0) {
 								if(c != null) {
 									attackPlayer(c, i);
-								} else {
-									npcs[i].killerId = 0;
-									npcs[i].underAttack = false;
-									npcs[i].facePlayer(0);
+								//} else {DeadCode?
+									//npcs[i].killerId = 0; // 
+								    //npcs[i].underAttack = false;
+									//npcs[i].facePlayer(0);
 								}
 							}
 						} else {

@@ -7,13 +7,16 @@ import server.util.Misc;
 import server.world.map.VirtualWorld;
 import server.Connection;
 import server.util.Stream;
+
 import java.net.InetSocketAddress;
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.File;
 import java.util.Scanner;
+
 import org.apache.mina.common.IoSession;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -21,6 +24,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+
 import server.event.EventManager;
 import server.event.Event;
 import server.event.EventContainer;
@@ -824,6 +828,7 @@ return -1;
 	}
 	
 	
+	@SuppressWarnings("unused")
 	public void updatePM(int pID, int world) { // used for private chat updates
 		Player p = Server.playerHandler.players[pID];
 		if(p == null || p.playerName == null || p.playerName.equals("null")){

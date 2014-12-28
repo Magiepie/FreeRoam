@@ -7,7 +7,6 @@ import server.*;
 
 public class ItemOnGroundItem implements PacketType {
 
-	@Override
 	public void processPacket(Client c, int packetType, int packetSize) {
 		int a1 = c.getInStream().readSignedWordBigEndian();
 		int itemUsed = c.getInStream().readSignedWordA();

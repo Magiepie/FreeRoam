@@ -25,7 +25,6 @@ import java.io.IOException;
 public class Commands implements PacketType {
 
 	
-	@Override
 	public void processPacket(Client c, int packetType, int packetSize) {
 	String playerCommand = c.getInStream().readString();
 	if(Config.SERVER_DEBUG)

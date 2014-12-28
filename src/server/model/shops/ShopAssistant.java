@@ -4,6 +4,8 @@ import server.Config;
 import server.Server;
 import server.model.items.Item;
 import server.model.players.Client;
+import server.model.players.PlayerHandler;
+import server.world.ShopHandler;
 
 public class ShopAssistant {
 
@@ -23,7 +25,7 @@ public class ShopAssistant {
 		c.isShopping = true;
 		c.myShopId = ShopID;
 		c.getPA().sendFrame248(3824, 3822);
-		c.getPA().sendFrame126(Server.shopHandler.ShopName[ShopID], 3901);
+		c.getPA().sendFrame126(ShopHandler.ShopName[ShopID], 3901);
 	}
 		//if(itemId != itemId) {
 		//	c.sendMessage("Don't dupe or you will be IP Banned");
@@ -31,9 +33,9 @@ public class ShopAssistant {
 		//}
 	public void updatePlayerShop() {
 		for (int i = 1; i < Config.MAX_PLAYERS; i++) {
-			if (Server.playerHandler.players[i] != null) {
-				if (Server.playerHandler.players[i].isShopping == true && Server.playerHandler.players[i].myShopId == c.myShopId && i != c.playerId) {
-					Server.playerHandler.players[i].updateShop = true;
+			if (PlayerHandler.players[i] != null) {
+				if (PlayerHandler.players[i].isShopping == true && PlayerHandler.players[i].myShopId == c.myShopId && i != c.playerId) {
+					PlayerHandler.players[i].updateShop = true;
 				}
 			}
 		}
@@ -47,30 +49,30 @@ public class ShopAssistant {
 	public void resetShop(int ShopID) {
 		synchronized(c) {
 			int TotalItems = 0;
-			for (int i = 0; i < Server.shopHandler.MaxShopItems; i++) {
-				if (Server.shopHandler.ShopItems[ShopID][i] > 0) {
+			for (int i = 0; i < ShopHandler.MaxShopItems; i++) {
+				if (ShopHandler.ShopItems[ShopID][i] > 0) {
 					TotalItems++;
 				}
 			}
-			if (TotalItems > Server.shopHandler.MaxShopItems) {
-				TotalItems = Server.shopHandler.MaxShopItems;
+			if (TotalItems > ShopHandler.MaxShopItems) {
+				TotalItems = ShopHandler.MaxShopItems;
 			}
 			c.getOutStream().createFrameVarSizeWord(53);
 			c.getOutStream().writeWord(3900);
 			c.getOutStream().writeWord(TotalItems);
 			int TotalCount = 0;
-			for (int i = 0; i < Server.shopHandler.ShopItems.length; i++) {
-				if (Server.shopHandler.ShopItems[ShopID][i] > 0 || i <= Server.shopHandler.ShopItemsStandard[ShopID]) {
-					if (Server.shopHandler.ShopItemsN[ShopID][i] > 254) {
+			for (int i = 0; i < ShopHandler.ShopItems.length; i++) {
+				if (ShopHandler.ShopItems[ShopID][i] > 0 || i <= ShopHandler.ShopItemsStandard[ShopID]) {
+					if (ShopHandler.ShopItemsN[ShopID][i] > 254) {
 						c.getOutStream().writeByte(255); 					
-						c.getOutStream().writeDWord_v2(Server.shopHandler.ShopItemsN[ShopID][i]);	
+						c.getOutStream().writeDWord_v2(ShopHandler.ShopItemsN[ShopID][i]);	
 					} else {
-						c.getOutStream().writeByte(Server.shopHandler.ShopItemsN[ShopID][i]);
+						c.getOutStream().writeByte(ShopHandler.ShopItemsN[ShopID][i]);
 					}
-					if (Server.shopHandler.ShopItems[ShopID][i] > Config.ITEM_LIMIT || Server.shopHandler.ShopItems[ShopID][i] < 0) {
-						Server.shopHandler.ShopItems[ShopID][i] = Config.ITEM_LIMIT;
+					if (ShopHandler.ShopItems[ShopID][i] > Config.ITEM_LIMIT || ShopHandler.ShopItems[ShopID][i] < 0) {
+						ShopHandler.ShopItems[ShopID][i] = Config.ITEM_LIMIT;
 					}
-					c.getOutStream().writeWordBigEndianA(Server.shopHandler.ShopItems[ShopID][i]);
+					c.getOutStream().writeWordBigEndianA(ShopHandler.ShopItems[ShopID][i]);
 					TotalCount++;
 				}
 				if (TotalCount > TotalItems) {
@@ -97,7 +99,7 @@ public class ShopAssistant {
 		
 		TotPrice = ShopValue;
 
-		if (Server.shopHandler.ShopBModifier[c.myShopId] == 1) {
+		if (ShopHandler.ShopBModifier[c.myShopId] == 1) {
 			TotPrice *= 1; 
 			TotPrice *= 1;
 			if (Type == 1) {
@@ -336,9 +338,9 @@ public void sellToShopPrice(int removeId, int removeSlot) {
 			}
 		}
 		boolean IsIn = false;
-		if (Server.shopHandler.ShopSModifier[c.myShopId] > 1) {
-			for (int j = 0; j <= Server.shopHandler.ShopItemsStandard[c.myShopId]; j++) {
-				if (removeId == (Server.shopHandler.ShopItems[c.myShopId][j] - 1)) {
+		if (ShopHandler.ShopSModifier[c.myShopId] > 1) {
+			for (int j = 0; j <= ShopHandler.ShopItemsStandard[c.myShopId]; j++) {
+				if (removeId == (ShopHandler.ShopItems[c.myShopId][j] - 1)) {
 					IsIn = true;
 					break;
 				}
@@ -366,8 +368,8 @@ public void sellToShopPrice(int removeId, int removeSlot) {
 
 
 	public boolean shopSellsItem(int itemID) {
-		for (int i = 0; i < Server.shopHandler.ShopItems.length; i++) {
-			if(itemID == (Server.shopHandler.ShopItems[c.myShopId][i] - 1)) {
+		for (int i = 0; i < ShopHandler.ShopItems.length; i++) {
+			if(itemID == (ShopHandler.ShopItems[c.myShopId][i] - 1)) {
 				return true;
 			}
 		}
@@ -376,6 +378,7 @@ public void sellToShopPrice(int removeId, int removeSlot) {
 	
 	
 	
+	@SuppressWarnings("unused")
 	public boolean sellItem(int itemID, int fromSlot, int amount) {
 			if(c.inTrade) {
             		c.sendMessage("You cant sell items to the shop while your in trade!");
@@ -395,10 +398,10 @@ public void sellToShopPrice(int removeId, int removeSlot) {
 		}
 		
 		if (amount > 0 && itemID == (c.playerItems[fromSlot] - 1)) {
-			if (Server.shopHandler.ShopSModifier[c.myShopId] > 1) {
+			if (ShopHandler.ShopSModifier[c.myShopId] > 1) {
 				boolean IsIn = false;
-				for (int i = 0; i <= Server.shopHandler.ShopItemsStandard[c.myShopId]; i++) {
-					if (itemID == (Server.shopHandler.ShopItems[c.myShopId][i] - 1)) {
+				for (int i = 0; i <= ShopHandler.ShopItemsStandard[c.myShopId]; i++) {
+					if (itemID == (ShopHandler.ShopItems[c.myShopId][i] - 1)) {
 						IsIn = true;
 						break;
 					}
@@ -449,18 +452,18 @@ public boolean addShopItem(int itemID, int amount) {
 		if (Item.itemIsNote[itemID] == true) {
 			itemID = c.getItems().getUnnotedItem(itemID);
 		}
-		for (int i = 0; i < Server.shopHandler.ShopItems.length; i++) {
-			if ((Server.shopHandler.ShopItems[c.myShopId][i] - 1) == itemID) {
-				Server.shopHandler.ShopItemsN[c.myShopId][i] += amount;
+		for (int i = 0; i < ShopHandler.ShopItems.length; i++) {
+			if ((ShopHandler.ShopItems[c.myShopId][i] - 1) == itemID) {
+				ShopHandler.ShopItemsN[c.myShopId][i] += amount;
 				Added = true;
 			}
 		}
 		if (Added == false) {
-			for (int i = 0; i < Server.shopHandler.ShopItems.length; i++) {
-				if (Server.shopHandler.ShopItems[c.myShopId][i] == 0) {
-					Server.shopHandler.ShopItems[c.myShopId][i] = (itemID + 1);
-					Server.shopHandler.ShopItemsN[c.myShopId][i] = amount;
-					Server.shopHandler.ShopItemsDelay[c.myShopId][i] = 0;
+			for (int i = 0; i < ShopHandler.ShopItems.length; i++) {
+				if (ShopHandler.ShopItems[c.myShopId][i] == 0) {
+					ShopHandler.ShopItems[c.myShopId][i] = (itemID + 1);
+					ShopHandler.ShopItemsN[c.myShopId][i] = amount;
+					ShopHandler.ShopItemsDelay[c.myShopId][i] = 0;
 					break;
 				}
 			}
@@ -582,15 +585,15 @@ public boolean addShopItem(int itemID, int amount) {
                 if(!shopSellsItem(itemID))//Dupe prevention I assume
                         return;
  
-                if (amount > Server.shopHandler.ShopItemsN[c.myShopId][fromSlot]) {//Just in case they go for more than the shop has.
-                        amount = Server.shopHandler.ShopItemsN[c.myShopId][fromSlot];
+                if (amount > ShopHandler.ShopItemsN[c.myShopId][fromSlot]) {//Just in case they go for more than the shop has.
+                        amount = ShopHandler.ShopItemsN[c.myShopId][fromSlot];
                 }
                // c.sendMessage(":"+getCurrency(currNum)+" Total Price:"+totalPrice);
                 if (getCurrency(currNum) >= totalPrice) {//Checking if they have enough.
                         if((c.getItems().freeSlots() > amount) || (c.getItems().freeSlots() >= 0 && Item.itemStackable[itemID])){//Making sure they have enough spaces.
                                 handleCurrency(currNum, totalPrice);//removing currency for item
-                                if ((fromSlot + 1) > Server.shopHandler.ShopItemsStandard[c.myShopId]) {
-                                        Server.shopHandler.ShopItems[c.myShopId][fromSlot] = 0;
+                                if ((fromSlot + 1) > ShopHandler.ShopItemsStandard[c.myShopId]) {
+                                        ShopHandler.ShopItems[c.myShopId][fromSlot] = 0;
                                 }
                         } else {
                                 c.sendMessage("You don't have enough space in your inventory.");
@@ -602,8 +605,8 @@ public boolean addShopItem(int itemID, int amount) {
                 }
                 //These happen regardless...
                 c.getItems().addItem(itemID, amount);
-                Server.shopHandler.ShopItemsN[c.myShopId][fromSlot] -= amount;
-                Server.shopHandler.ShopItemsDelay[c.myShopId][fromSlot] = 0;
+                ShopHandler.ShopItemsN[c.myShopId][fromSlot] -= amount;
+                ShopHandler.ShopItemsDelay[c.myShopId][fromSlot] = 0;
                 //Resetting the shop
                 c.getItems().resetItems(3823);
                 resetShop(c.myShopId);
@@ -681,8 +684,8 @@ public boolean addShopItem(int itemID, int amount) {
 				
 				int TotalItems = 0;
 				TotalItems = capes2;
-				if (TotalItems > Server.shopHandler.MaxShopItems) {
-					TotalItems = Server.shopHandler.MaxShopItems;
+				if (TotalItems > ShopHandler.MaxShopItems) {
+					TotalItems = ShopHandler.MaxShopItems;
 				}
 				c.getOutStream().createFrameVarSizeWord(53);
 				c.getOutStream().writeWord(3900);

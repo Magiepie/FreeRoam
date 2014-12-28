@@ -8,7 +8,6 @@ import server.model.players.PacketType;
 
 public class ItemOnNpc implements PacketType {
 
-	@Override
 	public void processPacket(Client c, int packetType, int packetSize) {
 		int itemId = c.getInStream().readSignedWordA();
 		int i = c.getInStream().readSignedWordA();

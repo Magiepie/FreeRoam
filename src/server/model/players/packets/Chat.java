@@ -9,7 +9,6 @@ import server.Connection;
  **/
 public class Chat implements PacketType {
 
-	@Override
 	public void processPacket(Client c, int packetType, int packetSize) {
 		c.setChatTextEffects(c.getInStream().readUnsignedByteS());
 		c.setChatTextColor(c.getInStream().readUnsignedByteS());

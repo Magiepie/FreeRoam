@@ -10,7 +10,6 @@ import server.util.Misc;
 public class ClickObject implements PacketType {
 
 	public static final int FIRST_CLICK = 132, SECOND_CLICK = 252, THIRD_CLICK = 70;	
-	@Override
 	public void processPacket(Client c, int packetType, int packetSize) {		
 		c.clickObjectType = c.objectX = c.objectId = c.objectY = 0;
 		c.objectYOffset = c.objectXOffset = 0;

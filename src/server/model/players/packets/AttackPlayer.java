@@ -1,9 +1,9 @@
 package server.model.players.packets;
 
 import server.Config;
-import server.Server;
 import server.model.players.Client;
 import server.model.players.PacketType;
+import server.model.players.PlayerHandler;
 
 /**
  * Attack Player
@@ -11,7 +11,6 @@ import server.model.players.PacketType;
 public class AttackPlayer implements PacketType {
 
 	public static final int ATTACK_PLAYER = 73, MAGE_PLAYER = 249;
-	@Override
 	public void processPacket(Client c, int packetType, int packetSize) {
 		c.playerIndex = 0;
 		c.npcIndex = 0;
@@ -22,7 +21,7 @@ public class AttackPlayer implements PacketType {
 			**/
 			case ATTACK_PLAYER:
 			c.playerIndex = c.getInStream().readSignedWordBigEndian();
-			if(Server.playerHandler.players[c.playerIndex] == null ){
+			if(PlayerHandler.players[c.playerIndex] == null ){
 				break;
 			}
 			
@@ -97,11 +96,11 @@ public class AttackPlayer implements PacketType {
 				}
 			}
 			
-			if((usingBow || c.autocasting) && c.goodDistance(c.getX(), c.getY(), Server.playerHandler.players[c.playerIndex].getX(), Server.playerHandler.players[c.playerIndex].getY(), 6)) {
+			if((usingBow || c.autocasting) && c.goodDistance(c.getX(), c.getY(), PlayerHandler.players[c.playerIndex].getX(), PlayerHandler.players[c.playerIndex].getY(), 6)) {
 				c.usingBow = true;
 				c.stopMovement();
 			}
-			if(usingOtherRangeWeapons && c.goodDistance(c.getX(), c.getY(), Server.playerHandler.players[c.playerIndex].getX(), Server.playerHandler.players[c.playerIndex].getY(), 3)) {
+			if(usingOtherRangeWeapons && c.goodDistance(c.getX(), c.getY(), PlayerHandler.players[c.playerIndex].getX(), PlayerHandler.players[c.playerIndex].getY(), 3)) {
 				c.usingRangeWeapon = true;
 				c.stopMovement();
 			}
@@ -155,7 +154,7 @@ public class AttackPlayer implements PacketType {
 			c.playerIndex = c.getInStream().readSignedWordA();
 			int castingSpellId = c.getInStream().readSignedWordBigEndian();
 			c.usingMagic = false;
-			if(Server.playerHandler.players[c.playerIndex] == null ){
+			if(PlayerHandler.players[c.playerIndex] == null ){
 				break;
 			}
 
@@ -190,8 +189,8 @@ public class AttackPlayer implements PacketType {
 			}
 			
 			for(int r = 0; r < c.REDUCE_SPELLS.length; r++){	// reducing spells, confuse etc
-				if(Server.playerHandler.players[c.playerIndex].REDUCE_SPELLS[r] == c.MAGIC_SPELLS[c.spellId][0]) {
-					if((System.currentTimeMillis() - Server.playerHandler.players[c.playerIndex].reduceSpellDelay[r]) < Server.playerHandler.players[c.playerIndex].REDUCE_SPELL_TIME[r]) {
+				if(PlayerHandler.players[c.playerIndex].REDUCE_SPELLS[r] == c.MAGIC_SPELLS[c.spellId][0]) {
+					if((System.currentTimeMillis() - PlayerHandler.players[c.playerIndex].reduceSpellDelay[r]) < PlayerHandler.players[c.playerIndex].REDUCE_SPELL_TIME[r]) {
 						c.sendMessage("That player is currently immune to this spell.");
 						c.usingMagic = false;
 						c.stopMovement();
@@ -202,7 +201,7 @@ public class AttackPlayer implements PacketType {
 			}
 
 			
-			if(System.currentTimeMillis() - Server.playerHandler.players[c.playerIndex].teleBlockDelay < Server.playerHandler.players[c.playerIndex].teleBlockLength && c.MAGIC_SPELLS[c.spellId][0] == 12445) {
+			if(System.currentTimeMillis() - PlayerHandler.players[c.playerIndex].teleBlockDelay < PlayerHandler.players[c.playerIndex].teleBlockLength && c.MAGIC_SPELLS[c.spellId][0] == 12445) {
 				c.sendMessage("That player is already affected by this spell.");
 				c.usingMagic = false;
 				c.stopMovement();
@@ -216,7 +215,7 @@ public class AttackPlayer implements PacketType {
 			}*/
 	 
 			if(c.usingMagic) {
-				if(c.goodDistance(c.getX(), c.getY(), Server.playerHandler.players[c.playerIndex].getX(), Server.playerHandler.players[c.playerIndex].getY(), 7)) {
+				if(c.goodDistance(c.getX(), c.getY(), PlayerHandler.players[c.playerIndex].getX(), PlayerHandler.players[c.playerIndex].getY(), 7)) {
 					c.stopMovement();
 				}
 				if (c.getCombat().checkReqs()) {
