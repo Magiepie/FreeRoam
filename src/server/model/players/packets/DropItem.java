@@ -4,6 +4,7 @@ import server.Config;
 import server.Server;
 import server.model.players.Client;
 import server.model.players.PacketType;
+import server.model.players.PlayerHandler;
 import server.model.players.PlayerSave;
 
 /**
@@ -16,7 +17,7 @@ public class DropItem implements PacketType {
 		c.getInStream().readUnsignedByte();
 		c.getInStream().readUnsignedByte();
 		int slot = c.getInStream().readUnsignedWordA();
-		if (Server.playerHandler.players[c.playerId].underAttackBy != 0) {
+		if (PlayerHandler.players[c.playerId].underAttackBy != 0) {
 			if ((c.getShops().getItemShopValue(itemId)*.75) > 1000) {
 			c.sendMessage("You can't drop items worth over 1,000 gold in combat.");
 			return;

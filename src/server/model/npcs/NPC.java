@@ -1,6 +1,5 @@
 package server.model.npcs;
 
-import server.Server;
 import server.util.Misc;
 import server.util.Stream;
 
@@ -200,7 +199,7 @@ public class NPC {
 
 	public void getNextNPCMovement(int i) {
 		direction = -1;
-		if(Server.npcHandler.npcs[i].freezeTimer == 0) {
+		if(NPCHandler.npcs[i].freezeTimer == 0) {
 			direction = getNextWalkingDirection();
 		}
 	}

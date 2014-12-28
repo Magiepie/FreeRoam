@@ -30,7 +30,7 @@ public class PlayerSaving implements Runnable {
 		while(true) {
 			saveAllPlayers();
 			try {
-				thread.sleep(300000);
+				Thread.sleep(300000);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

@@ -3,6 +3,7 @@ import server.Config;
 import server.Server;
 import server.model.items.GameItem;
 import server.model.players.Client;
+import server.model.players.PlayerHandler;
 import server.model.players.SkillMenu;
 import server.model.players.PacketType;
 import server.util.Misc;
@@ -33,19 +34,19 @@ public class ClickingButtons implements PacketType {
 			break;
 case 33206:// Attack button
 			case 34142:
-				SkillGuides.atkInterface(c);
+				//SkillGuides.atkInterface(c);
 				break;
 			case 33209:// str button
 			case 34119:
-				SkillGuides.strInterface(c);
+				//SkillGuides.strInterface(c);
 				break;
 			case 33212: //Defence
 			case 34120:
-				SkillGuides.defInterface(c);
+			//	SkillGuides.defInterface(c);
 				break;
 			case 34133:
 			case 33215: //Range
-				SkillGuides.rangeInterface(c);
+			//	SkillGuides.rangeInterface(c);
 				break;
 			case 34123:
 			case 33207: //Hitpoints
@@ -53,63 +54,63 @@ case 33206:// Attack button
 				break;
 			case 34139:
 			case 33218: //Prayer 
-				SkillGuides.prayInterface(c);
+				//SkillGuides.prayInterface(c);
 				break;
 			case 34136:
 			case 33221: //Magic
 
-				SkillGuides.mageInterface(c);
+				//SkillGuides.mageInterface(c);
 				break;
 			case 34155:
 			case 33224: //Runecrafting
-				SkillGuides.rcInterface(c);
+				//SkillGuides.rcInterface(c);
 				break;
 			case 34158:
 			case 33210: //Agility
-				SkillGuides.agilityInterface(c);
+				//SkillGuides.agilityInterface(c);
 				break;
 			case 34161:
 			case 33213: //Herblore
-				SkillGuides.herbloreInterface(c);
+				//SkillGuides.herbloreInterface(c);
 				break;
 			case 59199:
 			case 33216: //Theiving
-				SkillGuides.thievingInterface(c);
+				//SkillGuides.thievingInterface(c);
 				break;	
 			case 59202:
 			case 33219: //craft
-				SkillGuides.craftingInterface(c);
+				//SkillGuides.craftingInterface(c);
 				break;	
 			case 33222: //Fletching
-				SkillGuides.fletchingInterface(c);
+				//SkillGuides.fletchingInterface(c);
 				break;	
 			case 59205: 
 			case 47130: //Slayer
-				SkillGuides.slayerInterface(c);
+			//	SkillGuides.slayerInterface(c);
 				c.forcedText = "I must slay another " + c.taskAmount + " " + Server.npcHandler.getNpcListName(c.slayerTask) + ".";
 				c.forcedChatUpdateRequired = true;
 				c.updateRequired = true;
 				break;	
 			case 33208: //Mining
-				SkillGuides.miningInterface(c);
+				//SkillGuides.miningInterface(c);
 				break;	
 			case 33211: //Smithing
-				SkillGuides.smithingInterface(c);
+				//SkillGuides.smithingInterface(c);
 				break;	
 			case 33214: //Fishing
-				SkillGuides.fishingInterface(c);
+				//SkillGuides.fishingInterface(c);
 				break;	
 			case 33217: //Cooking
-				SkillGuides.cookingInterface(c);
+				//SkillGuides.cookingInterface(c);
 				break;	
 			case 33220: //Firemaking
-				SkillGuides.firemakingInterface(c);
+				//SkillGuides.firemakingInterface(c);
 				break;	
 			case 33223: //Woodcutting
-				SkillGuides.woodcuttingInterface(c);
+				//SkillGuides.woodcuttingInterface(c);
 				break;	
 			case 54104: //Farming
-				SkillGuides.farmingInterface(c);
+				//SkillGuides.farmingInterface(c);
 				break;
 case 154:
 if(c.getPA().wearingCape(c.playerEquipment[c.playerCape])) {
@@ -528,7 +529,7 @@ break;
 					c.getPA().startTeleport(2980, 3866, 0, "modern");
 				} else if (c.dialogueAction == 76) {
 				c.getShops().openShop(4);
-				c.sendMessage("You have " + c.pkPoints + " Tyreatta Points.");
+				c.sendMessage("You have " + c.pkPoints + "  Points.");
 				}
 			break;
 
@@ -537,7 +538,7 @@ break;
 					c.getPA().startTeleport(3357, 3721, 0, "modern");
 				} else if (c.dialogueAction == 76) {
 				c.getShops().openShop(12);
-				c.sendMessage("You have " + c.pkPoints + " Tyreatta Points.");
+				c.sendMessage("You have " + c.pkPoints + "  Points.");
 				}
 			break;
 		
@@ -546,7 +547,7 @@ break;
 					c.getPA().startTeleport(2541, 4714, 0, "modern");
 				} else if (c.dialogueAction == 76) {
 				c.getShops().openShop(17);
-				c.sendMessage("You have " + c.pkPoints + " Tyreatta Points.");
+				c.sendMessage("You have " + c.pkPoints + "  Points.");
 				}
 			break;
 
@@ -911,7 +912,7 @@ break;
 				return;
 			}
 			if(c.inDuelArena()) {
-				Client o = (Client) Server.playerHandler.players[c.duelingWith];
+				Client o = (Client) PlayerHandler.players[c.duelingWith];
 				if(o == null) {
 					c.getTradeAndDuel().declineDuel();
 					o.getTradeAndDuel().declineDuel();
@@ -942,7 +943,7 @@ break;
 					o.getTradeAndDuel().confirmDuel();
 				}
 			} else {
-					Client o = (Client) Server.playerHandler.players[c.duelingWith];
+					Client o = (Client) PlayerHandler.players[c.duelingWith];
 					c.getTradeAndDuel().declineDuel();
 					o.getTradeAndDuel().declineDuel();
 					c.sendMessage("You can't stake out of Duel Arena.");
@@ -958,7 +959,7 @@ break;
 				if(c.duelStatus == 5) {
 					break;
 				}
-				Client o1 = (Client) Server.playerHandler.players[c.duelingWith];
+				Client o1 = (Client) PlayerHandler.players[c.duelingWith];
 				if(o1 == null) {
 					c.getTradeAndDuel().declineDuel();
 					return;
@@ -977,7 +978,7 @@ break;
 					o1.getPA().sendFrame126("Other player has accepted", 6571);
 				}
 			} else {
-					Client o = (Client) Server.playerHandler.players[c.duelingWith];
+					Client o = (Client) PlayerHandler.players[c.duelingWith];
 					c.getTradeAndDuel().declineDuel();
 					o.getTradeAndDuel().declineDuel();
 					c.sendMessage("You can't stake out of Duel Arena.");
@@ -1255,7 +1256,7 @@ break;
 			break;		
 
 			case 13092:
-			Client ot = (Client) Server.playerHandler.players[c.tradeWith];
+			Client ot = (Client) PlayerHandler.players[c.tradeWith];
 			if(ot == null) {
 				c.getTradeAndDuel().declineTrade();
 				c.sendMessage("Trade declined as the other player has disconnected.");
@@ -1299,7 +1300,7 @@ break;
 					
 			case 13218:
 			c.tradeAccepted = true;
-			Client ot1 = (Client) Server.playerHandler.players[c.tradeWith];
+			Client ot1 = (Client) PlayerHandler.players[c.tradeWith];
 				if (ot1 == null) {
 					c.getTradeAndDuel().declineTrade();
 					c.sendMessage("Trade declined as the other player has disconnected.");
@@ -1556,7 +1557,7 @@ break;
 				c.getPA().openUpBank();
 			break;
 			case 28165:
-				c.forcedChat(" I have "+c.pkPoints+" Tyreatta points");
+				c.forcedChat(" I have "+c.pkPoints+"  points");
 				break;
 			case 28166:
 				if (!c.inWild()) {
@@ -1602,7 +1603,7 @@ break;
 				c.memberStatus = 1;
 				c.pkPoints -= 10000;
 				} else {
-				c.sendMessage("You need 10000 Tyreatta points for this");
+				c.sendMessage("You need 10000 points for this");
 				}
 				}
 				break;

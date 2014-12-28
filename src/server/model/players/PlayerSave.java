@@ -1,13 +1,11 @@
 package server.model.players;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import server.Server;
 import server.util.Misc;
 
 public class PlayerSave
@@ -208,7 +206,7 @@ public class PlayerSave
 			//System.out.println("first");
 			return false;
 		}
-		if(p.playerName == null || Server.playerHandler.players[p.playerId] == null) {
+		if(p.playerName == null || PlayerHandler.players[p.playerId] == null) {
 			//System.out.println("second");
 			return false;
 		}

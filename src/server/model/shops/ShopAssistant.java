@@ -87,7 +87,6 @@ public class ShopAssistant {
 	
 	public double getItemShopValue(int ItemID, int Type, int fromSlot) {
 		double ShopValue = 1;
-		double Overstock = 0;
 		double TotPrice = 0;
 		for (int i = 0; i < Config.ITEM_LIMIT; i++) {
 			if (Server.itemHandler.ItemList[i] != null) {
@@ -133,7 +132,7 @@ public class ShopAssistant {
 		ShopValue *= 1.15;
 		String ShopAdd = "";
 		if (c.myShopId == 17 || c.myShopId == 4 || c.myShopId == 12) {
-			c.sendMessage(c.getItems().getItemName(removeId)+": currently costs " + getSpecialItemValue(removeId) + " Tyreatta points.");
+			c.sendMessage(c.getItems().getItemName(removeId)+": currently costs " + getSpecialItemValue(removeId) + " points.");
 			return;
 		}
 		if (c.myShopId == 14) {
@@ -498,7 +497,7 @@ public boolean addShopItem(int itemID, int amount) {
                         case 2:
                                 return "tokkul";//Tokkul
                         case 3:
-                                return "Tyreatta Points";//Pking Points
+                                return "Points";//Pking Points
                         case 4:
                                 return "vote points";//Vote points
                         case 5:

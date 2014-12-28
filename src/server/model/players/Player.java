@@ -1,17 +1,12 @@
 package server.model.players;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
 import server.Config;
-import server.Server;
 import server.model.items.Item;
 import server.model.npcs.NPC;
 import server.model.npcs.NPCHandler;
 import server.util.ISAACRandomGen;
 import server.util.Misc;
 import server.util.Stream;
-import server.world.map.VirtualWorld;
 
 public abstract class Player {
 
@@ -233,7 +228,7 @@ public int follow2 = 0;
 	public void assignAutocast(int button) {
 		for (int j = 0; j < autocastIds.length; j++) {
 			if (autocastIds[j] == button) {
-				Client c = (Client) Server.playerHandler.players[this.playerId];
+				Client c = (Client) PlayerHandler.players[this.playerId];
 				autocasting = true;
 				autocastId = autocastIds[j+1];
 				c.getPA().sendFrame36(108, 1);
@@ -578,7 +573,7 @@ public int follow2 = 0;
 	public int[] playerXP = new int[25];
 	
 	public void updateshop(int i){
-		Client p = (Client) Server.playerHandler.players[playerId];
+		Client p = (Client) PlayerHandler.players[playerId];
 		p.getShops().resetShop(i);
 	}
 	
@@ -1692,11 +1687,11 @@ public int follow2 = 0;
 	}
 	
 	public boolean samePlayer() {
-		for (int j = 0; j < Server.playerHandler.players.length; j++) {
+		for (int j = 0; j < PlayerHandler.players.length; j++) {
 			if (j == playerId)
 				continue;
-			if (Server.playerHandler.players[j] != null) {
-				if (Server.playerHandler.players[j].playerName.equalsIgnoreCase(playerName)) {
+			if (PlayerHandler.players[j] != null) {
+				if (PlayerHandler.players[j].playerName.equalsIgnoreCase(playerName)) {
 					disconnected = true;
 					return true;
 				}	

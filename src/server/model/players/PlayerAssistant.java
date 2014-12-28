@@ -4,27 +4,12 @@ import server.Config;
 import server.Server;
 import server.model.npcs.NPCHandler;
 import server.util.Misc;
-import server.world.map.VirtualWorld;
 import server.Connection;
-import server.util.Stream;
-
-import java.net.InetSocketAddress;
-import java.io.InputStreamReader;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.File;
-import java.util.Scanner;
-
 import org.apache.mina.common.IoSession;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.IOException;
-
 import server.event.EventManager;
 import server.event.Event;
 import server.event.EventContainer;
@@ -185,7 +170,6 @@ return -1;
 	}
 	        public void tradeTimer() {
                 EventManager.getSingleton().addEvent(new Event() {
-                        @Override
                         public void execute(EventContainer timer) {
  			if (c.trade11 > 0) {
 				c.trade11 -= 1;
@@ -549,8 +533,8 @@ return -1;
 	public void frame1() {
 		synchronized(c) {
 			for(int i = 0; i < Config.MAX_PLAYERS; i++) {
-				if(Server.playerHandler.players[i] != null) {
-					Client person = (Client)Server.playerHandler.players[i];
+				if(PlayerHandler.players[i] != null) {
+					Client person = (Client)PlayerHandler.players[i];
 					if(person != null) {
 						if(person.getOutStream() != null && !person.disconnected) {
 							if(c.distanceToPoint(person.getX(), person.getY()) <= 25){	
@@ -618,7 +602,7 @@ return -1;
 	public void createPlayersProjectile(int x, int y, int offX, int offY, int angle, int speed, int gfxMoving, int startHeight, int endHeight, int lockon, int time) {
 		synchronized(c) {
 			for(int i = 0; i < Config.MAX_PLAYERS; i++) {
-				Player p = Server.playerHandler.players[i];
+				Player p = PlayerHandler.players[i];
 				if(p != null) {
 					Client person = (Client)p;
 					if(person != null) {
@@ -637,7 +621,7 @@ return -1;
 	public void createPlayersProjectile2(int x, int y, int offX, int offY, int angle, int speed, int gfxMoving, int startHeight, int endHeight, int lockon, int time, int slope) {
 		synchronized(c) {
 			for(int i = 0; i < Config.MAX_PLAYERS; i++) {
-				Player p = Server.playerHandler.players[i];
+				Player p = PlayerHandler.players[i];
 				if(p != null) {
 					Client person = (Client)p;
 					if(person != null) {
@@ -676,7 +660,7 @@ return -1;
 	public void createPlayersStillGfx(int id, int x, int y, int height, int time) {
 		synchronized(c) {
 			for(int i = 0; i < Config.MAX_PLAYERS; i++) {
-				Player p = Server.playerHandler.players[i];
+				Player p = PlayerHandler.players[i];
 				if(p != null) {
 					Client person = (Client)p;
 					if(person != null) {
@@ -785,7 +769,7 @@ return -1;
 	public void logIntoPM() {
 		setPrivateMessaging(2);
 		for(int i1 = 0; i1 < Config.MAX_PLAYERS; i1++) {
-			Player p = Server.playerHandler.players[i1];
+			Player p = PlayerHandler.players[i1];
 			if(p != null && p.isActive) {
 				Client o = (Client)p;
 				if(o != null) {
@@ -798,7 +782,7 @@ return -1;
 		for(int i = 0; i < c.friends.length; i++) {
 			if(c.friends[i] != 0)  {
 				for(int i2 = 1; i2 < Config.MAX_PLAYERS; i2++) {
-					Player p = Server.playerHandler.players[i2];
+					Player p = PlayerHandler.players[i2];
 					if (p != null && p.isActive && Misc.playerNameToInt64(p.playerName) == c.friends[i])  {
 						Client o = (Client)p;
 						if(o != null) {
@@ -816,7 +800,7 @@ return -1;
 				pmLoaded = false;
 			}
 			for(int i1 = 1; i1 < Config.MAX_PLAYERS; i1++) {
-				Player p = Server.playerHandler.players[i1];
+				Player p = PlayerHandler.players[i1];
     			if(p != null && p.isActive) {
 					Client o = (Client)p;
 					if(o != null) {
@@ -830,7 +814,7 @@ return -1;
 	
 	@SuppressWarnings("unused")
 	public void updatePM(int pID, int world) { // used for private chat updates
-		Player p = Server.playerHandler.players[pID];
+		Player p = PlayerHandler.players[pID];
 		if(p == null || p.playerName == null || p.playerName.equals("null")){
 			return;
 		}
@@ -838,7 +822,7 @@ return -1;
 		if(o == null) {
 			return;
 		}
-        long l = Misc.playerNameToInt64(Server.playerHandler.players[pID].playerName);
+        long l = Misc.playerNameToInt64(PlayerHandler.players[pID].playerName);
 
         if (p.privateChat == 0) {
             for (int i = 0; i < c.friends.length; i++) {
@@ -981,7 +965,7 @@ return -1;
 		if(c.duelStatus != 6) {
 			//c.killerId = c.getCombat().getKillerId(c.playerId);
 			c.killerId = findKiller();
-			Client o = (Client) Server.playerHandler.players[c.killerId];
+			Client o = (Client) PlayerHandler.players[c.killerId];
 					if(o != null) {
 				if (c.killerId != c.playerId)
 					o.sendMessage(""+c.playerName+" falls before your might.");
@@ -989,10 +973,10 @@ return -1;
 				if(o.duelStatus == 5) {
 					o.duelStatus++;
 				}
-				if (Server.playerHandler.players[c.killerId].connectedFrom != Server.playerHandler.players[c.playerKilled].connectedFrom && Server.playerHandler.players[c.playerId].connectedFrom != o.lastKilled && !c.isInFunPk() && !c.inDuelArena()) {
+				if (PlayerHandler.players[c.killerId].connectedFrom != PlayerHandler.players[c.playerKilled].connectedFrom && PlayerHandler.players[c.playerId].connectedFrom != o.lastKilled && !c.isInFunPk() && !c.inDuelArena()) {
 					o.sendMessage("You have defeated "+Misc.optimizeText(c.playerName)+" and recieved 1 Pk point.");
 					o.pkPoints = (o.pkPoints + Misc.random(10));
-					o.lastKilled = Server.playerHandler.players[c.playerId].connectedFrom;
+					o.lastKilled = PlayerHandler.players[c.playerId].connectedFrom;
 				} else {
 					o.sendMessage("You do not recieve points for killing " +c.playerName+ ".");
 					o.sendMessage("You either killed them twice, or you are not in the wilderness.");
@@ -1004,7 +988,7 @@ return -1;
 		c.npcIndex = 0;
 		c.playerIndex = 0;
 		c.stopMovement();
-		Client o = (Client) Server.playerHandler.players[c.killerId];
+		Client o = (Client) PlayerHandler.players[c.killerId];
 		if(c.duelStatus <= 4) {
 			c.sendMessage("Oh dear, you are dead!");
 			PlayerSave.saveGame(o);
@@ -1066,10 +1050,10 @@ return -1;
 	}
 	
 	public void resetFollowers() {
-		for (int j = 0; j < Server.playerHandler.players.length; j++) {
-			if (Server.playerHandler.players[j] != null) {
-				if (Server.playerHandler.players[j].followId == c.playerId) {
-					Client c = (Client)Server.playerHandler.players[j];
+		for (int j = 0; j < PlayerHandler.players.length; j++) {
+			if (PlayerHandler.players[j] != null) {
+				if (PlayerHandler.players[j].followId == c.playerId) {
+					Client c = (Client)PlayerHandler.players[j];
 					c.getPA().resetFollow();
 				}			
 			}		
@@ -1137,7 +1121,7 @@ return -1;
 		} else if (c.inFightCaves()) {
 			c.getPA().resetTzhaar();
 		} else { // we are in a duel, respawn outside of arena
-			Client o = (Client) Server.playerHandler.players[c.duelingWith];
+			Client o = (Client) PlayerHandler.players[c.duelingWith];
 			if(o != null) {
 				o.getPA().createPlayerHints(10, -1);
 				if(o.duelStatus == 6) {
@@ -1517,7 +1501,7 @@ return -1;
 	}
 	
 	public void followNpc() {
-		if(Server.npcHandler.npcs[c.followId2] == null || Server.npcHandler.npcs[c.followId2].isDead) {
+		if(NPCHandler.npcs[c.followId2] == null || NPCHandler.npcs[c.followId2].isDead) {
 			c.followId2 = 0;
 			return;
 		}		
@@ -1527,8 +1511,8 @@ return -1;
 		if (c.isDead || c.playerLevel[3] <= 0)
 			return;
 		
-		int otherX = Server.npcHandler.npcs[c.followId2].getX();
-		int otherY = Server.npcHandler.npcs[c.followId2].getY();
+		int otherX = NPCHandler.npcs[c.followId2].getX();
+		int otherY = NPCHandler.npcs[c.followId2].getY();
 		boolean withinDistance = c.goodDistance(otherX, otherY, c.getX(), c.getY(), 2);
 		boolean goodDistance = c.goodDistance(otherX, otherY, c.getX(), c.getY(), 1);
 		boolean hallyDistance = c.goodDistance(otherX, otherY, c.getX(), c.getY(), 2);
@@ -2182,7 +2166,7 @@ return -1;
 	public int getNpcId(int id) {
 		for(int i = 0; i < NPCHandler.maxNPCs; i++) {
 			if(NPCHandler.npcs[i] != null) {
-				if(Server.npcHandler.npcs[i].npcId == id) {
+				if(NPCHandler.npcs[i].npcId == id) {
 					return i;
 				}
 			}
@@ -2295,7 +2279,7 @@ return -1;
 	}
 	
 	public void addStarter() {
-		if (!Connection.hasRecieved1stStarter(Server.playerHandler.players[c.playerId].connectedFrom)) {
+		if (!Connection.hasRecieved1stStarter(PlayerHandler.players[c.playerId].connectedFrom)) {
 			c.trade11 = 900;
 			c.getItems().addItem(995,10000000);
                 	c.getItems().addItem(4587,1);
@@ -2316,16 +2300,16 @@ return -1;
 			c.sendMessage("@red@Type ::barrows. Talk to the Runescape Guide for more help :)");
 			c.sendMessage("@dre@Type ::commands for a list of commands");
 			c.sendMessage("@dre@Why not talk to Duradel for your first slayer task!");
-			if (Server.playerHandler.players[c.playerId].connectedFrom != "127.0.0.1") { 
-			Connection.addIpToStarterList1(Server.playerHandler.players[c.playerId].connectedFrom);
-			Connection.addIpToStarter1(Server.playerHandler.players[c.playerId].connectedFrom);
+			if (PlayerHandler.players[c.playerId].connectedFrom != "127.0.0.1") { 
+			Connection.addIpToStarterList1(PlayerHandler.players[c.playerId].connectedFrom);
+			Connection.addIpToStarter1(PlayerHandler.players[c.playerId].connectedFrom);
 			c.sendMessage("Starter Package: 1 out of 2 on this IP address.");
 			closeAllWindows();
 			c.getDH().sendDialogues(32, 945);
 			} else {
 			c.sendMessage("You are localhost and are not added to starter list!");
 			}
-		} else if (Connection.hasRecieved1stStarter(Server.playerHandler.players[c.playerId].connectedFrom) && !Connection.hasRecieved2ndStarter(Server.playerHandler.players[c.playerId].connectedFrom)) {
+		} else if (Connection.hasRecieved1stStarter(PlayerHandler.players[c.playerId].connectedFrom) && !Connection.hasRecieved2ndStarter(PlayerHandler.players[c.playerId].connectedFrom)) {
 			c.getItems().addItem(995,10000000);
 			c.slayerTask = -1;
 			c.trade11 = 900;
@@ -2346,11 +2330,11 @@ return -1;
 			c.sendMessage("@red@Type ::barrows. Talk to the Runescape Guide for more help :)");
 			c.sendMessage("@dre@Type ::commands for a list of commands :)");
 			c.sendMessage("Starter Package: @red@2 out of 2@bla@ on this IP address.");
-			Connection.addIpToStarterList2(Server.playerHandler.players[c.playerId].connectedFrom);
-			Connection.addIpToStarter2(Server.playerHandler.players[c.playerId].connectedFrom);
+			Connection.addIpToStarterList2(PlayerHandler.players[c.playerId].connectedFrom);
+			Connection.addIpToStarter2(PlayerHandler.players[c.playerId].connectedFrom);
 			closeAllWindows();
 			c.getDH().sendDialogues(32, 945);
-		} else if (Connection.hasRecieved1stStarter(Server.playerHandler.players[c.playerId].connectedFrom) && Connection.hasRecieved2ndStarter(Server.playerHandler.players[c.playerId].connectedFrom)) {
+		} else if (Connection.hasRecieved1stStarter(PlayerHandler.players[c.playerId].connectedFrom) && Connection.hasRecieved2ndStarter(PlayerHandler.players[c.playerId].connectedFrom)) {
 			c.sendMessage("You can no longer recieve starter packages.");
 			c.slayerTask = -1;
 			c.trade11 = 900;
@@ -2551,7 +2535,7 @@ return -1;
 		c.getPA().sendFrame126("@red@Owner Commands", 7343);
 		c.getPA().sendFrame126("@yel@Staffzone", 7344);
 		c.getPA().sendFrame126(" ", 7345);
-		c.getPA().sendFrame126("@red@10K Tyreatta Points for Donator", 7346);
+		c.getPA().sendFrame126("@red@10K Points for Donator", 7346);
 		c.getPA().sendFrame126(" ", 7347);
 		c.getPA().sendFrame126(" ", 7348);
 		c.getPA().sendFrame126("@whi@Spellbook Swap", 7383);
@@ -2568,7 +2552,7 @@ return -1;
 
 	}
 	public void playerCommands() {
-		c.getPA().sendFrame126("@dre@The commands of TyreattaScape", 8144);
+		c.getPA().sendFrame126("@dre@The commands of FreeRoam", 8144);
 		c.getPA().sendFrame126("@blu@::weed @bla@- Makes you high!", 8145);
 		c.getPA().sendFrame126("@blu@::bank @bla@- Opens your bank!", 8147);
 		c.getPA().sendFrame126("@blu@::players @bla@- Tells which and how many players are online.", 8148);
@@ -2679,11 +2663,11 @@ return -1;
 		c.getPA().sendFrame126("", 8254);
 }
 public void modCommands() {
-		c.getPA().sendFrame126("@dre@The Moderator commands of TyreattaScape", 8144);
+		c.getPA().sendFrame126("@dre@The Moderator commands of FreeRoam", 8144);
 		c.getPA().sendFrame126("@blu@::weed @bla@- Makes you high!", 8145);
 		c.getPA().sendFrame126("@blu@::bank @bla@- Opens your bank!", 8147);
 		c.getPA().sendFrame126("@blu@::players @bla@- Tells which and how many players are online.", 8148);
-		c.getPA().sendFrame126("@blu@::tpoints @bla@- Shows you your amount of Tyreatta points.", 8149);
+		c.getPA().sendFrame126("@blu@::tpoints @bla@- Shows you your amount of FreeRoam points.", 8149);
 		c.getPA().sendFrame126("@blu@::agility @bla@- Brings you to the agility course.", 8150);
 		c.getPA().sendFrame126("@blu@::partyroom @bla@- Brings you to the Drop Party room.", 8151);
 		c.getPA().sendFrame126("@blu@::newhits @bla@- Turns the new x10 hit multiplier on.", 8152);
@@ -2790,11 +2774,11 @@ public void modCommands() {
 		c.getPA().sendFrame126("", 8254);
 }
 public void adminCommands() {
-		c.getPA().sendFrame126("@dre@The Admin commands of TyreattaScape", 8144);
+		c.getPA().sendFrame126("@dre@The Admin commands of FreeRoam", 8144);
 		c.getPA().sendFrame126("@blu@::weed @bla@- Makes you high!", 8145);
 		c.getPA().sendFrame126("@blu@::bank @bla@- Opens your bank!", 8147);
 		c.getPA().sendFrame126("@blu@::players @bla@- Tells which and how many players are online.", 8148);
-		c.getPA().sendFrame126("@blu@::tpoints @bla@- Shows you your amount of Tyreatta points.", 8149);
+		c.getPA().sendFrame126("@blu@::tpoints @bla@- Shows you your amount of points.", 8149);
 		c.getPA().sendFrame126("@blu@::agility @bla@- Brings you to the agility course.", 8150);
 		c.getPA().sendFrame126("@blu@::partyroom @bla@- Brings you to the Drop Party room.", 8151);
 		c.getPA().sendFrame126("@blu@::newhits @bla@- Turns the new x10 hit multiplier on.", 8152);
@@ -2901,11 +2885,11 @@ public void adminCommands() {
 		c.getPA().sendFrame126("", 8254);
 }
 public void ownerCommands() {
-		c.getPA().sendFrame126("@dre@The Owner commands of TyreattaScape", 8144);
+		c.getPA().sendFrame126("@dre@The Owner commands of FreeRoam", 8144);
 		c.getPA().sendFrame126("@blu@::weed @bla@- Makes you high!", 8145);
 		c.getPA().sendFrame126("@blu@::bank @bla@- Opens your bank!", 8147);
 		c.getPA().sendFrame126("@blu@::players @bla@- Tells which and how many players are online.", 8148);
-		c.getPA().sendFrame126("@blu@::tpoints @bla@- Shows you your amount of Tyreatta points.", 8149);
+		c.getPA().sendFrame126("@blu@::tpoints @bla@- Shows you your amount of points.", 8149);
 		c.getPA().sendFrame126("@blu@::agility @bla@- Brings you to the agility course.", 8150);
 		c.getPA().sendFrame126("@blu@::partyroom @bla@- Brings you to the Drop Party room.", 8151);
 		c.getPA().sendFrame126("@blu@::newhits @bla@- Turns the new x10 hit multiplier on.", 8152);

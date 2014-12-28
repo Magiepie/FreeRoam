@@ -251,7 +251,6 @@ public class RS2LoginProtocolDecoder extends CumulativeProtocolDecoder {
 		final Client fcl = cl;
 		session.setAttachment(cl);
 		session.write(pkt).addListener(new IoFutureListener() {
-			@Override
 			public void operationComplete(IoFuture arg0) {
 				session.getFilterChain().remove("protocolFilter");
 				session.getFilterChain().addFirst("protocolFilter", new ProtocolCodecFilter(new GameCodecFactory(inC)));				

@@ -1,8 +1,8 @@
 package server.model.players.packets;
 
-import server.Server;
 import server.model.players.Client;
 import server.model.players.PacketType;
+import server.model.players.PlayerHandler;
 import server.util.Misc;
 
 
@@ -14,7 +14,7 @@ public class ClickingStuff implements PacketType {
 	public void processPacket(Client c, int packetType, int packetSize) {
 		if (c.inTrade) {
 			if (!c.acceptedTrade) {
-				Client o = (Client) Server.playerHandler.players[c.tradeWith];
+				Client o = (Client) PlayerHandler.players[c.tradeWith];
 				o.tradeAccepted = false;
 				c.tradeAccepted = false;
 				o.tradeStatus = 0;
@@ -30,7 +30,7 @@ public class ClickingStuff implements PacketType {
 		//if (c.isBanking)
 		//c.isBanking = false;
 
-		Client o = (Client) Server.playerHandler.players[c.duelingWith];
+		Client o = (Client) PlayerHandler.players[c.duelingWith];
 			if (c.duelStatus == 5) {
 				c.sendMessage("This glitch has been fixed by Damo, sorry sir.");
 				return;

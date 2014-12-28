@@ -13,9 +13,9 @@ public class RemoveItem implements PacketType {
 		int interfaceId = c.getInStream().readUnsignedWordA();
 		int removeSlot = c.getInStream().readUnsignedWordA();
 		int removeId = c.getInStream().readUnsignedWordA();
-		int shop = 0;
-		int value = 0;
-		String name = "null";
+		//int shop = 0;
+		//int value = 0;
+		//String name = "null";
 		
 
 		switch(interfaceId) {

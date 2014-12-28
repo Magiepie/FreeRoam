@@ -1,7 +1,7 @@
 package server.model.players.packets;
 
 import server.Config;
-import server.Server;
+import server.model.npcs.NPCHandler;
 import server.model.players.Client;
 import server.model.players.PacketType;
 
@@ -28,15 +28,15 @@ public class ClickNPC implements PacketType {
 				break;
 			}
 			c.npcIndex = c.getInStream().readUnsignedWordA();
-			if (Server.npcHandler.npcs[c.npcIndex] == null) {
+			if (NPCHandler.npcs[c.npcIndex] == null) {
 				c.npcIndex = 0;
 				break;
 			}	
-			if (Server.npcHandler.npcs[c.npcIndex].MaxHP == 0) {
+			if (NPCHandler.npcs[c.npcIndex].MaxHP == 0) {
 				c.npcIndex = 0;
 				break;
 			}			
-			if(Server.npcHandler.npcs[c.npcIndex] == null){
+			if(NPCHandler.npcs[c.npcIndex] == null){
 				break;
 			}
 			if (c.autocastId > 0)
@@ -67,11 +67,11 @@ public class ClickNPC implements PacketType {
 					usingOtherRangeWeapons = true;
 				}
 			}
-			if((usingBow || c.autocasting) && c.goodDistance(c.getX(), c.getY(), Server.npcHandler.npcs[c.npcIndex].getX(), Server.npcHandler.npcs[c.npcIndex].getY(), 7)) {
+			if((usingBow || c.autocasting) && c.goodDistance(c.getX(), c.getY(), NPCHandler.npcs[c.npcIndex].getX(), NPCHandler.npcs[c.npcIndex].getY(), 7)) {
 				c.stopMovement();
 			}
 			
-			if(usingOtherRangeWeapons && c.goodDistance(c.getX(), c.getY(), Server.npcHandler.npcs[c.npcIndex].getX(), Server.npcHandler.npcs[c.npcIndex].getY(), 7)) {
+			if(usingOtherRangeWeapons && c.goodDistance(c.getX(), c.getY(), NPCHandler.npcs[c.npcIndex].getX(), NPCHandler.npcs[c.npcIndex].getY(), 7)) {
 				c.stopMovement();
 			}
 			if(!usingCross && !usingArrows && usingBow && c.playerEquipment[c.playerWeapon] < 4212 && c.playerEquipment[c.playerWeapon] > 4223 && !usingCross) {
@@ -117,11 +117,11 @@ public class ClickNPC implements PacketType {
 			int castingSpellId = c.getInStream().readSignedWordA();
 			c.usingMagic = false;
 			
-			if(Server.npcHandler.npcs[c.npcIndex] == null ){
+			if(NPCHandler.npcs[c.npcIndex] == null ){
 				break;
 			}
 			
-			if(Server.npcHandler.npcs[c.npcIndex].MaxHP == 0 || Server.npcHandler.npcs[c.npcIndex].npcType == 944){
+			if(NPCHandler.npcs[c.npcIndex].MaxHP == 0 || NPCHandler.npcs[c.npcIndex].npcType == 944){
 				c.sendMessage("You can't attack this npc.");
 				break;
 			}
@@ -135,7 +135,7 @@ public class ClickNPC implements PacketType {
 			}
 			if(castingSpellId == 1171) { // crumble undead
 				for (int npc : Config.UNDEAD_NPCS) {
-					if(Server.npcHandler.npcs[c.npcIndex].npcType != npc) {
+					if(NPCHandler.npcs[c.npcIndex].npcType != npc) {
 					 c.sendMessage("You can only attack undead monsters with this spell.");
 					 c.usingMagic = false;
 					 c.stopMovement();
@@ -152,7 +152,7 @@ public class ClickNPC implements PacketType {
 				c.autocasting = false;
 			
 			if(c.usingMagic) {
-				if(c.goodDistance(c.getX(), c.getY(), Server.npcHandler.npcs[c.npcIndex].getX(), Server.npcHandler.npcs[c.npcIndex].getY(), 6)) {
+				if(c.goodDistance(c.getX(), c.getY(), NPCHandler.npcs[c.npcIndex].getX(), NPCHandler.npcs[c.npcIndex].getY(), 6)) {
 					c.stopMovement();
 				}
 				if (c.attackTimer <= 0) {
@@ -165,10 +165,10 @@ public class ClickNPC implements PacketType {
 			
 			case FIRST_CLICK:
 				c.npcClickIndex = c.inStream.readSignedWordBigEndian();
-				c.npcType = Server.npcHandler.npcs[c.npcClickIndex].npcType;
-				if(c.goodDistance(Server.npcHandler.npcs[c.npcClickIndex].getX(), Server.npcHandler.npcs[c.npcClickIndex].getY(), c.getX(), c.getY(), 1)) {
-					c.turnPlayerTo(Server.npcHandler.npcs[c.npcClickIndex].getX(), Server.npcHandler.npcs[c.npcClickIndex].getY());
-					Server.npcHandler.npcs[c.npcClickIndex].facePlayer(c.playerId);
+				c.npcType = NPCHandler.npcs[c.npcClickIndex].npcType;
+				if(c.goodDistance(NPCHandler.npcs[c.npcClickIndex].getX(), NPCHandler.npcs[c.npcClickIndex].getY(), c.getX(), c.getY(), 1)) {
+					c.turnPlayerTo(NPCHandler.npcs[c.npcClickIndex].getX(), NPCHandler.npcs[c.npcClickIndex].getY());
+					NPCHandler.npcs[c.npcClickIndex].facePlayer(c.playerId);
 					c.getActions().firstClickNpc(c.npcType);	
 				} else {
 					c.clickNpcType = 1;
@@ -177,10 +177,10 @@ public class ClickNPC implements PacketType {
 			
 			case SECOND_CLICK:
 				c.npcClickIndex = c.inStream.readUnsignedWordBigEndianA();
-				c.npcType = Server.npcHandler.npcs[c.npcClickIndex].npcType;
-				if(c.goodDistance(Server.npcHandler.npcs[c.npcClickIndex].getX(), Server.npcHandler.npcs[c.npcClickIndex].getY(), c.getX(), c.getY(), 1)) {
-					c.turnPlayerTo(Server.npcHandler.npcs[c.npcClickIndex].getX(), Server.npcHandler.npcs[c.npcClickIndex].getY());
-					Server.npcHandler.npcs[c.npcClickIndex].facePlayer(c.playerId);
+				c.npcType = NPCHandler.npcs[c.npcClickIndex].npcType;
+				if(c.goodDistance(NPCHandler.npcs[c.npcClickIndex].getX(), NPCHandler.npcs[c.npcClickIndex].getY(), c.getX(), c.getY(), 1)) {
+					c.turnPlayerTo(NPCHandler.npcs[c.npcClickIndex].getX(), NPCHandler.npcs[c.npcClickIndex].getY());
+					NPCHandler.npcs[c.npcClickIndex].facePlayer(c.playerId);
 					c.getActions().secondClickNpc(c.npcType);	
 				} else {
 					c.clickNpcType = 2;
@@ -189,10 +189,10 @@ public class ClickNPC implements PacketType {
 			
 			case THIRD_CLICK:
 				c.npcClickIndex = c.inStream.readSignedWord();
-				c.npcType = Server.npcHandler.npcs[c.npcClickIndex].npcType;
-				if(c.goodDistance(Server.npcHandler.npcs[c.npcClickIndex].getX(), Server.npcHandler.npcs[c.npcClickIndex].getY(), c.getX(), c.getY(), 1)) {
-					c.turnPlayerTo(Server.npcHandler.npcs[c.npcClickIndex].getX(), Server.npcHandler.npcs[c.npcClickIndex].getY());
-					Server.npcHandler.npcs[c.npcClickIndex].facePlayer(c.playerId);
+				c.npcType = NPCHandler.npcs[c.npcClickIndex].npcType;
+				if(c.goodDistance(NPCHandler.npcs[c.npcClickIndex].getX(), NPCHandler.npcs[c.npcClickIndex].getY(), c.getX(), c.getY(), 1)) {
+					c.turnPlayerTo(NPCHandler.npcs[c.npcClickIndex].getX(), NPCHandler.npcs[c.npcClickIndex].getY());
+					NPCHandler.npcs[c.npcClickIndex].facePlayer(c.playerId);
 					c.getActions().thirdClickNpc(c.npcType);	
 				} else {
 					c.clickNpcType = 3;

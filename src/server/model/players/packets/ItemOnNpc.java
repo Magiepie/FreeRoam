@@ -1,7 +1,7 @@
 package server.model.players.packets;
 
-import server.Server;
 import server.model.items.UseItem;
+import server.model.npcs.NPCHandler;
 import server.model.players.Client;
 import server.model.players.PacketType;
 
@@ -12,7 +12,7 @@ public class ItemOnNpc implements PacketType {
 		int itemId = c.getInStream().readSignedWordA();
 		int i = c.getInStream().readSignedWordA();
 		int slot = c.getInStream().readSignedWordBigEndian();
-		int npcId = Server.npcHandler.npcs[i].npcType;
+		int npcId = NPCHandler.npcs[i].npcType;
 				if(!c.getItems().playerHasItem(itemId, 1)) {
 			return;
 		}

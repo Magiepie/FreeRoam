@@ -27,7 +27,7 @@ public class TradeAndDuel{
 	public CopyOnWriteArrayList<GameItem> offeredItems = new CopyOnWriteArrayList<GameItem>();
 	
 	public void requestTrade(int id){
-		Client o = (Client) Server.playerHandler.players[id];
+		Client o = (Client) PlayerHandler.players[id];
 		if(c.isBanking) {
 			c.sendMessage("You can't trade while in bank sir, sorry.");
 			//o.sendMessage("The player you tried to trade is banking, tell him to close bank please.");
@@ -74,7 +74,7 @@ public class TradeAndDuel{
 			c.sendMessage("Administrator can't trade playerrs.");
 			return;
 		}
-		Client o = (Client) Server.playerHandler.players[c.tradeWith];
+		Client o = (Client) PlayerHandler.players[c.tradeWith];
 		
 		if(c.trade11 > 0) {
 			int mins = c.trade11 / 120;
@@ -205,7 +205,7 @@ public boolean fromTrade(int itemID, int fromSlot, int amount) {
 	}
 		
 	public boolean tradeItem(int itemID, int fromSlot, int amount) {
-		Client o = (Client) Server.playerHandler.players[c.tradeWith];
+		Client o = (Client) PlayerHandler.players[c.tradeWith];
 		if(o == null) {
 			return false;
 		}
@@ -299,7 +299,7 @@ public boolean fromTrade(int itemID, int fromSlot, int amount) {
 
 	public void declineTrade(boolean tellOther) {
 		c.getPA().removeAllWindows();
-		Client o = (Client) Server.playerHandler.players[c.tradeWith];
+		Client o = (Client) PlayerHandler.players[c.tradeWith];
 		if (o == null) {
 			return;
 		}
@@ -332,7 +332,7 @@ public boolean fromTrade(int itemID, int fromSlot, int amount) {
 		
 	public void resetOTItems(int WriteFrame) {
 		synchronized(c) {
-			Client o = (Client) Server.playerHandler.players[c.tradeWith];
+			Client o = (Client) PlayerHandler.players[c.tradeWith];
 			if(o == null) {
 				return;
 			}	
@@ -364,7 +364,7 @@ public boolean fromTrade(int itemID, int fromSlot, int amount) {
 	
 	
 	public void confirmScreen() {
-		Client o = (Client) Server.playerHandler.players[c.tradeWith];
+		Client o = (Client) PlayerHandler.players[c.tradeWith];
 		if(o == null) {
 			return;
 		}
@@ -430,7 +430,7 @@ public boolean fromTrade(int itemID, int fromSlot, int amount) {
 	
 	
 	public void giveItems() {
-		Client o = (Client) Server.playerHandler.players[c.tradeWith];
+		Client o = (Client) PlayerHandler.players[c.tradeWith];
 		if(o == null) {
 			return;
 		}	
@@ -461,7 +461,7 @@ public boolean fromTrade(int itemID, int fromSlot, int amount) {
 			resetDuel();
 			resetDuelItems();
 			c.duelingWith = id;
-			Client o = (Client) Server.playerHandler.players[id];
+			Client o = (Client) PlayerHandler.players[id];
 			if(o == null) {
 				return;
 			}
@@ -484,7 +484,7 @@ public boolean fromTrade(int itemID, int fromSlot, int amount) {
 	}
 	
 	public void openDuel() {
-		Client o = (Client) Server.playerHandler.players[c.duelingWith];
+		Client o = (Client) PlayerHandler.players[c.duelingWith];
 		if(o == null) {
 			return;
 		}	
@@ -531,7 +531,7 @@ public boolean fromTrade(int itemID, int fromSlot, int amount) {
 	
 	public void refreshDuelScreen() {
 		synchronized(c) {
-			Client o = (Client) Server.playerHandler.players[c.duelingWith];
+			Client o = (Client) PlayerHandler.players[c.duelingWith];
 			if(o == null) {
 				return;
 			}
@@ -620,7 +620,7 @@ if(!c.getItems().playerHasItem(itemID, amount))
 		}
 		if (amount <= 0)
 			return false;
-		Client o = (Client) Server.playerHandler.players[c.duelingWith];
+		Client o = (Client) PlayerHandler.players[c.duelingWith];
 		if (o == null ) {
 			declineDuel();
 			return false;
@@ -683,7 +683,7 @@ if(!c.getItems().playerHasItem(itemID, amount))
 	
 	
 	public boolean fromDuel(int itemID, int fromSlot, int amount)  {
-		Client o = (Client) Server.playerHandler.players[c.duelingWith];
+		Client o = (Client) PlayerHandler.players[c.duelingWith];
 		if (o == null ) {
 			declineDuel();
 			return false;
@@ -783,7 +783,7 @@ if(!c.getItems().playerHasItem(itemID, amount))
     }
 	
 	public void confirmDuel() {
-		Client o = (Client) Server.playerHandler.players[c.duelingWith];
+		Client o = (Client) PlayerHandler.players[c.duelingWith];
 		if(o == null) {
 			declineDuel();
 			return;
@@ -837,7 +837,7 @@ if(!c.getItems().playerHasItem(itemID, amount))
 	public void startDuel() {
 		c.freezeTimer = 2;
 		c.getPA().resetFollow();
-		Client o = (Client) Server.playerHandler.players[c.duelingWith];
+		Client o = (Client) PlayerHandler.players[c.duelingWith];
 		if (o.disconnected) {
 		duelVictory();
 		}
@@ -921,7 +921,7 @@ if(!c.getItems().playerHasItem(itemID, amount))
 
 	
 	public void duelVictory() {
-		Client o = (Client) Server.playerHandler.players[c.duelingWith];
+		Client o = (Client) PlayerHandler.players[c.duelingWith];
 		if(o != null) {
 			c.getPA().sendFrame126(""+o.combatLevel, 6839);
 			c.getPA().sendFrame126(o.playerName, 6840);
@@ -1063,7 +1063,7 @@ if(!c.getItems().playerHasItem(itemID, amount))
 	}
 	
 	public void changeDuelStuff() {
-		Client o = (Client) Server.playerHandler.players[c.duelingWith];
+		Client o = (Client) PlayerHandler.players[c.duelingWith];
 		if(o == null) {
 			return;
 		}
@@ -1075,7 +1075,7 @@ if(!c.getItems().playerHasItem(itemID, amount))
 	
 	
 	public void selectRule(int i) { // rules
-		Client o = (Client) Server.playerHandler.players[c.duelingWith];
+		Client o = (Client) PlayerHandler.players[c.duelingWith];
 		if(o == null) {
 			return;
 		}

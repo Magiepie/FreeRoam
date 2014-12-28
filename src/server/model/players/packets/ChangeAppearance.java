@@ -8,7 +8,6 @@ import server.model.players.PacketType;
  **/
 public class ChangeAppearance implements PacketType {
 
-	@Override
 	public void processPacket(Client c, int packetType, int packetSize) {
 		int gender = c.getInStream().readSignedByte();
 		int head = c.getInStream().readSignedByte();

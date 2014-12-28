@@ -9,7 +9,6 @@ import server.model.players.PacketType;
 
 public class BankX2 implements PacketType {
 	
-	@Override
 	public void processPacket(Client c, int packetType, int packetSize) {
 		int amount = c.getInStream().readDWord();
 		if (amount == 0) {

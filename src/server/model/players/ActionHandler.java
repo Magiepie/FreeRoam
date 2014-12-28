@@ -1234,7 +1234,7 @@ break;
 			case 213:
 				if (c.memberStatus == 1) {
 				c.getShops().openShop(17);
-				c.sendMessage("You have " + c.pkPoints + " Tyreatta Points.");
+				c.sendMessage("You have " + c.pkPoints + " Points.");
 				} else {
 				c.sendMessage("@red@You must be a donator to view this shop!");
 				}

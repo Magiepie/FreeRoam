@@ -3,8 +3,8 @@ package server.model.minigames;
 
 import java.util.ArrayList;
 
-import server.Server;
 import server.model.players.Client;
+import server.model.players.PlayerHandler;
 import server.util.Misc;
 
 public class CastleWars {
@@ -117,8 +117,8 @@ public class CastleWars {
 	public void updatePlayers() {
 		//saradomin players
 		for (int player : saradominWait) {
-			if (Server.playerHandler.players[player] != null) {
-				Client c = (Client) Server.playerHandler.players[player];
+			if (PlayerHandler.players[player] != null) {
+				Client c = (Client) PlayerHandler.players[player];
 				c.getPA().walkableInterface(6673);
 				c.getPA().sendFrame126("Next Game Begins In : " + ((gameStartTimer * 3) + (timeRemaining * 3)) + " seconds.", 6570);
 				c.getPA().sendFrame126("", 6572);
@@ -129,8 +129,8 @@ public class CastleWars {
 			}
 		}
 		for (int player : zamorakWait) {
-			if (Server.playerHandler.players[player] != null) {
-				Client c = (Client) Server.playerHandler.players[player];
+			if (PlayerHandler.players[player] != null) {
+				Client c = (Client) PlayerHandler.players[player];
 				c.getPA().walkableInterface(6673);
 				c.getPA().sendFrame126("Next Game Begins In : " + gameStartTimer * 3 + " seconds.", 6570);
 				c.getPA().sendFrame126("", 6572);
@@ -145,8 +145,8 @@ public class CastleWars {
 	public void updateInGamePlayers() {
 		if (saradomin.size() > 0) {
 			for (int player : saradomin) {
-				if (Server.playerHandler.players[player] != null) {
-					Client c = (Client) Server.playerHandler.players[player];
+				if (PlayerHandler.players[player] != null) {
+					Client c = (Client) PlayerHandler.players[player];
 					c.getPA().walkableInterface(11146);
 					c.getPA().sendFrame126(saradominScore + " = Saradomin", 11148);
 					c.getPA().sendFrame126("Zamorak = " + zamorakScore, 11147);
@@ -175,8 +175,8 @@ public class CastleWars {
 		}
 		if (zamorak.size() > 0) {
 			for (int player : zamorak) {
-				if (Server.playerHandler.players[player] != null) {
-					Client c = (Client) Server.playerHandler.players[player];
+				if (PlayerHandler.players[player] != null) {
+					Client c = (Client) PlayerHandler.players[player];
 					c.getPA().walkableInterface(11146);
 					c.getPA().sendFrame126(saradominScore + " = Saradomin", 11148);
 					c.getPA().sendFrame126("Zamorak = " + zamorakScore, 11147);
@@ -210,9 +210,9 @@ public class CastleWars {
 		System.out.println("Starting Castle Wars game.");
 		timeRemaining = GAME_TIMER;
 		for (int player : saradominWait) {
-			if (Server.playerHandler.players[player] != null) {
+			if (PlayerHandler.players[player] != null) {
 				//put player @ coords
-				Client c = (Client)Server.playerHandler.players[player];
+				Client c = (Client)PlayerHandler.players[player];
 				c.getPA().walkableInterface(-1);
 				c.getPA().movePlayer(2426 + Misc.random(3), 3076 - Misc.random(3), 1);
 				saradomin.add(player);
@@ -223,9 +223,9 @@ public class CastleWars {
 		saradominWait.clear();
 		
 		for (int player : zamorakWait) {
-			if (Server.playerHandler.players[player] != null) {
+			if (PlayerHandler.players[player] != null) {
 				//put player @ coords
-				Client c = (Client)Server.playerHandler.players[player];
+				Client c = (Client)PlayerHandler.players[player];
 				c.getPA().walkableInterface(-1);
 				c.getPA().movePlayer(2373 + Misc.random(3), 3131 - Misc.random(3), 1);
 				zamorak.add(player);

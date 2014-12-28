@@ -11,6 +11,7 @@ import server.Server;
 import server.model.objects.Objects;
 import server.model.players.Client;
 import server.model.players.Player;
+import server.model.players.PlayerHandler;
 import server.util.Misc;
 
 /**
@@ -79,7 +80,7 @@ public class ObjectHandler {
 	* Creates the object for anyone who is within 60 squares of the object
 	**/
 	public void placeObject(Objects o) {
-		for (Player p : Server.playerHandler.players){
+		for (Player p : PlayerHandler.players){
 			if(p != null) {
 			Client person = (Client)p;
 				if(person != null){
@@ -211,7 +212,7 @@ public class ObjectHandler {
 				} else {
 					doorId--;
 				}
-				for (Player p : Server.playerHandler.players){
+				for (Player p : PlayerHandler.players){
 					if(p != null) {
 						Client person = (Client)p;
 						if(person != null){
@@ -355,9 +356,9 @@ public class ObjectHandler {
 		while (random == port) {
 		random = Misc.random(5);
 		}
-		for (int j = 0; j < Server.playerHandler.players.length; j++) {
-			if (Server.playerHandler.players[j] != null) {
-				Client c = (Client)Server.playerHandler.players[j];
+		for (int j = 0; j < PlayerHandler.players.length; j++) {
+			if (PlayerHandler.players[j] != null) {
+				Client c = (Client)PlayerHandler.players[j];
 				if (c.goodDistance(c.getX(), c.getY(), obeliskCoords[port][0] + 2, obeliskCoords[port][1] + 2, 1)) {
 					c.getPA().startTeleport2(obeliskCoords[random][0] + 2, obeliskCoords[random][1] + 2, 0);
 				}

@@ -1,10 +1,7 @@
 package server.world;
 
 import server.model.players.Client;
-import server.util.Misc;
-import server.Server;
-
-import java.util.ArrayList;
+import server.model.players.PlayerHandler;
 
 /**
  * @author Sanity
@@ -50,15 +47,15 @@ public class ClanChatHandler {
 		for (int j = 0; j < clans[clanId].members.length; j++) {
 			if (clans[clanId].members[j] <= 0)
 				continue;
-			if (Server.playerHandler.players[clans[clanId].members[j]] != null) {
-				Client c = (Client)Server.playerHandler.players[clans[clanId].members[j]];
+			if (PlayerHandler.players[clans[clanId].members[j]] != null) {
+				Client c = (Client)PlayerHandler.players[clans[clanId].members[j]];
 				c.getPA().sendFrame126("Talking in: " + clans[clanId].name, 18139);
 				c.getPA().sendFrame126("Owner: " + clans[clanId].owner, 18140);
 				int slotToFill = 18144;
 				for (int i = 0; i < clans[clanId].members.length; i++) {
 					if (clans[clanId].members[i] > 0){
-						if (Server.playerHandler.players[clans[clanId].members[i]] != null) {
-							c.getPA().sendFrame126(Server.playerHandler.players[clans[clanId].members[i]].playerName, slotToFill);
+						if (PlayerHandler.players[clans[clanId].members[i]] != null) {
+							c.getPA().sendFrame126(PlayerHandler.players[clans[clanId].members[i]].playerName, slotToFill);
 							slotToFill++;
 						}	
 					}
@@ -87,15 +84,15 @@ public class ClanChatHandler {
 		return true;
 	}	
 	public void addToClan(int playerId, int clanId) {
-		Client c = (Client)Server.playerHandler.players[playerId];
+		Client c = (Client)PlayerHandler.players[playerId];
 		if (clans[clanId] != null) {	
 			for (int j = 0; j < clans[clanId].members.length; j++) {
 				if (clans[clanId].members[j] <= 0) {
 					clans[clanId].members[j] = playerId;
-					Server.playerHandler.players[playerId].clanId = clanId;
+					PlayerHandler.players[playerId].clanId = clanId;
 					//Client c = (Client)Server.playerHandler.players[playerId];
 					//c.sendMessage("You have joined the clan chat: " + clans[clanId].name);
-					messageToClan(Server.playerHandler.players[playerId].playerName + " has joined the channel.", clanId);
+					messageToClan(PlayerHandler.players[playerId].playerName + " has joined the channel.", clanId);
 					if (clans[clanId].name.equalsIgnoreCase("Public")) {
 						clans[clanId].owner = "@gre@Server";
 						clans[clanId].lootshare = true;
@@ -112,14 +109,14 @@ public class ClanChatHandler {
 
 	public void leaveClan(int playerId, int clanId) {
 		if (clanId < 0) {
-			Client c = (Client)Server.playerHandler.players[playerId];
+			Client c = (Client)PlayerHandler.players[playerId];
 			c.sendMessage("You are not in a clan.");
 			return;		
 		}
 		if (clans[clanId] != null) {
-			if (Server.playerHandler.players[playerId].playerName.equalsIgnoreCase(clans[clanId].owner)) {
+			if (PlayerHandler.players[playerId].playerName.equalsIgnoreCase(clans[clanId].owner)) {
 				messageToClan("The clan has been deleted by the owner.", clanId);
-				destructClan(Server.playerHandler.players[playerId].clanId);
+				destructClan(PlayerHandler.players[playerId].clanId);
 				return;
 			}	
 			for (int j = 0; j < clans[clanId].members.length; j++) {
@@ -127,16 +124,16 @@ public class ClanChatHandler {
 					clans[clanId].members[j] = -1;
 				}
 			}
-			if (Server.playerHandler.players[playerId] != null) {
-				Client c = (Client)Server.playerHandler.players[playerId];
-				Server.playerHandler.players[playerId].clanId = -1;
+			if (PlayerHandler.players[playerId] != null) {
+				Client c = (Client)PlayerHandler.players[playerId];
+				PlayerHandler.players[playerId].clanId = -1;
 				c.sendMessage("You have left the clan.");
 				c.getPA().clearClanChat();
 			}
 			updateClanChat(clanId);
 		} else {
-			Client c = (Client)Server.playerHandler.players[playerId];
-			Server.playerHandler.players[playerId].clanId = -1;
+			Client c = (Client)PlayerHandler.players[playerId];
+			PlayerHandler.players[playerId].clanId = -1;
 			c.sendMessage("You are not in a clan.");
 		}
 	}
@@ -149,8 +146,8 @@ public class ClanChatHandler {
 				continue;
 			if (clans[clanId].members[j] <= 0)
 				continue;
-			if (Server.playerHandler.players[clans[clanId].members[j]] != null) {
-				Client c = (Client)Server.playerHandler.players[clans[clanId].members[j]];
+			if (PlayerHandler.players[clans[clanId].members[j]] != null) {
+				Client c = (Client)PlayerHandler.players[clans[clanId].members[j]];
 				c.clanId = -1;
 				c.getPA().clearClanChat();
 			}	
@@ -166,8 +163,8 @@ public class ClanChatHandler {
 		for (int j = 0; j < clans[clanId].members.length; j++) {
 			if (clans[clanId].members[j] < 0)
 				continue;
-			if (Server.playerHandler.players[clans[clanId].members[j]] != null) {
-				Client c = (Client)Server.playerHandler.players[clans[clanId].members[j]];
+			if (PlayerHandler.players[clans[clanId].members[j]] != null) {
+				Client c = (Client)PlayerHandler.players[clans[clanId].members[j]];
 				c.sendMessage("@red@" + message);
 			}
 		}	
@@ -179,11 +176,11 @@ public class ClanChatHandler {
 		for (int j = 0; j < clans[clanId].members.length; j++) {
 			if (clans[clanId].members[j] <= 0)
 				continue;
-			if (Server.playerHandler.players[clans[clanId].members[j]] != null) {
-				Client c = (Client)Server.playerHandler.players[clans[clanId].members[j]];
+			if (PlayerHandler.players[clans[clanId].members[j]] != null) {
+				Client c = (Client)PlayerHandler.players[clans[clanId].members[j]];
 				//c.sendMessage("["+Server.playerHandler.players[playerId].playerName+"] - " + message");
 				//sendClan(String name, String message, String clan, int rights)
-				c.sendClan(Server.playerHandler.players[playerId].playerName, message, clans[clanId].name, Server.playerHandler.players[playerId].playerRights);
+				c.sendClan(PlayerHandler.players[playerId].playerName, message, clans[clanId].name, PlayerHandler.players[playerId].playerRights);
 			}
 		}	
 	}
@@ -193,8 +190,8 @@ public class ClanChatHandler {
 			for (int j = 0; j < clans[clanId].members.length; j++) {
 				if (clans[clanId].members[j] <= 0)
 					continue;
-				if (Server.playerHandler.players[clans[clanId].members[j]] != null) {
-					Client c = (Client)Server.playerHandler.players[clans[clanId].members[j]];
+				if (PlayerHandler.players[clans[clanId].members[j]] != null) {
+					Client c = (Client)PlayerHandler.players[clans[clanId].members[j]];
 					c.sendClan("Lootshare", message, clans[clanId].name, 2);
 				}
 			}

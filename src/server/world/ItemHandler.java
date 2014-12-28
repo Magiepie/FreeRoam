@@ -10,11 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import server.Config;
-import server.Server;
 import server.model.items.GroundItem;
 import server.model.items.ItemList;
 import server.model.players.Client;
 import server.model.players.Player;
+import server.model.players.PlayerHandler;
 import server.util.Misc;
 
 /**
@@ -170,12 +170,12 @@ public class ItemHandler {
 			if (!server.model.items.Item.itemStackable[itemId] && itemAmount > 0) {
 				for (int j = 0; j < itemAmount; j++) {
 					c.getItems().createGroundItem(itemId, itemX, itemY, 1);
-					GroundItem item = new GroundItem(itemId, itemX, itemY, 1, c.playerId, HIDE_TICKS, Server.playerHandler.players[playerId].playerName);
+					GroundItem item = new GroundItem(itemId, itemX, itemY, 1, c.playerId, HIDE_TICKS, PlayerHandler.players[playerId].playerName);
 					addItem(item);
 				}	
 			} else {
 				c.getItems().createGroundItem(itemId, itemX, itemY, itemAmount);
-				GroundItem item = new GroundItem(itemId, itemX, itemY, itemAmount, c.playerId, HIDE_TICKS, Server.playerHandler.players[playerId].playerName);
+				GroundItem item = new GroundItem(itemId, itemX, itemY, itemAmount, c.playerId, HIDE_TICKS, PlayerHandler.players[playerId].playerName);
 				addItem(item);
 			}
 		}
@@ -186,7 +186,7 @@ public class ItemHandler {
 	* Shows items for everyone who is within 60 squares
 	**/
 	public void createGlobalItem(GroundItem i) {
-		for (Player p : Server.playerHandler.players){
+		for (Player p : PlayerHandler.players){
 			if(p != null) {
 			Client person = (Client)p;
 				if(person != null){
@@ -256,7 +256,7 @@ public class ItemHandler {
 	**/
 	
 	public void removeGlobalItem(GroundItem i, int itemId, int itemX, int itemY, int itemAmount) {
-		for (Player p : Server.playerHandler.players){
+		for (Player p : PlayerHandler.players){
 			if(p != null) {
 			Client person = (Client)p;
 				if(person != null){

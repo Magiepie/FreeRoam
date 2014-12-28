@@ -58,9 +58,9 @@ public class PlayerHandler{
 		}
 	}
 	public final void getDoubleEXPWeekend() {
-		for (int j = 0; j < Server.playerHandler.players.length; j++) {
-			if (Server.playerHandler.players[j] != null) {
-				Client c = (Client)Server.playerHandler.players[j];
+		for (int j = 0; j < PlayerHandler.players.length; j++) {
+			if (PlayerHandler.players[j] != null) {
+				Client c = (Client)PlayerHandler.players[j];
 		Calendar calendar = new GregorianCalendar();
 		int day = calendar.get(Calendar.DAY_OF_WEEK);
 		Config.doubleEXPWeekend = false;
@@ -126,23 +126,23 @@ public class PlayerHandler{
 					
 					if(players[i].disconnected && (System.currentTimeMillis() - players[i].logoutDelay > 10000 || players[i].properLogout || kickAllPlayers)) {
 						if(players[i].inTrade) {
-							Client o = (Client) Server.playerHandler.players[players[i].tradeWith];
+							Client o = (Client) PlayerHandler.players[players[i].tradeWith];
 							if(o != null) {
 								o.getTradeAndDuel().declineTrade();
 							}
 						}
 						if(players[i].duelStatus == 5) {
-							Client o = (Client) Server.playerHandler.players[players[i].duelingWith];
+							Client o = (Client) PlayerHandler.players[players[i].duelingWith];
 							if(o != null) {
 								o.getTradeAndDuel().duelVictory();
 							}
 						} else if (players[i].duelStatus <= 4 && players[i].duelStatus >= 1) {
-							Client o = (Client) Server.playerHandler.players[players[i].duelingWith];
+							Client o = (Client) PlayerHandler.players[players[i].duelingWith];
 							if(o != null) {
 								o.getTradeAndDuel().declineDuel();
 							}
 						}
-						Client o = (Client) Server.playerHandler.players[i];
+						Client o = (Client) PlayerHandler.players[i];
 						if(PlayerSave.saveGame(o)) { 
 							System.out.println("Game saved for player "+players[i].playerName+"."); 
 						} else { 
@@ -170,24 +170,24 @@ public class PlayerHandler{
 				try {
 					if(players[i].disconnected && (System.currentTimeMillis() - players[i].logoutDelay > 10000 || players[i].properLogout || kickAllPlayers)) {
 						if(players[i].inTrade) {
-							Client o = (Client) Server.playerHandler.players[players[i].tradeWith];
+							Client o = (Client) PlayerHandler.players[players[i].tradeWith];
 							if(o != null) {
 								o.getTradeAndDuel().declineTrade();
 							}
 						}
 						if(players[i].duelStatus == 5) {
-							Client o1 = (Client) Server.playerHandler.players[players[i].duelingWith];
+							Client o1 = (Client) PlayerHandler.players[players[i].duelingWith];
 							if(o1 != null) {
 								o1.getTradeAndDuel().duelVictory();
 							}
 						} else if (players[i].duelStatus <= 4 && players[i].duelStatus >= 1) {
-							Client o1 = (Client) Server.playerHandler.players[players[i].duelingWith];
+							Client o1 = (Client) PlayerHandler.players[players[i].duelingWith];
 							if(o1 != null) {
 								o1.getTradeAndDuel().declineDuel();
 							}
 						}
 						
-						Client o1 = (Client) Server.playerHandler.players[i];
+						Client o1 = (Client) PlayerHandler.players[i];
 						if(PlayerSave.saveGame(o1)){ 
 							System.out.println("Game saved for player "+players[i].playerName); 
 						} else { 
@@ -196,7 +196,7 @@ public class PlayerHandler{
 						removePlayer(players[i]);
 						players[i] = null;
 					} else {
-						Client o = (Client) Server.playerHandler.players[i];
+						Client o = (Client) PlayerHandler.players[i];
 						//if(o.g) {
 							if(!players[i].initialized) {
 								players[i].initialize();
@@ -256,14 +256,14 @@ public class PlayerHandler{
 
 			
 			for(int i = 0; i < NPCHandler.maxNPCs; i++) {
-				if(Server.npcHandler.npcs[i] != null) {
-					int id = Server.npcHandler.npcs[i].npcId;
+				if(NPCHandler.npcs[i] != null) {
+					int id = NPCHandler.npcs[i].npcId;
 					if (plr.RebuildNPCList == false && (plr.npcInListBitmap[id>>3]&(1 << (id&7))) != 0) {
 						
-					} else if (plr.withinDistance(Server.npcHandler.npcs[i]) == false) {
+					} else if (plr.withinDistance(NPCHandler.npcs[i]) == false) {
 						
 					} else {
-						plr.addNewNPC(Server.npcHandler.npcs[i], str, updateBlock);
+						plr.addNewNPC(NPCHandler.npcs[i], str, updateBlock);
 					}
 				}
 			}
@@ -339,7 +339,7 @@ public class PlayerHandler{
 		if(plr.privateChat != 2) { 
 			for(int i = 1; i < Config.MAX_PLAYERS; i++) {
 				if (players[i] == null || players[i].isActive == false) continue;
-				Client o = (Client)Server.playerHandler.players[i];
+				Client o = (Client)PlayerHandler.players[i];
 				if(o != null) {
 					o.getPA().updatePM(plr.playerId, 0);
 				}

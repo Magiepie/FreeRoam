@@ -6,7 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 import server.Config;
-import server.Server;
+import server.model.players.PlayerHandler;
 import server.util.Misc;
 
 /**
@@ -74,11 +74,11 @@ public class ShopHandler {
 			}
 			if (DidUpdate == true) {
 				for (int k = 1; k < Config.MAX_PLAYERS; k++) {
-					if (Server.playerHandler.players[k] != null) {
-						if (Server.playerHandler.players[k].isShopping == true && Server.playerHandler.players[k].myShopId == i) {
-							Server.playerHandler.players[k].updateShop = true;
+					if (PlayerHandler.players[k] != null) {
+						if (PlayerHandler.players[k].isShopping == true && PlayerHandler.players[k].myShopId == i) {
+							PlayerHandler.players[k].updateShop = true;
 							DidUpdate =false;
-							Server.playerHandler.players[k].updateshop(i);
+							PlayerHandler.players[k].updateshop(i);
 						}
 					}
 				}

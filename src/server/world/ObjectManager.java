@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import server.model.objects.Object;
 import server.util.Misc;
 import server.model.players.Client;
-import server.Server;
+import server.model.players.PlayerHandler;
 
 /**
  * @author Sanity
@@ -38,27 +38,27 @@ public class ObjectManager {
 	}
 	
 	public void removeObject(int x, int y) {
-		for (int j = 0; j < Server.playerHandler.players.length; j++) {
-			if (Server.playerHandler.players[j] != null) {
-				Client c = (Client)Server.playerHandler.players[j];
+		for (int j = 0; j < PlayerHandler.players.length; j++) {
+			if (PlayerHandler.players[j] != null) {
+				Client c = (Client)PlayerHandler.players[j];
 				c.getPA().object(-1, x, y, 0, 10);			
 			}	
 		}	
 	}
 	
 	public void updateObject(Object o) {
-		for (int j = 0; j < Server.playerHandler.players.length; j++) {
-			if (Server.playerHandler.players[j] != null) {
-				Client c = (Client)Server.playerHandler.players[j];
+		for (int j = 0; j < PlayerHandler.players.length; j++) {
+			if (PlayerHandler.players[j] != null) {
+				Client c = (Client)PlayerHandler.players[j];
 				c.getPA().object(o.newId, o.objectX, o.objectY, o.face, o.type);			
 			}	
 		}	
 	}
 	
 	public void placeObject(Object o) {
-		for (int j = 0; j < Server.playerHandler.players.length; j++) {
-			if (Server.playerHandler.players[j] != null) {
-				Client c = (Client)Server.playerHandler.players[j];
+		for (int j = 0; j < PlayerHandler.players.length; j++) {
+			if (PlayerHandler.players[j] != null) {
+				Client c = (Client)PlayerHandler.players[j];
 				if (c.distanceToPoint(o.objectX, o.objectY) <= 60)
 					c.getPA().object(o.objectId, o.objectX, o.objectY, o.face, o.type);
 			}	
@@ -253,9 +253,9 @@ c.getPA().checkObjectSpawn(-1, 2722, 9828, 1, 10);
 		while (random == port) {
 			random = Misc.random(5);
 		}
-		for (int j = 0; j < Server.playerHandler.players.length; j++) {
-			if (Server.playerHandler.players[j] != null) {
-				Client c = (Client)Server.playerHandler.players[j];
+		for (int j = 0; j < PlayerHandler.players.length; j++) {
+			if (PlayerHandler.players[j] != null) {
+				Client c = (Client)PlayerHandler.players[j];
 				int xOffset = c.absX - obeliskCoords[port][0];
 				int yOffset = c.absY - obeliskCoords[port][1];
 				if (c.goodDistance(c.getX(), c.getY(), obeliskCoords[port][0] + 2, obeliskCoords[port][1] + 2, 1)) {

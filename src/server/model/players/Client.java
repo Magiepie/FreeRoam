@@ -116,7 +116,7 @@ public class Client extends Player {
 		return true;
 	}
         public void highscores() {
-getPA().sendFrame126("Tyreatta-Scape's Highscores", 6399);
+getPA().sendFrame126("Highscores", 6399);
                 for(int i = 0; i < 10; i++) {
                         if(ranks[i] > 0) {
                                 getPA().sendFrame126("Rank "+(i+1)+": "+rankPpl[i]+ "- Total Level: " +ranks[i], 6402+i);
@@ -439,7 +439,7 @@ public void gimeCP() {
 			setSidebarInterface(13, -1);
 			setSidebarInterface(0, 2423);
 		//c.getPA().showInterface(15244);
-			sendMessage("@369@Welcome to Tyreatta-Scape! Beta Phase is over");
+			sendMessage("@369@Welcome to FreeRoam");
 			sendMessage("@red@type ::starter if u didnt get a starter");
 			if (Config.doubleEXPWeekend == true) {
 				sendMessage("@or2@Enjoy Double EXP Weekend!");
@@ -453,7 +453,7 @@ getPA().sendFrame126(" ", 6403);
 getPA().sendFrame126(" ", 6404);
 
 getPA().sendFrame126(" ", 6405);
-getPA().sendFrame126("Tyreatta-Scape", 640);
+getPA().sendFrame126("FreeRoam", 640);
 getPA().sendFrame126(" ", 6406);
 getPA().sendFrame126(" ", 6407);
 getPA().sendFrame126(" ", 6408);
@@ -599,7 +599,7 @@ public void loginMessage() {
 					int Message = 0;
 					Message = Misc.random(5);
 					if (Message == 0) {
-				            sendMessage("[@red@Server@bla@] @blu@Have a great time on Tyreatta-Scape.");
+				            sendMessage("[@red@Server@bla@] @blu@Have a great time on FreeRoam");
 					} else if (Message == 1) { 
 				            sendMessage("[@red@Server@bla@] @blu@Report all bugs/dupes for a reward!");
 					} else if (Message == 2) { 
@@ -607,7 +607,7 @@ public void loginMessage() {
 					} else if (Message == 3) { 
 				            sendMessage("[@red@Server@bla@] @blu@Have you registered on the forums? Type ::forums.");
 					} else if (Message == 4) { 
-				            sendMessage("[@red@Server@bla@] @blu@You can donate for items/donator status and Tyreatta points.");
+				            sendMessage("[@red@Server@bla@] @blu@You can donate for items/donator status and points.");
 					} else if (Message == 5) { 
 				            sendMessage("[@red@Server@bla@] @blu@Please respect all players and staff members :)");
 					} else if (Message == 6) { 
@@ -654,7 +654,7 @@ getPA().followPlayer();
 getPA().followNpc();
 
 }
-		getPA().sendFrame126("@whi@Tyreatta Points: "+pkPoints+"", 7333);
+		getPA().sendFrame126("@whi@Points: "+pkPoints+"", 7333);
 		getPA().sendFrame126("@whi@Players Online: "+PlayerHandler.getPlayerCount()+ "", 7339);
 		getPA().sendFrame126("@whi@Task: @red@"+Server.npcHandler.getNpcListName(slayerTask )+"", 7338);
 		getPA().sendFrame126("  @whi@Amount: @red@"+taskAmount+"", 7340);

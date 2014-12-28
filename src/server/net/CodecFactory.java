@@ -23,7 +23,7 @@ public class CodecFactory implements ProtocolCodecFactory {
 	 */
 	private ProtocolDecoder decoder = new RS2LoginProtocolDecoder();
 	
-	@Override
+	
 	/**
 	 * Get the encoder.
 	 */
@@ -31,7 +31,7 @@ public class CodecFactory implements ProtocolCodecFactory {
 		return encoder;
 	}
 
-	@Override
+	
 	/**
 	 * Get the decoder.
 	 */

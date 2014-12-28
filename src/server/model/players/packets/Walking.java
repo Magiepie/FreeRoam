@@ -1,8 +1,8 @@
 package server.model.players.packets;
 
-import server.Server;
 import server.model.players.Client;
 import server.model.players.PacketType;
+import server.model.players.PlayerHandler;
 
 /**
  * Walking packet
@@ -22,8 +22,8 @@ public class Walking implements PacketType {
 		}	
 		c.getPA().removeAllWindows();
 		if(c.duelRule[1] && c.duelStatus == 5) {
-			if(Server.playerHandler.players[c.duelingWith] != null) { 
-				if(!c.goodDistance(c.getX(), c.getY(), Server.playerHandler.players[c.duelingWith].getX(), Server.playerHandler.players[c.duelingWith].getY(), 1) || c.attackTimer == 0) {
+			if(PlayerHandler.players[c.duelingWith] != null) { 
+				if(!c.goodDistance(c.getX(), c.getY(), PlayerHandler.players[c.duelingWith].getX(), PlayerHandler.players[c.duelingWith].getY(), 1) || c.attackTimer == 0) {
 					c.sendMessage("Walking has been disabled in this duel!");
 				}
 			}
@@ -32,8 +32,8 @@ public class Walking implements PacketType {
 		}
 		
 		if(c.freezeTimer > 0) {
-			if(Server.playerHandler.players[c.playerIndex] != null) {
-				if(c.goodDistance(c.getX(), c.getY(), Server.playerHandler.players[c.playerIndex].getX(), Server.playerHandler.players[c.playerIndex].getY(), 1) && packetType != 98) {
+			if(PlayerHandler.players[c.playerIndex] != null) {
+				if(c.goodDistance(c.getX(), c.getY(), PlayerHandler.players[c.playerIndex].getX(), PlayerHandler.players[c.playerIndex].getY(), 1) && packetType != 98) {
 					c.playerIndex = 0;	
 					return;
 				}

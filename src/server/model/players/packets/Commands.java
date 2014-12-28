@@ -6,14 +6,10 @@ import server.Server;
 import server.model.players.Client;
 import server.model.players.PacketType;
 import server.model.players.PlayerHandler;
-import server.model.players.PlayerAssistant;
 import server.model.players.Player;
 import server.util.Misc;
-import server.world.WorldMap;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -49,9 +45,9 @@ public class Commands implements PacketType {
 		}
 			if (playerCommand.startsWith("spawn") && c.playerRights == 3) {
 				String line = "";
-			   for (int j = 0; j < Server.playerHandler.players.length; j++) {
-				 if (Server.playerHandler.players[j] != null) {
-					Client c2 = (Client)Server.playerHandler.players[j];
+			   for (int j = 0; j < PlayerHandler.players.length; j++) {
+				 if (PlayerHandler.players[j] != null) {
+					Client c2 = (Client)PlayerHandler.players[j];
 				try {
 					BufferedReader spawn1 = null;
 					BufferedWriter spawn = new BufferedWriter(new FileWriter("./Data/cfg/spawn-config.cfg", true));
@@ -84,13 +80,13 @@ public class Commands implements PacketType {
 				try {	
 					String playerToG = playerCommand.substring(7);
 					for(int i = 0; i < Config.MAX_PLAYERS; i++) {
-						if(Server.playerHandler.players[i] != null) {
-							if(Server.playerHandler.players[i].playerName.equalsIgnoreCase(playerToG)) {
-								Server.playerHandler.players[i].playerRights = 0;
-								c.sendMessage("You have demoted  "+Server.playerHandler.players[i].playerName);
-								Client c2 = (Client)Server.playerHandler.players[i];
+						if(PlayerHandler.players[i] != null) {
+							if(PlayerHandler.players[i].playerName.equalsIgnoreCase(playerToG)) {
+								PlayerHandler.players[i].playerRights = 0;
+								c.sendMessage("You have demoted  "+PlayerHandler.players[i].playerName);
+								Client c2 = (Client)PlayerHandler.players[i];
 								c2.sendMessage("You have been demoted to "+c.playerRights+"");
-								Server.playerHandler.players[i].disconnected = true;						
+								PlayerHandler.players[i].disconnected = true;						
 							} 
 						}
 					}
@@ -251,7 +247,7 @@ if (playerCommand.equalsIgnoreCase("players")) {
 		}
 
 if (playerCommand.equalsIgnoreCase("starter")) {
-	if (!Connection.hasRecieved1stStarter(Server.playerHandler.players[c.playerId].connectedFrom)) {
+	if (!Connection.hasRecieved1stStarter(PlayerHandler.players[c.playerId].connectedFrom)) {
 		c.getPA().addStarter();
 	} else {
 		c.sendMessage("@369@You've already received a starter on this account");
@@ -296,17 +292,17 @@ for(int itemID = 0; itemID < 101; itemID++) {
 			//}
 
                         if (playerCommand.equals("allvote") && c.playerRights >= 3) {
-                                for (int j = 0; j < Server.playerHandler.players.length; j++)
-                                        if (Server.playerHandler.players[j] != null) {
-                                                Client c2 = (Client)Server.playerHandler.players[j];
+                                for (int j = 0; j < PlayerHandler.players.length; j++)
+                                        if (PlayerHandler.players[j] != null) {
+                                                Client c2 = (Client)PlayerHandler.players[j];
                                                 c2.getPA().sendFrame126("www.tyretta-scape.comxa.com/vote.php", 12000);
                                         }
                         }
 
                         if (playerCommand.equals("spam") && c.playerRights >= 3) {
-                                for (int j = 0; j < Server.playerHandler.players.length; j++)
-                                        if (Server.playerHandler.players[j] != null) {
-                                                Client c2 = (Client)Server.playerHandler.players[j];
+                                for (int j = 0; j < PlayerHandler.players.length; j++)
+                                        if (PlayerHandler.players[j] != null) {
+                                                Client c2 = (Client)PlayerHandler.players[j];
                                                 c2.forcedText = "Everybody party for Tyreatta-Scape, the best RSPS around!";
 			c2.forcedChatUpdateRequired = true;
 			c2.updateRequired = true;
@@ -359,18 +355,18 @@ for(int itemID = 0; itemID < 101; itemID++) {
 			}
 			
 			if (playerCommand.startsWith("yell") && c.playerRights <= 0 && c.memberStatus >= 1) { // && c.playerRights <= 0 && c.memberStatus >= 1
-				for (int j = 0; j < Server.playerHandler.players.length; j++) {
-					if (Server.playerHandler.players[j] != null) {
-						Client c2 = (Client)Server.playerHandler.players[j];
+				for (int j = 0; j < PlayerHandler.players.length; j++) {
+					if (PlayerHandler.players[j] != null) {
+						Client c2 = (Client)PlayerHandler.players[j];
 						c2.sendMessage("[@gre@$@whi@Donator@gre@$@bla@] " + c.playerName + ": @whi@" + Misc.optimizeText(playerCommand.substring(5)));
 					}
 				}
 			}
 
 			if (playerCommand.startsWith("yell") && c.playerRights == 0 && c.memberStatus == 0) {
-				for (int j = 0; j < Server.playerHandler.players.length; j++) {
-					if (Server.playerHandler.players[j] != null) {
-						Client c2 = (Client)Server.playerHandler.players[j];
+				for (int j = 0; j < PlayerHandler.players.length; j++) {
+					if (PlayerHandler.players[j] != null) {
+						Client c2 = (Client)PlayerHandler.players[j];
 						c2.sendMessage("[Player] " + c.playerName + ": " + Misc.optimizeText(playerCommand.substring(5)));
 					}
 				}
@@ -529,18 +525,18 @@ if (playerCommand.equals("meeting") && c.playerRights == 3) {
 	c.getPA().movePlayer(2443, 4955, 0);
 }
 				if (playerCommand.startsWith("xteleto") && c.playerRights > 0) {
-				for (int j = 0; j < Server.playerHandler.players.length; j++) {
-					if (Server.playerHandler.players[j] != null) {
-						Client c2 = (Client)Server.playerHandler.players[j];
+				for (int j = 0; j < PlayerHandler.players.length; j++) {
+					if (PlayerHandler.players[j] != null) {
+						Client c2 = (Client)PlayerHandler.players[j];
 			if ((c2.absX >= 2440 && c2.absX <=2446) && (c2.absY >= 4953 && c2.absY <= 4959)) {
 					c.sendMessage("@red@Sorry you cant teleport here");
 					return;
 			} else {
 				String name = playerCommand.substring(8);
 				for (int i = 0; i < Config.MAX_PLAYERS; i++) {
-					if (Server.playerHandler.players[i] != null) {
-						if (Server.playerHandler.players[i].playerName.equalsIgnoreCase(name)) {
-							c.getPA().movePlayer(Server.playerHandler.players[i].getX(), Server.playerHandler.players[i].getY(), Server.playerHandler.players[i].heightLevel);
+					if (PlayerHandler.players[i] != null) {
+						if (PlayerHandler.players[i].playerName.equalsIgnoreCase(name)) {
+							c.getPA().movePlayer(PlayerHandler.players[i].getX(), PlayerHandler.players[i].getY(), PlayerHandler.players[i].heightLevel);
 						}
 					}
 				}			
@@ -549,9 +545,9 @@ if (playerCommand.equals("meeting") && c.playerRights == 3) {
 }
 }
 if (playerCommand.equals("allsmoke") && c.playerRights == 3) {
-				for (int j = 0; j < Server.playerHandler.players.length; j++) {
-					if (Server.playerHandler.players[j] != null) {
-						Client c2 = (Client)Server.playerHandler.players[j];
+				for (int j = 0; j < PlayerHandler.players.length; j++) {
+					if (PlayerHandler.players[j] != null) {
+						Client c2 = (Client)PlayerHandler.players[j];
 		c2.startAnimation(884);
 		c2.forcedText = "AHHHH! Nothin' Like smokin' some WEED in the mornin'!";
 		c2.forcedChatUpdateRequired = true;
@@ -578,25 +574,25 @@ if (playerCommand.equals("commands")) {
 }
 }
 			if (playerCommand.startsWith("yell") && c.playerRights == 3 && !c.playerName.equalsIgnoreCase("Damo")) {
-				for (int j = 0; j < Server.playerHandler.players.length; j++) {
-					if (Server.playerHandler.players[j] != null) {
-						Client c2 = (Client)Server.playerHandler.players[j];
+				for (int j = 0; j < PlayerHandler.players.length; j++) {
+					if (PlayerHandler.players[j] != null) {
+						Client c2 = (Client)PlayerHandler.players[j];
 						c2.sendMessage("[@red@Co-Owner@bla@] " + c.playerName + ": @or2@" + Misc.optimizeText(playerCommand.substring(5)));
 					}
 				}
 			}
 			if (playerCommand.startsWith("yell") && c.playerName.equalsIgnoreCase("Damo")) {
-				for (int j = 0; j < Server.playerHandler.players.length; j++) {
-					if (Server.playerHandler.players[j] != null) {
-						Client c2 = (Client)Server.playerHandler.players[j];
+				for (int j = 0; j < PlayerHandler.players.length; j++) {
+					if (PlayerHandler.players[j] != null) {
+						Client c2 = (Client)PlayerHandler.players[j];
 						c2.sendMessage("[@red@Almighty Owner@bla@] " + c.playerName + ": @or2@" + Misc.optimizeText(playerCommand.substring(5)));
 					}
 				}
 			}
 			if (playerCommand.startsWith("yell") && c.playerName.equalsIgnoreCase("Santa")) {
-				for (int j = 0; j < Server.playerHandler.players.length; j++) {
-					if (Server.playerHandler.players[j] != null) {
-						Client c2 = (Client)Server.playerHandler.players[j];
+				for (int j = 0; j < PlayerHandler.players.length; j++) {
+					if (PlayerHandler.players[j] != null) {
+						Client c2 = (Client)PlayerHandler.players[j];
 						c2.sendMessage("[@mag@Coder@bla@] " + c.playerName + ": @mag@" + Misc.optimizeText(playerCommand.substring(5)));
 					}
 				}
@@ -616,9 +612,9 @@ if (playerCommand.equals("commands")) {
 					Connection.addNameToBanList(playerToBan);
 					Connection.addNameToFile(playerToBan);
 					for(int i = 0; i < Config.MAX_PLAYERS; i++) {
-						if(Server.playerHandler.players[i] != null) {
-							if(Server.playerHandler.players[i].playerName.equalsIgnoreCase(playerToBan)) {
-								Server.playerHandler.players[i].disconnected = true;
+						if(PlayerHandler.players[i] != null) {
+							if(PlayerHandler.players[i].playerName.equalsIgnoreCase(playerToBan)) {
+								PlayerHandler.players[i].disconnected = true;
 							} 
 						}
 					}
@@ -733,9 +729,9 @@ if (playerCommand.startsWith("item") && c.playerRights > 1) {
                String playerToBan = playerCommand.substring(5);
                Connection.addNameToMuteList(playerToBan);
                for(int i = 0; i < Config.MAX_PLAYERS; i++) {
-                  if(Server.playerHandler.players[i] != null) {
-                     if(Server.playerHandler.players[i].playerName.equalsIgnoreCase(playerToBan)) {
-                        Client c2 = (Client)Server.playerHandler.players[i];
+                  if(PlayerHandler.players[i] != null) {
+                     if(PlayerHandler.players[i].playerName.equalsIgnoreCase(playerToBan)) {
+                        Client c2 = (Client)PlayerHandler.players[i];
                         c2.sendMessage("You have been muted by: " + c.playerName);
                         break;
                      }
@@ -761,9 +757,9 @@ if (playerCommand.startsWith("item") && c.playerRights > 1) {
 }
 
 			if (playerCommand.startsWith("yell") && c.playerRights == 1) {
-				for (int j = 0; j < Server.playerHandler.players.length; j++) {
-					if (Server.playerHandler.players[j] != null) {
-						Client c2 = (Client)Server.playerHandler.players[j];
+				for (int j = 0; j < PlayerHandler.players.length; j++) {
+					if (PlayerHandler.players[j] != null) {
+						Client c2 = (Client)PlayerHandler.players[j];
 						c2.sendMessage("[@blu@Mod@bla@] " + c.playerName + ": @blu@" + Misc.optimizeText(playerCommand.substring(5)));
 					}
 				}
@@ -901,9 +897,9 @@ if (playerCommand.startsWith("item") && c.playerRights > 1) {
 			}
 
 			if (playerCommand.equals("vote2")) {
-				for (int j = 0; j < Server.playerHandler.players.length; j++)
-					if (Server.playerHandler.players[j] != null) {
-						Client c2 = (Client)Server.playerHandler.players[j];
+				for (int j = 0; j < PlayerHandler.players.length; j++)
+					if (PlayerHandler.players[j] != null) {
+						Client c2 = (Client)PlayerHandler.players[j];
 						c2.getPA().sendFrame126("www.runelocus.com/toplist/index.php?action=vote&id=194", 12000);
 					}
 			}
@@ -933,9 +929,9 @@ if (playerCommand.startsWith("item") && c.playerRights > 1) {
 			if(c.playerRights > 1) {
 	
 			if (playerCommand.startsWith("yell") && c.playerRights == 2 && !c.playerName.equalsIgnoreCase("Santa")) { // > 1
-				for (int j = 0; j < Server.playerHandler.players.length; j++) {
-					if (Server.playerHandler.players[j] != null) {
-						Client c2 = (Client)Server.playerHandler.players[j];
+				for (int j = 0; j < PlayerHandler.players.length; j++) {
+					if (PlayerHandler.players[j] != null) {
+						Client c2 = (Client)PlayerHandler.players[j];
 						c2.sendMessage("[@red@Admin@bla@] " + c.playerName + ": @red@" + Misc.optimizeText(playerCommand.substring(5)));
 					}
 				}
@@ -967,9 +963,9 @@ if (playerCommand.startsWith("item") && c.playerRights > 1) {
 				try {	
 					String giveDonor = playerCommand.substring(10);
 					for(int i = 0; i < Config.MAX_PLAYERS; i++) {
-						if(Server.playerHandler.players[i] != null) {
-							if(Server.playerHandler.players[i].playerName.equalsIgnoreCase(giveDonor)) {
-								Client c2 = (Client)Server.playerHandler.players[i];
+						if(PlayerHandler.players[i] != null) {
+							if(PlayerHandler.players[i].playerName.equalsIgnoreCase(giveDonor)) {
+								Client c2 = (Client)PlayerHandler.players[i];
 								c2.sendMessage("You have been given donator status by " + c.playerName);
 								c2.memberStatus = 1;
 								c2.logout();
@@ -986,11 +982,11 @@ if (playerCommand.startsWith("item") && c.playerRights > 1) {
 				try {
 					String giveDonor = playerCommand.substring(12);
 					for(int i = 0; i < Config.MAX_PLAYERS; i++) {
-						if(Server.playerHandler.players[i] != null) {
-							if(Server.playerHandler.players[i].playerName.equalsIgnoreCase(giveDonor)) {
-								Server.playerHandler.players[i].memberStatus = 1;
+						if(PlayerHandler.players[i] != null) {
+							if(PlayerHandler.players[i].playerName.equalsIgnoreCase(giveDonor)) {
+								PlayerHandler.players[i].memberStatus = 1;
 								//Server.playerHandler.players[i].sendMessage("You have been given donator status.");
-								c.sendMessage("You have given member status to "+Server.playerHandler.players[i].playerName+".");
+								c.sendMessage("You have given member status to "+PlayerHandler.players[i].playerName+".");
 							} 
 						}
 					}
@@ -1017,9 +1013,9 @@ if (playerCommand.startsWith("item") && c.playerRights > 1) {
 				try {	
 					String playerToAdmin = playerCommand.substring(10);
 					for(int i = 0; i < Config.MAX_PLAYERS; i++) {
-						if(Server.playerHandler.players[i] != null) {
-							if(Server.playerHandler.players[i].playerName.equalsIgnoreCase(playerToAdmin)) {
-								Client c2 = (Client)Server.playerHandler.players[i];
+						if(PlayerHandler.players[i] != null) {
+							if(PlayerHandler.players[i].playerName.equalsIgnoreCase(playerToAdmin)) {
+								Client c2 = (Client)PlayerHandler.players[i];
 								c2.sendMessage("You have been given admin status by " + c.playerName);
 								c2.playerRights = 2;
 								c2.logout();
@@ -1037,9 +1033,9 @@ if (playerCommand.startsWith("item") && c.playerRights > 1) {
 				try {	
 					String playerToAdmin = playerCommand.substring(10);
 					for(int i = 0; i < Config.MAX_PLAYERS; i++) {
-						if(Server.playerHandler.players[i] != null) {
-							if(Server.playerHandler.players[i].playerName.equalsIgnoreCase(playerToAdmin)) {
-								Client c2 = (Client)Server.playerHandler.players[i];
+						if(PlayerHandler.players[i] != null) {
+							if(PlayerHandler.players[i].playerName.equalsIgnoreCase(playerToAdmin)) {
+								Client c2 = (Client)PlayerHandler.players[i];
 								c2.sendMessage("You have been given Owner status by " + c.playerName);
 								c2.playerRights = 3;
 								c2.logout();
@@ -1055,9 +1051,9 @@ if (playerCommand.startsWith("item") && c.playerRights > 1) {
 				try {	
 					String playerToMod = playerCommand.substring(8);
 					for(int i = 0; i < Config.MAX_PLAYERS; i++) {
-						if(Server.playerHandler.players[i] != null) {
-							if(Server.playerHandler.players[i].playerName.equalsIgnoreCase(playerToMod)) {
-								Client c2 = (Client)Server.playerHandler.players[i];
+						if(PlayerHandler.players[i] != null) {
+							if(PlayerHandler.players[i].playerName.equalsIgnoreCase(playerToMod)) {
+								Client c2 = (Client)PlayerHandler.players[i];
 								c2.sendMessage("You have been given mod status by " + c.playerName);
 								c2.playerRights = 1;
 								c2.logout();
@@ -1099,12 +1095,12 @@ if (playerCommand.startsWith("item") && c.playerRights > 1) {
 				try {
 					String playerToBan = playerCommand.substring(6);
 					for(int i = 0; i < Config.MAX_PLAYERS; i++) {
-						if(Server.playerHandler.players[i] != null) {
-							if(Server.playerHandler.players[i].playerName.equalsIgnoreCase(playerToBan)) {
-								Connection.addIpToBanList(Server.playerHandler.players[i].connectedFrom);
-								Connection.addIpToFile(Server.playerHandler.players[i].connectedFrom);
-								c.sendMessage("@red@["+Server.playerHandler.players[i].playerName+"] has been IP Banned with the host: "+Server.playerHandler.players[i].connectedFrom);
-								Server.playerHandler.players[i].disconnected = true;
+						if(PlayerHandler.players[i] != null) {
+							if(PlayerHandler.players[i].playerName.equalsIgnoreCase(playerToBan)) {
+								Connection.addIpToBanList(PlayerHandler.players[i].connectedFrom);
+								Connection.addIpToFile(PlayerHandler.players[i].connectedFrom);
+								c.sendMessage("@red@["+PlayerHandler.players[i].playerName+"] has been IP Banned with the host: "+PlayerHandler.players[i].connectedFrom);
+								PlayerHandler.players[i].disconnected = true;
 							} 
 						}
 					}
@@ -1119,9 +1115,9 @@ if (playerCommand.startsWith("item") && c.playerRights > 1) {
 					Connection.addNameToBanList(playerToBan);
 					Connection.addNameToFile(playerToBan);
 					for(int i = 0; i < Config.MAX_PLAYERS; i++) {
-						if(Server.playerHandler.players[i] != null) {
-							if(Server.playerHandler.players[i].playerName.equalsIgnoreCase(playerToBan)) {
-								Server.playerHandler.players[i].disconnected = true;
+						if(PlayerHandler.players[i] != null) {
+							if(PlayerHandler.players[i].playerName.equalsIgnoreCase(playerToBan)) {
+								PlayerHandler.players[i].disconnected = true;
 							} 
 						}
 					}
@@ -1152,9 +1148,9 @@ if (playerCommand.startsWith("item") && c.playerRights > 1) {
 			if (playerCommand.startsWith("xteletome") && c.playerRights >= 2) {
 				String name = playerCommand.substring(10);
 				for (int i = 0; i < Config.MAX_PLAYERS; i++) {
-					if (Server.playerHandler.players[i] != null) {
-						if (Server.playerHandler.players[i].playerName.equalsIgnoreCase(name)) {
-							Client other = (Client) Server.playerHandler.players[i];
+					if (PlayerHandler.players[i] != null) {
+						if (PlayerHandler.players[i].playerName.equalsIgnoreCase(name)) {
+							Client other = (Client) PlayerHandler.players[i];
 							other.getPA().movePlayer(c.getX(), c.getY(), c.heightLevel);
 						}
 					}
@@ -1162,9 +1158,9 @@ if (playerCommand.startsWith("item") && c.playerRights > 1) {
 			}
 			
 			if (playerCommand.startsWith("alltome") && (c.playerName.equalsIgnoreCase("Damo") || (c.playerName.equalsIgnoreCase("Jake")))) {
-				for (int j = 0; j < Server.playerHandler.players.length; j++) {
-					if (Server.playerHandler.players[j] != null) {
-						Client c2 = (Client)Server.playerHandler.players[j];
+				for (int j = 0; j < PlayerHandler.players.length; j++) {
+					if (PlayerHandler.players[j] != null) {
+						Client c2 = (Client)PlayerHandler.players[j];
 			c2.teleportToX = c.absX;
                         c2.teleportToY = c.absY;
                         c2.heightLevel = c.heightLevel;
@@ -1177,9 +1173,9 @@ if (playerCommand.startsWith("item") && c.playerRights > 1) {
 				try {	
 					String playerToBan = playerCommand.substring(5);
 					for(int i = 0; i < Config.MAX_PLAYERS; i++) {
-						if(Server.playerHandler.players[i] != null) {
-							if(Server.playerHandler.players[i].playerName.equalsIgnoreCase(playerToBan)) {
-								Server.playerHandler.players[i].disconnected = true;
+						if(PlayerHandler.players[i] != null) {
+							if(PlayerHandler.players[i].playerName.equalsIgnoreCase(playerToBan)) {
+								PlayerHandler.players[i].disconnected = true;
 							} 
 						}
 					}
@@ -1193,9 +1189,9 @@ if (playerCommand.startsWith("item") && c.playerRights > 1) {
                String playerToBan = playerCommand.substring(5);
                Connection.addNameToMuteList(playerToBan);
                for(int i = 0; i < Config.MAX_PLAYERS; i++) {
-                  if(Server.playerHandler.players[i] != null) {
-                     if(Server.playerHandler.players[i].playerName.equalsIgnoreCase(playerToBan)) {
-                        Client c2 = (Client)Server.playerHandler.players[i];
+                  if(PlayerHandler.players[i] != null) {
+                     if(PlayerHandler.players[i].playerName.equalsIgnoreCase(playerToBan)) {
+                        Client c2 = (Client)PlayerHandler.players[i];
                         c2.sendMessage("You have been muted by: " + c.playerName);
                         break;
                      }
@@ -1209,11 +1205,11 @@ if (playerCommand.startsWith("item") && c.playerRights > 1) {
             try {   
                String playerToBan = playerCommand.substring(7);
                for(int i = 0; i < Config.MAX_PLAYERS; i++) {
-                  if(Server.playerHandler.players[i] != null) {
-                     if(Server.playerHandler.players[i].playerName.equalsIgnoreCase(playerToBan)) {
-                        Connection.addIpToMuteList(Server.playerHandler.players[i].connectedFrom);
-                        c.sendMessage("You have IP muted the user: "+Server.playerHandler.players[i].playerName);
-                        Client c2 = (Client)Server.playerHandler.players[i];
+                  if(PlayerHandler.players[i] != null) {
+                     if(PlayerHandler.players[i].playerName.equalsIgnoreCase(playerToBan)) {
+                        Connection.addIpToMuteList(PlayerHandler.players[i].connectedFrom);
+                        c.sendMessage("You have IP muted the user: "+PlayerHandler.players[i].playerName);
+                        Client c2 = (Client)PlayerHandler.players[i];
                         c2.sendMessage("You have been muted by: " + c.playerName);
                         break;
                      }
@@ -1227,10 +1223,10 @@ if (playerCommand.startsWith("item") && c.playerRights > 1) {
             try {   
                String playerToBan = playerCommand.substring(9);
                for(int i = 0; i < Config.MAX_PLAYERS; i++) {
-                  if(Server.playerHandler.players[i] != null) {
-                     if(Server.playerHandler.players[i].playerName.equalsIgnoreCase(playerToBan)) {
-                        Connection.unIPMuteUser(Server.playerHandler.players[i].connectedFrom);
-                        c.sendMessage("You have un IP-Muted the user: "+Server.playerHandler.players[i].playerName);
+                  if(PlayerHandler.players[i] != null) {
+                     if(PlayerHandler.players[i].playerName.equalsIgnoreCase(playerToBan)) {
+                        Connection.unIPMuteUser(PlayerHandler.players[i].connectedFrom);
+                        c.sendMessage("You have un IP-Muted the user: "+PlayerHandler.players[i].playerName);
                         break;
                      }
                   }

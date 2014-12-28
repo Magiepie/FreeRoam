@@ -1,8 +1,8 @@
 package server.model.minigames;
 
 import server.model.players.Client;
+import server.model.players.PlayerHandler;
 import server.util.Misc;
-import server.Server;
 
 /**
  * @author Sanity
@@ -47,15 +47,15 @@ public class FightPits {
 	public String getLastPlayerName() {
 		for (int j = 0; j < playerInPits.length; j++) {
 			if (playerInPits[j] > 0)
-				return Server.playerHandler.players[playerInPits[j]].playerName;
+				return PlayerHandler.players[playerInPits[j]].playerName;
 		}	
 		return "Nobody";
 	}
 	
 	public void updateWaitRoom() {
-		for (int j = 0; j < Server.playerHandler.players.length; j++) {
-			if (Server.playerHandler.players[j] != null) {
-				Client c = (Client) Server.playerHandler.players[j];
+		for (int j = 0; j < PlayerHandler.players.length; j++) {
+			if (PlayerHandler.players[j] != null) {
+				Client c = (Client) PlayerHandler.players[j];
 				if (c.getPA().inPitsWait()) {
 					c.getPA().sendFrame126("Next game begins in: " + ((gameStartTimer * 3) + (gameTime * 3)) + " seconds.", 6570);
 					c.getPA().sendFrame126("Champion: " + pitsChampion, 6572);
@@ -72,9 +72,9 @@ public class FightPits {
 			//System.out.println("Unable to start fight pits game due to lack of players.");
 			return;
 		}	
-		for (int j = 0; j < Server.playerHandler.players.length; j++) {
-			if (Server.playerHandler.players[j] != null )  {
-					Client c = (Client)Server.playerHandler.players[j];
+		for (int j = 0; j < PlayerHandler.players.length; j++) {
+			if (PlayerHandler.players[j] != null )  {
+					Client c = (Client)PlayerHandler.players[j];
 					if (c.getPA().inPitsWait())
 						addToPitsGame(j);
 			}	
@@ -86,9 +86,9 @@ public class FightPits {
 	
 	public int getWaitAmount() {
 		int count = 0;
-		for (int j = 0; j < Server.playerHandler.players.length; j++) {
-			if (Server.playerHandler.players[j] != null )  {
-					Client c = (Client)Server.playerHandler.players[j];
+		for (int j = 0; j < PlayerHandler.players.length; j++) {
+			if (PlayerHandler.players[j] != null )  {
+					Client c = (Client)PlayerHandler.players[j];
 					if (c.getPA().inPitsWait())
 						count++;
 			}	
@@ -99,7 +99,7 @@ public class FightPits {
 	public void removePlayerFromPits(int playerId) {
 		for (int j = 0; j < playerInPits.length; j++) {
 			if (playerInPits[j] == playerId) {
-				Client c = (Client)Server.playerHandler.players[playerInPits[j]];
+				Client c = (Client)PlayerHandler.players[playerInPits[j]];
 				c.getPA().movePlayer(2399, 5173, 0);
 				playerInPits[j] = -1;
 				playersRemaining--;
@@ -116,9 +116,9 @@ public class FightPits {
 		for (int j = 0; j < playerInPits.length; j++) {
 			if (playerInPits[j] < 0)
 				continue;
-			if (Server.playerHandler.players[playerInPits[j]] == null)
+			if (PlayerHandler.players[playerInPits[j]] == null)
 				continue;
-			Client c = (Client)Server.playerHandler.players[playerInPits[j]];
+			Client c = (Client)PlayerHandler.players[playerInPits[j]];
 			c.getPA().movePlayer(2399, 5173, 0);
 			c.inPits = false;
 		}
@@ -133,10 +133,10 @@ public class FightPits {
 	
 	private int pitsSlot = 0;
 	public void addToPitsGame(int playerId) {
-		if (Server.playerHandler.players[playerId] == null)
+		if (PlayerHandler.players[playerId] == null)
 			return;
 		playersRemaining++;
-		Client c = (Client)Server.playerHandler.players[playerId];
+		Client c = (Client)PlayerHandler.players[playerId];
 		c.getPA().walkableInterface(-1);
 		playerInPits[pitsSlot++] = playerId;
 		c.getPA().movePlayer(2392 + Misc.random(12), 5139 + Misc.random(25), 0);

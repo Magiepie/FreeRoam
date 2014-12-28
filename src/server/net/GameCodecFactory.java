@@ -27,7 +27,7 @@ public class GameCodecFactory implements ProtocolCodecFactory {
 		decoder = new RS2ProtocolDecoder(inC);
 	}
 
-	@Override
+	
 	/**
 	 * Get the encoder.
 	 */
@@ -35,7 +35,7 @@ public class GameCodecFactory implements ProtocolCodecFactory {
 		return encoder;
 	}
 
-	@Override
+	
 	/**
 	 * Get the decoder.
 	 */

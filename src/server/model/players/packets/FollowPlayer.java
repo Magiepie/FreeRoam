@@ -1,14 +1,14 @@
 package server.model.players.packets;
 
-import server.Server;
 import server.model.players.Client;
 import server.model.players.PacketType;
+import server.model.players.PlayerHandler;
 
 public class FollowPlayer implements PacketType {
 	
 	public void processPacket(Client c, int packetType, int packetSize) {
 		int followPlayer = c.getInStream().readUnsignedWordBigEndian();
-		if(Server.playerHandler.players[followPlayer] == null) {
+		if(PlayerHandler.players[followPlayer] == null) {
 			return;
 		}
 		c.playerIndex = 0;

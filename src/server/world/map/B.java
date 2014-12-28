@@ -2,9 +2,6 @@ package server.world.map;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
 
 public class B
 {

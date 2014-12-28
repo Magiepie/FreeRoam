@@ -1,6 +1,8 @@
 package server.model.minigames;
 
+import server.model.npcs.NPCHandler;
 import server.model.players.Client;
+import server.model.players.PlayerHandler;
 import server.Server;
 
 /**
@@ -48,19 +50,19 @@ public class PestControl {
 			//spawn npcs
 			spawnNpcs();	
 			//move players into game
-			for (int j = 0; j < Server.playerHandler.players.length; j++) {
-				if (Server.playerHandler.players[j] != null) {
-					if (Server.playerHandler.players[j].inPcBoat()) {
+			for (int j = 0; j < PlayerHandler.players.length; j++) {
+				if (PlayerHandler.players[j] != null) {
+					if (PlayerHandler.players[j].inPcBoat()) {
 						movePlayer(j);
 					}			
 				}		
 			}
 		} else {
 			waitTimer = WAIT_TIMER;
-			for (int j = 0; j < Server.playerHandler.players.length; j++) {
-				if (Server.playerHandler.players[j] != null) {
-					if (Server.playerHandler.players[j].inPcBoat()) {
-						Client c = (Client)Server.playerHandler.players[j];
+			for (int j = 0; j < PlayerHandler.players.length; j++) {
+				if (PlayerHandler.players[j] != null) {
+					if (PlayerHandler.players[j].inPcBoat()) {
+						Client c = (Client)PlayerHandler.players[j];
 						//c.sendMessage("There need to be at least 3 players to start a game of pest control.");
 					}			
 				}		
@@ -70,9 +72,9 @@ public class PestControl {
 	
 	public int playersInBoat() {
 		int count = 0;
-		for (int j = 0; j < Server.playerHandler.players.length; j++) {
-			if (Server.playerHandler.players[j] != null) {
-				if (Server.playerHandler.players[j].inPcBoat()) {
+		for (int j = 0; j < PlayerHandler.players.length; j++) {
+			if (PlayerHandler.players[j] != null) {
+				if (PlayerHandler.players[j].inPcBoat()) {
 						count++;
 				}
 			}
@@ -83,10 +85,10 @@ public class PestControl {
 	public void endGame(boolean won) {
 		gameTimer = -1;
 		waitTimer = WAIT_TIMER;
-		for (int j = 0; j < Server.playerHandler.players.length; j++) {
-			if (Server.playerHandler.players[j] != null) {
-				if (Server.playerHandler.players[j].inPcGame()) {
-					Client c = (Client)Server.playerHandler.players[j];
+		for (int j = 0; j < PlayerHandler.players.length; j++) {
+			if (PlayerHandler.players[j] != null) {
+				if (PlayerHandler.players[j].inPcGame()) {
+					Client c = (Client)PlayerHandler.players[j];
 					c.getPA().movePlayer(2657, 2639, 0);
 					if (won && c.pcDamage > 4) {
 						c.sendMessage("Victory! You have been awarded 5 points by the Void knights.");
@@ -109,20 +111,20 @@ public class PestControl {
 			}		
 		}
 
-		for (int j = 0; j < Server.npcHandler.npcs.length; j++) {
-			if (Server.npcHandler.npcs[j] != null) {
-				if (Server.npcHandler.npcs[j].npcType >= 3777 && Server.npcHandler.npcs[j].npcType <= 3780)
-					Server.npcHandler.npcs[j] = null;
+		for (int j = 0; j < NPCHandler.npcs.length; j++) {
+			if (NPCHandler.npcs[j] != null) {
+				if (NPCHandler.npcs[j].npcType >= 3777 && NPCHandler.npcs[j].npcType <= 3780)
+					NPCHandler.npcs[j] = null;
 			}			
 		}
 	}
 	
 	public boolean allPortalsDead() {
 		int count = 0;
-		for (int j = 0; j < Server.npcHandler.npcs.length; j++) {
-			if (Server.npcHandler.npcs[j] != null) {
-				if (Server.npcHandler.npcs[j].npcType >= 3777 && Server.npcHandler.npcs[j].npcType <= 3780)
-					if (Server.npcHandler.npcs[j].needRespawn)
+		for (int j = 0; j < NPCHandler.npcs.length; j++) {
+			if (NPCHandler.npcs[j] != null) {
+				if (NPCHandler.npcs[j].npcType >= 3777 && NPCHandler.npcs[j].npcType <= 3780)
+					if (NPCHandler.npcs[j].needRespawn)
 						count++;		
 			}			
 		}
@@ -130,7 +132,7 @@ public class PestControl {
 	}
 	
 	public void movePlayer(int index) {
-		Client c = (Client)Server.playerHandler.players[index];
+		Client c = (Client)PlayerHandler.players[index];
 		if (c.combatLevel < 40) {
 			c.sendMessage("You must have a combat level of atleast 40 to enter this boat.");
 			return;
@@ -139,27 +141,27 @@ public class PestControl {
 	}
 
 	public void setInterface() {
-		for (int j = 0; j < Server.playerHandler.players.length; j++) {
-			if (Server.playerHandler.players[j] != null) {
-				if (Server.playerHandler.players[j].inPcBoat()) {
-					Client c = (Client)Server.playerHandler.players[j];
+		for (int j = 0; j < PlayerHandler.players.length; j++) {
+			if (PlayerHandler.players[j] != null) {
+				if (PlayerHandler.players[j].inPcBoat()) {
+					Client c = (Client)PlayerHandler.players[j];
 					c.getPA().sendFrame126("Next Departure: "+waitTimer+"", 21120);
 					c.getPA().sendFrame126("Players Ready: "+playersInBoat()+"", 21121);
 					c.getPA().sendFrame126("(Need 1 to 25 players)", 21122);
 					c.getPA().sendFrame126("Pest Points: "+c.pcPoints+"", 21123);
 				}
-				if (Server.playerHandler.players[j].inPcGame()) {
-					Client c = (Client)Server.playerHandler.players[j];
-					for (j = 0; j < Server.npcHandler.npcs.length; j++) {
-						if (Server.npcHandler.npcs[j] != null) {
-							if (Server.npcHandler.npcs[j].npcType == 3777)
-								c.getPA().sendFrame126("" + Server.npcHandler.npcs[j].HP + "", 21111);
-							if (Server.npcHandler.npcs[j].npcType == 3778)
-								c.getPA().sendFrame126("" + Server.npcHandler.npcs[j].HP + "", 21112);
-							if (Server.npcHandler.npcs[j].npcType == 3779)
-								c.getPA().sendFrame126("" + Server.npcHandler.npcs[j].HP + "", 21113);
-							if (Server.npcHandler.npcs[j].npcType == 3780)
-								c.getPA().sendFrame126("" + Server.npcHandler.npcs[j].HP + "", 21113);
+				if (PlayerHandler.players[j].inPcGame()) {
+					Client c = (Client)PlayerHandler.players[j];
+					for (j = 0; j < NPCHandler.npcs.length; j++) {
+						if (NPCHandler.npcs[j] != null) {
+							if (NPCHandler.npcs[j].npcType == 3777)
+								c.getPA().sendFrame126("" + NPCHandler.npcs[j].HP + "", 21111);
+							if (NPCHandler.npcs[j].npcType == 3778)
+								c.getPA().sendFrame126("" + NPCHandler.npcs[j].HP + "", 21112);
+							if (NPCHandler.npcs[j].npcType == 3779)
+								c.getPA().sendFrame126("" + NPCHandler.npcs[j].HP + "", 21113);
+							if (NPCHandler.npcs[j].npcType == 3780)
+								c.getPA().sendFrame126("" + NPCHandler.npcs[j].HP + "", 21113);
 						}
 					}
 					c.getPA().sendFrame126("100", 21115);

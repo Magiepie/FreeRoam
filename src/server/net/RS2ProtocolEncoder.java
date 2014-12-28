@@ -12,7 +12,7 @@ public class RS2ProtocolEncoder implements ProtocolEncoder {
 	 */
 	protected RS2ProtocolEncoder() {}
 
-	@Override
+	
 	/**
 	 * Encodes a message.
 	 * @param session
@@ -55,7 +55,7 @@ public class RS2ProtocolEncoder implements ProtocolEncoder {
 		}
 	}
 	
-	@Override
+	
 	/**
 	 * Releases resources used by this encoder.
 	 * @param session

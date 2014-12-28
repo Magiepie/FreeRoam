@@ -61,15 +61,15 @@ public class DialogueHandler {
 			c.nextChat = 14;
 		break;
 		case 32:
-		sendNpcChat4 ( "Hello, Welcome to Tyreatta-Scape.", "I will teach you a few of the basics.", "You can do ::commands for a list of commands", "You can do ::barrows for barrows", c.talkingNpc, "RuneScape_Guide");
+		sendNpcChat4 ( "Hello, Welcome to FreeRoam.", "I will teach you a few of the basics.", "You can do ::commands for a list of commands", "You can do ::barrows for barrows", c.talkingNpc, "RuneScape_Guide");
 		c.nextChat = 33;
 		break;
 		case 33:
-		sendNpcChat4 ( "Tyreatta Points can be earnt by slayer,", "by killing other players", "or donators can earn them by killing", "pirates at donator zone.", c.talkingNpc, "RuneScape_Guide");
+		sendNpcChat4 ( "Points can be earnt by slayer,", "by killing other players", "or donators can earn them by killing", "pirates at donator zone.", c.talkingNpc, "RuneScape_Guide");
 		c.nextChat = 34;
 		break;
 		case 34:
-		sendNpcChat4 ( "You can gain donator status", "by donating or by sacrificing", "10000 Tyreatta points.", "Check the quest tab for extras.", c.talkingNpc, "RuneScape_Guide");
+		sendNpcChat4 ( "You can gain donator status", "by donating or by sacrificing", "10000 points.", "Check the quest tab for extras.", c.talkingNpc, "RuneScape_Guide");
 		c.nextChat = 35;
 		break;
 		case 35:
@@ -127,7 +127,7 @@ public class DialogueHandler {
 			c.dialogueAction = 13;
 		break;
 		/*case 22:
-			sendNpcChat1("You currently have "+c.pkPoints+" Tyreatta points.", c.talkingNpc, "Mazchna");
+			sendNpcChat1("You currently have "+c.pkPoints+" points.", c.talkingNpc, "Mazchna");
 		break;*/
 		case 23:
 			sendOption3("44 Portals", "East Dragons", "Mage Bank");
@@ -163,6 +163,7 @@ public class DialogueHandler {
 	 * Options
 	 */
 	
+	@SuppressWarnings("unused")
 	private void sendOption(String s, String s1) {
 		c.getPA().sendFrame126("Select an Option", 2470);
 	 	c.getPA().sendFrame126(s, 2471);
@@ -227,6 +228,7 @@ public class DialogueHandler {
 		c.getPA().sendFrame164(4882);
 	}
 	
+	@SuppressWarnings("unused")
 	private void sendNpcChat2(String s, String s1, int ChatNpc, String name) {
 		c.getPA().sendFrame200(4888, 591);
 		c.getPA().sendFrame126(name, 4889);
@@ -236,6 +238,7 @@ public class DialogueHandler {
 		c.getPA().sendFrame164(4887);
 	}
 	
+	@SuppressWarnings("unused")
 	private void sendNpcChat3(String s, String s1, String s2, int ChatNpc, String name) {
 		c.getPA().sendFrame200(4894, 591);
 		c.getPA().sendFrame126(name, 4895);
@@ -261,6 +264,7 @@ public class DialogueHandler {
 	 * Player Chating Back
 	 */
 	
+	@SuppressWarnings("unused")
 	private void sendPlayerChat1(String s) {
 		c.getPA().sendFrame200(969, 591);
 		c.getPA().sendFrame126(c.playerName, 970);
@@ -278,6 +282,7 @@ public class DialogueHandler {
 		c.getPA().sendFrame164(973);
 	}
 	
+	@SuppressWarnings("unused")
 	private void sendPlayerChat3(String s, String s1, String s2) {
 		c.getPA().sendFrame200(980, 591);
 		c.getPA().sendFrame126(c.playerName, 981);
@@ -288,6 +293,7 @@ public class DialogueHandler {
 		c.getPA().sendFrame164(979);
 	}
 	
+	@SuppressWarnings("unused")
 	private void sendPlayerChat4(String s, String s1, String s2, String s3) {
 		c.getPA().sendFrame200(987, 591);
 		c.getPA().sendFrame126(c.playerName, 988);
