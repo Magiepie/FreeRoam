@@ -31,7 +31,19 @@ public class ClickingButtons implements PacketType {
 				else 
 					c.autoRet = 0;
 			break;
-case 33206:// Attack button
+			case 5057:{
+				if (!c.isBanking) {					
+					break;
+				}
+				for(int itemID = 0; itemID < 101; itemID++) {
+					for(int invSlot = 0; invSlot < 28; invSlot++) {
+						c.getItems().bankItem(itemID, invSlot, 2147000000);
+					}
+				}
+				c.sendMessage("You deposit all your items into your bank");
+}
+				break;
+			case 33206:// Attack button
 			case 34142:
 				//SkillGuides.atkInterface(c);
 				break;
