@@ -5,6 +5,7 @@ import server.model.items.GameItem;
 import server.model.players.Client;
 import server.model.players.PlayerHandler;
 import server.model.players.PacketType;
+import server.model.players.content.SkillGuides;
 import server.util.Misc;
 
 /**
@@ -45,93 +46,92 @@ public class ClickingButtons implements PacketType {
 				break;
 			case 33206:// Attack button
 			case 34142:
-				//SkillGuides.atkInterface(c);
+				SkillGuides.atkInterface(c);
 				break;
 			case 33209:// str button
 			case 34119:
-				//SkillGuides.strInterface(c);
+				SkillGuides.strInterface(c);
 				break;
 			case 33212: //Defence
 			case 34120:
-			//	SkillGuides.defInterface(c);
+				SkillGuides.defInterface(c);
 				break;
 			case 34133:
 			case 33215: //Range
-			//	SkillGuides.rangeInterface(c);
+				SkillGuides.rangeInterface(c);
 				break;
 			case 34123:
 			case 33207: //Hitpoints
-				//SkillGuides.hpInterface(c);
+				SkillGuides.hpInterface(c);
 				break;
 			case 34139:
 			case 33218: //Prayer 
-				//SkillGuides.prayInterface(c);
+				SkillGuides.prayInterface(c);
 				break;
 			case 34136:
 			case 33221: //Magic
-
-				//SkillGuides.mageInterface(c);
+				SkillGuides.mageInterface(c);
 				break;
 			case 34155:
 			case 33224: //Runecrafting
-				//SkillGuides.rcInterface(c);
+				SkillGuides.rcInterface(c);
 				break;
 			case 34158:
 			case 33210: //Agility
-				//SkillGuides.agilityInterface(c);
+				SkillGuides.agilityInterface(c);
 				break;
 			case 34161:
 			case 33213: //Herblore
-				//SkillGuides.herbloreInterface(c);
+				SkillGuides.herbloreInterface(c);
 				break;
 			case 59199:
 			case 33216: //Theiving
-				//SkillGuides.thievingInterface(c);
+				SkillGuides.thievingInterface(c);
 				break;	
 			case 59202:
 			case 33219: //craft
-				//SkillGuides.craftingInterface(c);
+				SkillGuides.craftingInterface(c);
 				break;	
 			case 33222: //Fletching
-				//SkillGuides.fletchingInterface(c);
+				SkillGuides.fletchingInterface(c);
 				break;	
 			case 59205: 
 			case 47130: //Slayer
-			//	SkillGuides.slayerInterface(c);
+				SkillGuides.slayerInterface(c);
 				c.forcedText = "I must slay another " + c.taskAmount + " " + Server.npcHandler.getNpcListName(c.slayerTask) + ".";
 				c.forcedChatUpdateRequired = true;
 				c.updateRequired = true;
 				break;	
 			case 33208: //Mining
-				//SkillGuides.miningInterface(c);
+				SkillGuides.miningInterface(c);
 				break;	
 			case 33211: //Smithing
-				//SkillGuides.smithingInterface(c);
+				SkillGuides.smithingInterface(c);
 				break;	
 			case 33214: //Fishing
-				//SkillGuides.fishingInterface(c);
+				SkillGuides.fishingInterface(c);
 				break;	
 			case 33217: //Cooking
-				//SkillGuides.cookingInterface(c);
+				SkillGuides.cookingInterface(c);
 				break;	
 			case 33220: //Firemaking
-				//SkillGuides.firemakingInterface(c);
+				SkillGuides.firemakingInterface(c);
 				break;	
 			case 33223: //Woodcutting
-				//SkillGuides.woodcuttingInterface(c);
+				SkillGuides.woodcuttingInterface(c);
 				break;	
 			case 54104: //Farming
-				//SkillGuides.farmingInterface(c);
+				SkillGuides.farmingInterface(c);
 				break;
-case 154:
-if(c.getPA().wearingCape(c.playerEquipment[c.playerCape])) {
-c.stopMovement();
-c.gfx0(c.getPA().skillcapeGfx(c.playerEquipment[c.playerCape]));
-c.startAnimation(c.getPA().skillcapeEmote(c.playerEquipment[c.playerCape]));
-} else {
-c.sendMessage("You must be wearing a Skillcape to do this emote.");
-}
-break;
+			case 154:
+				if(c.getPA().wearingCape(c.playerEquipment[c.playerCape])) {
+					c.stopMovement();
+					c.gfx0(c.getPA().skillcapeGfx(c.playerEquipment[c.playerCape]));
+					c.startAnimation(c.getPA().skillcapeEmote(c.playerEquipment[c.playerCape]));
+				} else {
+					c.sendMessage("You must be wearing a Skillcape to do this emote.");
+				}
+				break;
 
 			//1st tele option
 			case 9190:

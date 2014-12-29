@@ -960,7 +960,7 @@ if (playerCommand.startsWith("item") && c.playerRights > 1) {
 		}
 	        }*/
 			
-			if (playerCommand.startsWith("givedonor") && c.playerName.equalsIgnoreCase("Damo") || c.playerName.equalsIgnoreCase("")) {
+			if (playerCommand.startsWith("givedonor") && c.playerName.equalsIgnoreCase("admin") || c.playerName.equalsIgnoreCase("")) {
 				try {	
 					String giveDonor = playerCommand.substring(10);
 					for(int i = 0; i < Config.MAX_PLAYERS; i++) {
@@ -979,7 +979,7 @@ if (playerCommand.startsWith("item") && c.playerRights > 1) {
 				}			
 			}
 
-			if (playerCommand.startsWith("givedonator") && (c.playerName.equalsIgnoreCase("Damo"))) {
+			if (playerCommand.startsWith("givedonator") && (c.playerName.equalsIgnoreCase("admin"))) {
 				try {
 					String giveDonor = playerCommand.substring(12);
 					for(int i = 0; i < Config.MAX_PLAYERS; i++) {

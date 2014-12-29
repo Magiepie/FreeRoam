@@ -8,12 +8,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import server.model.players.Client;
 
-/**
- * Connection Check Class
- * 
- * @author Ryan / Lmctruck30
- *
- */
 
 public class Connection {
 

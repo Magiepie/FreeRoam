@@ -29,17 +29,6 @@ import server.world.ClanChatHandler;
 import server.clip.region.ObjectDef;
 import server.clip.region.Region;
 
-/**
- * Server.java
- *
- * @author Sanity
- * @author Graham
- * @author Blake
- * @author Ryan Lmctruck30
- * @author Fridder (a little bit)
- *
- */
-
 public class Server {
 	
 	
@@ -68,8 +57,6 @@ public class Server {
 	public static NPCDrops npcDrops = new NPCDrops();
 	public static ClanChatHandler clanChat = new ClanChatHandler();
 	public static FightCaves fightCaves = new FightCaves();
-	//public static WorldMap worldMap = new WorldMap();
-	//private static final WorkerThread engine = new WorkerThread();
 	
 	static {
 		if(!Config.SERVER_DEBUG) {

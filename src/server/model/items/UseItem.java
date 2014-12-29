@@ -4,12 +4,6 @@ import server.model.players.Client;
 import server.util.Misc;
 import server.Config;
 
-/**
- * 
- * @author Ryan / Lmctruck30
- *
- */
-
 public class UseItem {
 
 	public static void ItemonObject(Client c, int objectID, int objectX, int objectY, int itemId) {

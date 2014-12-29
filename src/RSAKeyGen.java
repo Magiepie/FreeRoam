@@ -9,10 +9,6 @@ import java.security.PublicKey;
 import java.security.spec.RSAPrivateKeySpec;
 import java.security.spec.RSAPublicKeySpec;
 
-/**
- * A class to generate a simple 1024 bit RSA pair
- * @author Nikki
- */
 public class RSAKeyGen {
 
 	public static void main(String[] args) {

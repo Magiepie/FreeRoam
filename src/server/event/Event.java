@@ -4,7 +4,6 @@ package server.event;
 /**
  * A simple interface for an event.
  * 
- * @author Graham
  * 
  */
 public interface Event {

@@ -8,7 +8,6 @@ import java.util.List;
  * Manages events which will be run in the future. Has its own thread since some
  * events may need to be ran faster than the cycle time in the main thread.
  * 
- * @author Graham
  * 
  */
 public class EventManager implements Runnable {
